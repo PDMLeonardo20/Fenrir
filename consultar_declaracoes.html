@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/css.css">
+    <link rel="icon" href="img/nycrux.jfif">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <title>Consulta de Declarações</title>
+</head>
+<body data-bs-theme="dark">
+    <main>
+        <section class=" bg-primary-subtle m-2 border border-primary rounded-3 p-3">
+            <h1 class="display-4 text-center">Consulta de Declarações</h1>
+        </section>
+        <section class="text-center">
+            <ul class="nav nav-tabs bg-body-tertiary">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link" target="_blank">Cadastro de Declarações</a>
+                </li>
+                <li class="nav-item">
+                    <a href="cad_cliente.html" class="nav-link" target="_blank">Cadastro de Cliente</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" target="_blank">Consulta de Declarações Emitidas</a>
+                </li>
+                <li class="nav-item">
+                    <a href="cancelar_declaracoes.html" class="nav-link" target="_blank">Cancelamento de Declarações</a>
+                </li>
+                <li class="nav-item">
+                    <a href="consulta_loc_ate_redesp.html" class="nav-link" target="_blank">Consulta Loc. Ate. p/ Redespacho</a>
+                </li>
+            </ul>
+        </section>
+        <section class="container m-2" style="width: 80%; float: left;">
+            <div class="row mt-2">
+                <div class="col bg-primary rounded-3 p-3">
+                    <label for="busca_declara" class="form-label">Buscar Declaração</label>
+                    <input type="search" name="busca_declara" id="busca_declara" class="form-control" onkeyup="consultar_dados()">
+                </div>
+            </div>
+        </section>
+        <section class="container" id="declara_emitida" style="width: 75%; float:left;">
+            <div class="row">
+                <div class="col"><h5 class="bg-primary m-3 p-2 rounded-3 text-center">Dados da Declaração</h5></div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="number" name="volume_declara_cad" id="volume_declara_cad" class="form-control" disabled>
+                        <label for="volume_declara">Volume</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="num_declara_cad" id="num_declara_cad" class="form-control" disabled>
+                        <label for="num_declara">N° Declaração</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="num_nf_cad" id="num_nf_cad" class="form-control" disabled>
+                        <label for="num_nf_cad">N° Nota Fiscal</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="text" name="rota_entrega_cad" id="rota_entrega_cad" class="form-control" disabled>
+                        <label for="rota_entrega_cad">Rota Entrega</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col"><h5 class="bg-primary m-3 p-2 rounded-3 text-center">Remetente</h5></div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="cnpj_rem_cad" name="cnpj_rem_cad" disabled>
+                        <label for="cnpj_rem_cad">CNPJ</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="nome_remetente_cad" id="nome_remetente_cad" class="form-control" disabled>
+                        <label for="nome_remetente">Nome</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-5">
+                    <div class="form-floating">
+                        <input type="text" name="nome_log_rem_cad" id="nome_log_rem_cad" class="form-control" disabled>
+                        <label for="nome_log_rem">Endereço</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="text" name="num_log_rem_cad" id="num_log_rem_cad" class="form-control" disabled>
+                        <label for="num_log_rem">Número</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="text" name="bairro_rem_cad" id="bairro_rem_cad" class="form-control" disabled>
+                        <label for="bairro_rem">Bairro</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="text" name="cidade_rem_cad" id="cidade_rem_cad" class="form-control" disabled>
+                        <label for="cidade_rem">Cidade</label>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="form-floating">
+                        <input type="text" name="uf_rem_cad" id="uf_rem_cad" class="form-control" disabled>
+                        <label for="uf_rem">UF</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col"><h5 class="bg-primary m-3 p-2 rounded-3 text-center">Destinatário</h5></div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="cnpj_dest_cad" name="cnpj_dest_cad" disabled>
+                        <label for="cnpj_dest">CNPJ</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="nome_destinatario_cad" id="nome_destinatario_cad" class="form-control" disabled>
+                        <label for="nome_destinatario">Nome</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-5">
+                    <div class="form-floating">
+                        <input type="text" name="nome_log_dest_cad" id="nome_log_dest_cad" class="form-control" disabled>
+                        <label for="nome_log_dest">Endereço</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="text" name="num_log_dest_cad" id="num_log_dest_cad" class="form-control" disabled>
+                        <label for="num_log_dest">Número</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="text" name="bairro_dest_cad" id="bairro_dest_cad" class="form-control" disabled>
+                        <label for="bairro_dest">Bairro</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="text" name="cidade_dest_cad" id="cidade_dest_cad" class="form-control" disabled>
+                        <label for="cidade_dest">Cidade</label>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="form-floating">
+                        <input type="text" name="uf_dest_cad" id="uf_dest_cad" class="form-control" disabled>
+                        <label for="uf_dest">UF</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col"><h5 class="bg-primary m-3 p-2 rounded-3 text-center">Dados Extras</h5></div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="ocorrencia_cad" id="ocorrencia_cad" class="form-control" disabled>
+                        <label for="ocorrencia_cad">Ocorrência</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="data_hora_cad_baixa" id="data_hora_cad_baixa" disabled class="form-control">
+                        <label for="data_hora_cad_baixa">Data/Hora de Cadastro</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="data_hora_entrega_cad" id="data_hora_entrega_cad" disabled class="form-control">
+                        <label for="data_hora_entrega_cad">Data/Hora de Entrega</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-4">
+                    <div class="form-floating">
+                        <input type="text" name="motivo_devolucao_cad" id="motivo_devolucao_cad" class="form-control" disabled>
+                        <label for="motivo_devolucao_cad" class="form-input">Motivo da Devolução</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="observacao_cad" id="observacao_cad" class="form-control" disabled>
+                        <label for="observacao_cad" class="form-input">Observação</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container mt-3" style="width: 20%; float: right;">
+            <div class="form-floating">
+                <input type="text" name="nome_digitador_cad" id="nome_digitador_cad" readonly class="form-control">
+                <label for="nome_digitador_cad" class="form-label">Digitador</label>
+            </div>
+            <div class="card mt-2">
+                <div class="card-body">
+                    <h5 class="card-header">Caracteristicas</h5>
+                    <input type="checkbox" name="e_devolucao" id="e_devolucao_cad" class="form-check-input" disabled>
+                    <label for="e_devolucao">Devolução</label>
+                    <br>
+                    <input type="checkbox" name="e_cortesia" id="e_cortesia_cad" class="form-check-input" disabled>
+                    <label for="e_cortesia" class="form-check-label">Cortesia</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <button class="btn btn-info" onclick="reimprmir_pdf()">Reimprimir Declaração</button>
+            </div>
+        </section>
+    </main>
+    <script src="js/main.js"></script>
+</body>
+</html>
