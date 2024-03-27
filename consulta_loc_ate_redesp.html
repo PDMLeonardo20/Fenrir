@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/css.css">
     <link rel="icon" href="img/nycrux.jfif">
     <title>Consulta de Localidades para Redespacho</title>
+    <script src="js/main.js"></script>
 </head>
 <body data-bs-theme="dark">
     <main>
@@ -39,7 +40,7 @@
             <div class="row mt-2">
                 <div class="col">
                     <div class="form-floating">
-                        <input list="cliente_redesp" name="cliente_redespachante" id="cliente_redespachante" class="form-control" onkeyup="consulta_loc_redespacho()">
+                        <input list="cliente_redesp" name="cliente_redespachante" id="cliente_redespachante" class="form-control" onkeyup="consulta_loc_redespacho(); this.value = this.value.  toUpperCase();">
                         <label for="cliente_redespachante" class="form-label">Cliente Redespachante</label>
                         <datalist id="cliente_redesp">
                             <option value="Termolar"></option>
@@ -98,6 +99,6 @@
             </div>
         </section>
     </main>
-    <script src="js/main.js"></script>
+    
 </body>
 </html>
