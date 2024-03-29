@@ -308,44 +308,75 @@ function cadastrar_dados_com_chave() {
     for (let i = 0; i < digitadores.length; i++) { 
         if (num_declara == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Nº declaração/Nota fiscal'.</p>";
+            document.getElementById("num_declara").focus();
         }else if (digitador == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário informar um digitador.</p>";
+            document.getElementById("nome_digitador").focus();
         } else if (chave_nf == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário informar uma chave de acesso.</p>";
+            document.getElementById("chave_nf").focus();
         } else if (volume_declara == ""){
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Volume'.</p>";
-        } else if (cnpj_rem == "") {
+            document.getElementById("volume_declara").focus();
+        }
+        /*
+        else if (cnpj_rem == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'CNPJ Remetente'.</p>";
-        } else if (nome_log == "") {
+        } 
+        */
+        else if (nome_log == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Nome do Logradouro Remetente'.</p>";
+            document.getElementById("nome_log_rem").focus();
         } else if (num_log == "") {
-            document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Número do Logradouro Remetente'.</p>";
-        } else if (bairro == "") {
+            document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Número do Logradouro Remetente'.</p>";document.getElementById("num_log_rem").focus();
+        }
+        /*
+        else if (bairro == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Bairro Remetente'.</p>";
-        } else if (cidade == "") {
+        }
+        */
+        else if (cidade == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Cidade Remetente'.</p>";
+            document.getElementById("cidade_rem").focus();
         } else if (unidade_federativa == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Unidade Federativa Remetente'.</p>";
+            document.getElementById("uf_rem").focus();
         } else if (status_entrega == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Ocorrência'.</p>";
+            document.getElementById("status").focus();
         } else if (data_cadastro_baixa == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Data Cadastro Baixa'.</p>";
-        } else if (cnpj_dest == "") {
+            document.getElementById("data_hora_cad").focus();
+        }
+        /*
+        else if (cnpj_dest == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'CNPJ Destinatario'.</p>";
-        } else if (nome_log_dest == "") {
+        }
+        */
+        else if (nome_log_dest == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Nome do Logradouro Destinatario'.</p>";
+            document.getElementById("nome_log_dest").focus();
         } else if (num_log_dest == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Numero do Logradouro Destinatario'.</p>";
-        } else if (bairro_dest == "") {
+            document.getElementById("num_log_dest").focus();
+        }
+        /*
+        else if (bairro_dest == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Bairro Destinatario'.</p>";
-        } else if (cidade_dest == "") {
+        }
+        */
+        else if (cidade_dest == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Cidade Destinatario'.</p>";
+            document.getElementById("cidade_dest").focus();
         } else if (!pegar_hora){
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Hora cadastro baixa'.</p>";
+            document.getElementById("data_hora_cad").focus();
         } else if (document.getElementById("e_devolucao").checked && motivo_devolucao == ""){
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>Devolução marcada mas não foi informado um motivo de devolução, verifique.</p>";
+            document.getElementById("motivo_devolucao").focus();
         } else if (nome_digitadores.indexOf(digitador) == -1){
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>Digitador não cadastrado.</p>";
+            document.getElementById("nome_digitador").focus();
         }
         else{
             if (status_entrega !== "Declaração/NFS-e emitida" && digitador == digitadores[i].nome) {
@@ -492,11 +523,11 @@ function cadastrar_dados(){
 function copia_dados_dest() {
     let cnpj_rem = document.getElementById("cnpj_rem").value;
     let nome_remetente = document.getElementById("nome_remetente").value
-    let nome_log = document.getElementById("nome_log").value;
-    let num_log = document.getElementById("num_log").value;
-    let bairro = document.getElementById("bairro").value;
-    let cidade = document.getElementById("cidade").value;
-    let unidade_federativa = document.getElementById("unidade_federativa").value;
+    let nome_log = document.getElementById("nome_log_rem").value;
+    let num_log = document.getElementById("num_log_rem").value;
+    let bairro = document.getElementById("bairro_rem").value;
+    let cidade = document.getElementById("cidade_rem").value;
+    let unidade_federativa = document.getElementById("uf_rem").value;
 
     //dados do destinatario
 
@@ -506,7 +537,7 @@ function copia_dados_dest() {
     document.getElementById("num_log_dest").value = num_log;
     document.getElementById("bairro_dest").value = bairro;
     document.getElementById("cidade_dest").value = cidade;
-    document.getElementById("unidade_federativa_dest").value = unidade_federativa;
+    document.getElementById("uf_dest").value = unidade_federativa;
 }
 
 function consultar_dados(){
@@ -545,7 +576,6 @@ function consultar_dados(){
                     if(typeof dados_salvos.status_entrega !== "undefined") document.getElementById("ocorrencia_cad").value = dados_salvos.status_entrega;
                     if(typeof dados_salvos.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos.data_cadastro_baixa;
                     if(typeof dados_salvos.data_entrega !== "undefined") document.getElementById("data_hora_entrega_cad").value = dados_salvos.data_entrega;
-                    if(typeof dados_salvos.chave_nf !== "undefined") document.getElementById("chave_nf_cad").value = dados_salvos.chave_nf;
                     if(typeof dados_salvos.num_declara !== "undefined") document.getElementById("num_declara_cad").value = dados_salvos.num_declara;
                     if(typeof dados_salvos.num_nf !== "undefined") document.getElementById("num_nf_cad").value = dados_salvos.num_nf;
                     if(typeof dados_salvos.rota_entrega !== "undefined") document.getElementById("rota_entrega_cad").value = dados_salvos.rota_entrega;
@@ -896,10 +926,6 @@ function buscar_cadastro() {
  * CONSULTA LOCALIDADES REDESPACHO
  * -------------------------------
  */
-
-
-
-
 
 for (let i = 0; i < cidade_agencia_redesp.length; i++) {
     let bingus = document.createElement("option");
@@ -1292,8 +1318,6 @@ cidade_agencia_redesp = [
     document.getElementById("procedimento_redesp").value = "";
     document.getElementById("nome_agencia_redesp").value = "";
     document.getElementById("uf_redesp").value = "";
-
-
 
     if(cliente_redespacahante == "Termolar"){
         document.getElementById("procedimento_redesp").value = "R$150.00 para todos os redespachos";

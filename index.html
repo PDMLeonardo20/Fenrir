@@ -41,31 +41,31 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-floating">
-                            <input type="number" name="chave_nf" id="chave_nf" class="form-control">
+                            <input type="number" name="chave_nf" id="chave_nf" class="form-control" required>
                             <label for="chave_nf">Chave de Acesso</label>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="form-floating">
-                            <input type="text" name="num_declara" id="num_declara" class="form-control">
+                            <input type="text" name="num_declara" id="num_declara" class="form-control" required>
                             <label for="num_declara">N° Declaração</label>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="form-floating">
-                            <input type="text" name="num_nf" id="num_nf" class="form-control">
+                            <input type="text" name="num_nf" id="num_nf" class="form-control" required>
                             <label for="num_nf" class="form-label">N° Nota Fiscal</label>
                         </div>
                     </div>
                 <div class="col-2">
                     <div class="form-floating">
-                        <input type="number" name="volume_declara" id="volume_declara" class="form-control">
+                        <input type="number" name="volume_declara" id="volume_declara" class="form-control" required>
                         <label for="volume_declara">Volume</label>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class="form-floating">
-                        <input type="number" name="rota_entrega" id="rota_entrega" class="form-control">
+                        <input type="number" name="rota_entrega" id="rota_entrega" class="form-control" required>
                         <label for="rota_entrega">Rota Entrega</label>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input type="text" name="nome_remetente" id="nome_remetente" class="form-control" disabled>
+                        <input type="text" name="nome_remetente" id="nome_remetente" class="form-control" required onkeyup="this.value = this.value.toUpperCase();">
                         <label for="nome_remetente">Nome</label>
                     </div>
                 </div>
@@ -90,34 +90,37 @@
             <div class="row mt-3">
                 <div class="col-4">
                     <div class="form-floating">
-                        <input type="text" name="nome_log_rem" id="nome_log_rem" class="form-control" disabled>
+                        <input type="text" name="nome_log_rem" id="nome_log_rem" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required>
                         <label for="nome_log_rem">Endereço</label>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class="form-floating">
-                        <input type="text" name="num_log_rem" id="num_log_rem" class="form-control" disabled>
+                        <input type="text" name="num_log_rem" id="num_log_rem" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required>
                         <label for="num_log_rem">Número</label>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class="form-floating">
-                        <input type="text" name="bairro_rem" id="bairro_rem" class="form-control" disabled>
+                        <input type="text" name="bairro_rem" id="bairro_rem" onkeyup="this.value = this.value.toUpperCase();" class="form-control" >
                         <label for="bairro_rem">Bairro</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input type="text" name="cidade_rem" id="cidade_rem" class="form-control" disabled>
+                        <input type="text" name="cidade_rem" id="cidade_rem" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required>
                         <label for="cidade_rem">Cidade</label>
                     </div>
                 </div>
                 <div class="col-1">
                     <div class="form-floating">
-                        <input type="text" name="uf_rem" id="uf_rem" class="form-control" disabled>
+                        <input type="text" name="uf_rem" id="uf_rem" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required>
                         <label for="uf_rem">UF</label>
                     </div>
                 </div>
+            </div>
+            <div class="row mt-3">
+                <button class="btn btn-info" onclick="copia_dados_dest()">Copiar dados do remetente para o destinatário</button>
             </div>
             <div class="row">
                 <div class="col"><h5 class="bg-primary m-3 p-2 rounded-3">Destinatário</h5></div>
@@ -131,7 +134,7 @@
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input type="text" name="nome_destinatario" id="nome_destinatario" class="form-control" disabled>
+                        <input type="text" name="nome_destinatario" id="nome_destinatario" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required>
                         <label for="nome_destinatario">Nome</label>
                     </div>
                 </div>
@@ -139,31 +142,31 @@
             <div class="row mt-3">
                 <div class="col-4">
                     <div class="form-floating">
-                        <input type="text" name="nome_log_dest" id="nome_log_dest" class="form-control" disabled>
+                        <input type="text" name="nome_log_dest" id="nome_log_dest" class="form-control" onkeyup="this.value = this.value.toUpperCase();"required>
                         <label for="nome_log_dest">Endereço</label>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class="form-floating">
-                        <input type="text" name="num_log_dest" id="num_log_dest" class="form-control" disabled>
+                        <input type="text" name="num_log_dest" id="num_log_dest" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required>
                         <label for="num_log_dest">Número</label>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class="form-floating">
-                        <input type="text" name="bairro_dest" id="bairro_dest" class="form-control" disabled>
+                        <input type="text" name="bairro_dest" id="bairro_dest" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required>
                         <label for="bairro_dest">Bairro</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input type="text" name="cidade_dest" id="cidade_dest" class="form-control" disabled>
+                        <input type="text" name="cidade_dest" id="cidade_dest" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required>
                         <label for="cidade_dest">Cidade</label>
                     </div>
                 </div>
                 <div class="col-1">
                     <div class="form-floating">
-                        <input type="text" name="uf_dest" id="uf_dest" class="form-control" disabled>
+                        <input type="text" name="uf_dest" id="uf_dest" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required>
                         <label for="uf_dest">UF</label>
                     </div>
                 </div>
@@ -175,16 +178,20 @@
                 <div class="col">
                     <div class="form-floating">
                         <select class="form-select" id="status" name="status">
-                            <option value="Entregue">Entregue</option>
-                            <option value="Disponível para entrega">Disponível para entrega</option>
-                            <option value="Retido para conferência no cliente">Retido para conferência no cliente</option>
+                            <!--
+                                <option value="Entregue">Entregue</option>
+                                <option value="Disponível para entrega">Disponível para entrega</option>
+                                <option value="Retido para conferência no cliente">Retido para conferência no cliente</option>
+                                -->
                             <option value="Declaração/NFS-e emitida" selected>Declaração/NFS-e emitida</option>
-                            <option value="Retido até segunda ordem">Retido até segunda ordem</option>
-                            <option value="Outros Problemas">Outros Problemas</option>
-                            <option value="Férias Coletivas">Férias Coletivas</option>
-                            <option value="B.O. Extravio">B.O. Extravio</option>
-                            <option value="B.O. Falta">B.O. Falta</option>
-                            <option value="B.O. Localizado">B.O. Localizado</option>
+                            <!--
+                                <option value="Retido até segunda ordem">Retido até segunda ordem</option>
+                                <option value="Outros Problemas">Outros Problemas</option>
+                                <option value="Férias Coletivas">Férias Coletivas</option>
+                                <option value="B.O. Extravio">B.O. Extravio</option>
+                                <option value="B.O. Falta">B.O. Falta</option>
+                                <option value="B.O. Localizado">B.O. Localizado</option>
+                            -->
                         </select>
                         <label for="status">Ocorrência</label>
                     </div>
