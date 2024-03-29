@@ -11,13 +11,13 @@ function preenchimento_automatico_rem() {
     document.getElementById("cidade_rem").value = "";
     document.getElementById("uf_rem").value = "";
 
-    if (typeof cadastros_salvos.cnpj_cliente !== 'undefined' && typeof cadastros_salvos.tipo_pessoa !== 'undefined' && typeof cadastros_salvos.nome_cliente !== 'undefined' && typeof cadastros_salvos.nome_logradouro !== 'undefined' && typeof cadastros_salvos.numero_logradouro !== 'undefined' && typeof cadastros_salvos.bairro_cad_cliente !== 'undefined' && typeof cadastros_salvos.cidade_cad_cliente !== 'undefined' && typeof cadastros_salvos.uf_cad_cliente !== "undefined") {
-        document.getElementById("nome_remetente").value = cadastros_salvos.nome_cliente;
-        document.getElementById("nome_log_rem").value = cadastros_salvos.nome_logradouro;
-        document.getElementById("num_log_rem").value = cadastros_salvos.numero_logradouro;
-        document.getElementById("bairro_rem").value = cadastros_salvos.bairro_cad_cliente;
-        document.getElementById("cidade_rem").value = cadastros_salvos.cidade_cad_cliente;
-        document.getElementById("uf_rem").value = cadastros_salvos.uf_cad_cliente;
+    if (localStorage.getItem(numero_cnpj_rem) !== null) {
+        if(typeof cadastros_salvos.cnpj_cliente !== 'undefined')document.getElementById("nome_remetente").value = cadastros_salvos.nome_cliente;
+        if(typeof cadastros_salvos.nome_logradouro !== 'undefined')document.getElementById("nome_log_rem").value = cadastros_salvos.nome_logradouro;
+        if(typeof cadastros_salvos.numero_logradouro !== 'undefined')document.getElementById("num_log_rem").value = cadastros_salvos.numero_logradouro;
+        if(typeof cadastros_salvos.bairro_cad_cliente !== 'undefined')document.getElementById("bairro_rem").value = cadastros_salvos.bairro_cad_cliente;
+        if(typeof cadastros_salvos.cidade_cad_cliente !== 'undefined')document.getElementById("cidade_rem").value = cadastros_salvos.cidade_cad_cliente;
+        if(typeof cadastros_salvos.uf_cad_cliente !== "undefined")document.getElementById("uf_rem").value = cadastros_salvos.uf_cad_cliente;
         
     }
 }
@@ -32,13 +32,13 @@ function preenchimento_automatico_dest() {
     document.getElementById("cidade_dest").value = "";
     document.getElementById("uf_dest").value = "";
 
-    if (typeof cadastros_salvos.cnpj_cliente !== 'undefined' && typeof cadastros_salvos.tipo_pessoa !== 'undefined' && typeof cadastros_salvos.nome_cliente !== 'undefined' && typeof cadastros_salvos.nome_logradouro !== 'undefined' && typeof cadastros_salvos.numero_logradouro !== 'undefined' && typeof cadastros_salvos.bairro_cad_cliente !== 'undefined' && typeof cadastros_salvos.cidade_cad_cliente !== 'undefined' && typeof cadastros_salvos.uf_cad_cliente !== "undefined") {
-        document.getElementById("nome_destinatario").value = cadastros_salvos.nome_cliente;
-        document.getElementById("nome_log_dest").value = cadastros_salvos.nome_logradouro;
-        document.getElementById("num_log_dest").value = cadastros_salvos.numero_logradouro;
-        document.getElementById("bairro_dest").value = cadastros_salvos.bairro_cad_cliente;
-        document.getElementById("cidade_dest").value = cadastros_salvos.cidade_cad_cliente;
-        document.getElementById("uf_dest").value = cadastros_salvos.uf_cad_cliente;
+    if (localStorage.getItem(numero_cnpj_dest) !== null) {
+        if(typeof cadastros_salvos.nome_cliente !== 'undefined')document.getElementById("nome_destinatario").value = cadastros_salvos.nome_cliente;
+        if(typeof cadastros_salvos.nome_logradouro !== 'undefined')document.getElementById("nome_log_dest").value = cadastros_salvos.nome_logradouro;
+        if(typeof cadastros_salvos.numero_logradouro !== 'undefined')document.getElementById("num_log_dest").value = cadastros_salvos.numero_logradouro;
+        if(typeof cadastros_salvos.bairro_cad_cliente !== 'undefined')document.getElementById("bairro_dest").value = cadastros_salvos.bairro_cad_cliente;
+        if(typeof cadastros_salvos.cidade_cad_cliente !== 'undefined')document.getElementById("cidade_dest").value = cadastros_salvos.cidade_cad_cliente;
+        if(typeof cadastros_salvos.uf_cad_cliente !== "undefined")document.getElementById("uf_dest").value = cadastros_salvos.uf_cad_cliente;
         
     }
 }
@@ -214,7 +214,72 @@ function TestaCPF(strCPF) {
     return true;
 }
 
+function cadastrar_ciente_cad_declara(cnpj,nome_c,nome_log,num_log,bairro_c,cidade_c,uf_c,tipo_pessoa) {
+    let cnpj_cliente = cnpj
+    let nome_cliente = nome_c
+    let nome_logradouro = nome_log
+    let numero_logradouro = num_log
+    let bairro_cad_cliente = bairro_c
+    let cidade_cad_cliente = cidade_c
+    let uf_cad_cliente = uf_c
 
+    nome_cliente.toUpperCase();
+
+    let dados_cad_cliente = {
+        cnpj_cliente: cnpj_cliente,
+        tipo_pessoa: tipo_pessoa,
+        nome_cliente: nome_cliente,
+        nome_logradouro: nome_logradouro,
+        numero_logradouro: numero_logradouro,
+        bairro_cad_cliente: bairro_cad_cliente,
+        cidade_cad_cliente: cidade_cad_cliente,
+        uf_cad_cliente: uf_cad_cliente,
+    };
+    if(localStorage.getItem(cnpj_cliente) == null){
+        if(cnpj_cliente.length == 14 ){
+            
+            if (!validarCNPJ(cnpj_cliente)) {
+                alert("CNPJ Inválido!")
+            document.getElementById("resultado_cad_declara").innerHTML += "<p class='text-bg-danger p-3 mt-3 rounded-3'>CNPJ Inválido, verifique!.</p>";
+        } else if (nome_cliente == "") {
+            document.getElementById("resultado_cad_declara").innerHTML += "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Nome'.</p>";
+        } else if (nome_logradouro == "") {
+            document.getElementById("resultado_cad_declara").innerHTML += "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Endereço'.</p>";
+        } else if (numero_logradouro == "") {
+            document.getElementById("resultado_cad_declara").innerHTML += "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Número'.</p>";
+        } else if (cidade_cad_cliente == "") {
+            document.getElementById("resultado_cad_declara").innerHTML += "<p class='text-bg-success p-3 mt-3 rounded-3'>É necessário preencher o campo 'Cidade'.</p>";
+        } else if (uf_cad_cliente == "") {
+            document.getElementById("resultado_cad_declara").innerHTML += "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'UF'.</p>";
+        } else {
+            localStorage.setItem(cnpj_cliente,JSON.stringify(dados_cad_cliente));
+            console.log(JSON.parse(localStorage.getItem(cnpj_cliente)));
+            document.getElementById("resultado_cad_declara").innerHTML += "<p class='text-bg-info p-3 mt-3 rounded-3'>Cadastro para o cliente foi criado com sucesso.</p>";
+        }
+        }else{
+            tipo_pessoa = "Física";
+            if (cnpj_cliente == "") {
+                document.getElementById("resultado_cad_declara").innerHTML += "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'CNPJ/CPF'.</p>";
+            } if (!TestaCPF(cnpj_cliente)) {
+                document.getElementById("resultado_cad_declara").innerHTML += "<p class='text-bg-danger p-3 mt-3 rounded-3'>CPF Inválido, verifique!.</p>";
+            } else if (nome_cliente == "") {
+                document.getElementById("resultado_cad_declara").innerHTML += "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Nome'.</p>";
+            } else if (nome_logradouro == "") {
+                document.getElementById("resultado_cad_declara").innerHTML += "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Endereço'.</p>";
+            } else if (numero_logradouro == "") {
+                document.getElementById("resultado_cad_declara").innerHTML += "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Número'.</p>";
+            } else if (cidade_cad_cliente == "") {
+                document.getElementById("resultado_cad_declara").innerHTML += "<p class='text-bg-success p-3 mt-3 rounded-3'>É necessário preencher o campo 'Cidade'.</p>";
+            } else if (uf_cad_cliente == "") {
+                document.getElementById("resultado_cad_declara").innerHTML += "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'UF'.</p>";
+            } else {
+                localStorage.setItem(cnpj_cliente,JSON.stringify(dados_cad_cliente));
+                console.log(JSON.parse(localStorage.getItem(cnpj_cliente)));
+                document.getElementById("resultado_cad_declara").innerHTML += "<p class='text-bg-success p-3 mt-3 rounded-3'>Cadastro realizado com sucesso.</p>";
+            }
+        }
+    }
+}
 
 function cadastrar_dados_com_chave() {
     let chave_nf = document.getElementById("chave_nf").value;
@@ -266,6 +331,8 @@ function cadastrar_dados_com_chave() {
     let observacao = document.getElementById("observacao").value;
 
     let e_devolucao = false;
+
+    let tipo_pessoa;
 
     if (document.getElementById("e_devolucao").checked){
         e_devolucao = true;
@@ -379,23 +446,49 @@ function cadastrar_dados_com_chave() {
             document.getElementById("nome_digitador").focus();
         }
         else{
-            if (status_entrega !== "Declaração/NFS-e emitida" && digitador == digitadores[i].nome) {
-                localStorage.setItem(chave_nf,JSON.stringify(dados));
-                localStorage.setItem(num_nf,JSON.stringify(dados));
-                console.log(JSON.parse(localStorage.getItem(chave_nf)));
-                document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-success p-3 mt-3 rounded-3'>Cadastro realizado com sucesso.</p>";
-            }else if(status_entrega == "Declaração/NFS-e emitida" && digitador == digitadores[i].nome){
-                localStorage.setItem(chave_nf,JSON.stringify(dados));
-                localStorage.setItem(num_nf,JSON.stringify(dados));
-                console.log(JSON.parse(localStorage.getItem(chave_nf)));
-                gerar_pdf();
-                document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-success p-3 mt-3 rounded-3'>Cadastro realizado com sucesso.</p>";
-            }
+            if(status_entrega == "Declaração/NFS-e emitida" && digitador == digitadores[i].nome){
+                if(cnpj_dest !== "" && cnpj_rem !== ""){
+                    if(cnpj_rem.length == 14){
+                        if(!validarCNPJ(cnpj_rem)){
+                            document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>CNPJ Remetente Inválido.</p>";
+                        } else {
+                            tipo_pessoa = "Jurídica";
+                            cadastrar_ciente_cad_declara(cnpj_rem,nome_remetente,nome_log,num_log,bairro,cidade,unidade_federativa,tipo_pessoa);
+                            localStorage.setItem(chave_nf,JSON.stringify(dados));
+                            localStorage.setItem(num_nf,JSON.stringify(dados));
+                            gerar_pdf();
+                            console.log(JSON.parse(localStorage.getItem(chave_nf)));
+                            document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-success p-3 mt-3 rounded-3'>Cadastro realizado com sucesso.</p>";
+                        }
+                    } else {
+                        if(!TestaCPF(cnpj_rem)){
+                            document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>CPF Remetente Inválido.</p>";
+                        } else {
+                            tipo_pessoa = "Física";
+                            cadastrar_ciente_cad_declara(cnpj_rem,nome_remetente,nome_log,num_log,bairro,cidade,unidade_federativa,tipo_pessoa);
+                            localStorage.setItem(chave_nf,JSON.stringify(dados));
+                            localStorage.setItem(num_nf,JSON.stringify(dados));
+                            gerar_pdf();
+                            console.log(JSON.parse(localStorage.getItem(chave_nf)));
+                            document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-success p-3 mt-3 rounded-3'>Cadastro realizado com sucesso.</p>";
+                        }
+                    }
+                    
+                }
+                else if(cnpj_rem == "" || cnpj_dest == "") {
+                    localStorage.setItem(chave_nf,JSON.stringify(dados));
+                    localStorage.setItem(num_nf,JSON.stringify(dados));
+                    console.log(JSON.parse(localStorage.getItem(chave_nf)));
+                    gerar_pdf();
+                    document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-success p-3 mt-3 rounded-3'>Cadastro realizado com sucesso.</p>";
+                }
+            } 
         }
+    }
     
 }
     
-}
+
 /**
  
 function cadastrar_dados(){
@@ -825,6 +918,8 @@ function cancelar_declaracao() {
  * -------------------
  */
 
+
+
 function cadastrar_ciente() {
     let cnpj_cliente = document.getElementById("cnpj_cliente").value;
     let nome_cliente = document.getElementById("nome_cliente").value;
@@ -907,15 +1002,15 @@ function buscar_cadastro() {
     let num_cnpj_cliente = document.getElementById("cnpj_cad").value;
     let cadastros_salvos = JSON.parse(localStorage.getItem(num_cnpj_cliente));
 
-    if (typeof cadastros_salvos.cnpj_cliente !== 'undefined' && typeof cadastros_salvos.tipo_pessoa !== 'undefined' && typeof cadastros_salvos.nome_cliente !== 'undefined' && typeof cadastros_salvos.nome_logradouro !== 'undefined' && typeof cadastros_salvos.numero_logradouro !== 'undefined' && typeof cadastros_salvos.bairro_cad_cliente !== 'undefined' && typeof cadastros_salvos.cidade_cad_cliente !== 'undefined' && typeof cadastros_salvos.uf_cad_cliente !== "undefined") {
+    if (localStorage.getItem(num_cnpj_cliente)) {
 
-        document.getElementById("nome_cliente_cad").value = cadastros_salvos.nome_cliente;
-        document.getElementById("nome_logradouro_cad").value = cadastros_salvos.nome_logradouro;
-        document.getElementById("numero_logradouro_cad").value = cadastros_salvos.numero_logradouro;
-        document.getElementById("bairro_cad").value = cadastros_salvos.bairro_cad_cliente;
-        document.getElementById("cidade_cad").value = cadastros_salvos.cidade_cad_cliente;
-        document.getElementById("uf_cad").value = cadastros_salvos.uf_cad_cliente;
-        document.getElementById("tipo_pessoa").value = cadastros_salvos.tipo_pessoa;
+        if (typeof cadastros_salvos.nome_cliente !== 'undefined')document.getElementById("nome_cliente_cad").value = cadastros_salvos.nome_cliente;
+        if(typeof cadastros_salvos.nome_logradouro !== 'undefined')document.getElementById("nome_logradouro_cad").value = cadastros_salvos.nome_logradouro;
+        if(typeof cadastros_salvos.numero_logradouro !== 'undefined' )document.getElementById("numero_logradouro_cad").value = cadastros_salvos.numero_logradouro;
+        if(typeof cadastros_salvos.bairro_cad_cliente !== 'undefined')document.getElementById("bairro_cad").value = cadastros_salvos.bairro_cad_cliente;
+        if(typeof cadastros_salvos.cidade_cad_cliente !== 'undefined')document.getElementById("cidade_cad").value = cadastros_salvos.cidade_cad_cliente;
+        if(typeof cadastros_salvos.uf_cad_cliente !== "undefined")document.getElementById("uf_cad").value = cadastros_salvos.uf_cad_cliente;
+        if(typeof cadastros_salvos.tipo_pessoa !== "undefined")document.getElementById("tipo_pessoa").value = cadastros_salvos.tipo_pessoa;
 
         console.log(cadastros_salvos.cnpj_cliente);
     }
