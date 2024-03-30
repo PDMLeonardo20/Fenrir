@@ -447,7 +447,7 @@ function cadastrar_dados_com_chave() {
         }
         else{
             if(status_entrega == "Declaração/NFS-e emitida" && digitador == digitadores[i].nome){
-                if(cnpj_dest !== "" && cnpj_rem !== ""){
+                if(cnpj_rem !== ""){
                     if(cnpj_rem.length == 14){
                         if(!validarCNPJ(cnpj_rem)){
                             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>CNPJ Remetente Inválido.</p>";
@@ -474,6 +474,32 @@ function cadastrar_dados_com_chave() {
                         }
                     }
                     
+                } else if (cnpj_dest !== ""){
+                    if(cnpj_dest.length == 14){
+                        if(!validarCNPJ(cnpj_dest)){
+                            document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>CNPJ Remetente Inválido.</p>";
+                        } else {
+                            tipo_pessoa = "Jurídica";
+                            cadastrar_ciente_cad_declara(cnpj_dest,nome_destinatario,nome_log_dest,num_log_dest,bairro_dest,cidade_dest,unidade_federativa_dest,tipo_pessoa);
+                            localStorage.setItem(chave_nf,JSON.stringify(dados));
+                            localStorage.setItem(num_nf,JSON.stringify(dados));
+                            gerar_pdf();
+                            console.log(JSON.parse(localStorage.getItem(chave_nf)));
+                            document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-success p-3 mt-3 rounded-3'>Cadastro realizado com sucesso.</p>";
+                        }
+                    } else {
+                        if(!TestaCPF(cnpj_dest)){
+                            document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>CPF Remetente Inválido.</p>";
+                        } else {
+                            tipo_pessoa = "Física";
+                            cadastrar_ciente_cad_declara(cnpj_dest,nome_destinatario,nome_log_dest,num_log_dest,bairro_dest,cidade_dest,unidade_federativa_dest,tipo_pessoa);
+                            localStorage.setItem(chave_nf,JSON.stringify(dados));
+                            localStorage.setItem(num_nf,JSON.stringify(dados));
+                            gerar_pdf();
+                            console.log(JSON.parse(localStorage.getItem(chave_nf)));
+                            document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-success p-3 mt-3 rounded-3'>Cadastro realizado com sucesso.</p>";
+                        }
+                    }
                 }
                 else if(cnpj_rem == "" || cnpj_dest == "") {
                     localStorage.setItem(chave_nf,JSON.stringify(dados));
