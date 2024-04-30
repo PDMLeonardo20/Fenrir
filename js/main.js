@@ -691,6 +691,7 @@ function consultar_dados(){
     if (localStorage.getItem(num_declara) !== null) {
         console.log(JSON.parse(localStorage.getItem(num_declara)));
                 if (dados_salvos.e_devolucao == true) {
+                    if (typeof dados_salvos.chave_nf !== "undefined")document.getElementById("chave_nf_cad").value = dados_salvos.chave_nf
                     document.getElementById("e_devolucao_cad").checked = true;
                     if(typeof dados_salvos.status_entrega !== "undefined") document.getElementById("ocorrencia_cad").value = dados_salvos.status_entrega;
                     if(typeof dados_salvos.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos.data_cadastro_baixa;
@@ -718,6 +719,7 @@ function consultar_dados(){
                     if(typeof dados_salvos.cidade_dest !== "undefined") document.getElementById("cidade_dest_cad").value = dados_salvos.cidade_dest;
                     if(typeof dados_salvos.unidade_federativa_dest !== "undefined") document.getElementById("uf_dest_cad").value = dados_salvos.unidade_federativa_dest;
                 }else{
+                    if (typeof dados_salvos.chave_nf !== "undefined")document.getElementById("chave_nf_cad").value = dados_salvos.chave_nf
                     document.getElementById("e_devolucao_cad").checked = false;
                     if(typeof dados_salvos.status_entrega !== "undefined") document.getElementById("ocorrencia_cad").value = dados_salvos.status_entrega;
                     if(typeof dados_salvos.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos.data_cadastro_baixa;
@@ -747,6 +749,7 @@ function consultar_dados(){
                 }
             }else{
                 if(dados_salvos.e_devolucao == true){
+                    if (typeof dados_salvos.chave_nf !== "undefined")document.getElementById("chave_nf_cad").value = dados_salvos.chave_nf
                     document.getElementById("e_devolucao_cad").checked = true;
                     if(typeof dados_salvos.status_entrega !== "undefined") document.getElementById("ocorrencia_cad").value = dados_salvos.status_entrega;
                     if(typeof dados_salvos.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos.data_cadastro_baixa;
@@ -774,6 +777,7 @@ function consultar_dados(){
                     if(typeof dados_salvos.cidade_dest !== "undefined") document.getElementById("cidade_dest_cad").value = dados_salvos.cidade_dest;
                     if(typeof dados_salvos.unidade_federativa_dest !== "undefined") document.getElementById("uf_dest_cad").value = dados_salvos.unidade_federativa_dest;
                 }else{
+                    if (typeof dados_salvos.chave_nf !== "undefined")document.getElementById("chave_nf_cad").value = dados_salvos.chave_nf
                     document.getElementById("e_devolucao_cad").checked = false;
                     if(typeof dados_salvos.status_entrega !== "undefined") document.getElementById("ocorrencia_cad").value = dados_salvos.status_entrega;
                     if(typeof dados_salvos.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos.data_cadastro_baixa;
