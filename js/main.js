@@ -314,6 +314,7 @@ function insere_doc() {
         document.getElementById('num_nf').value = ''
         document.getElementById('volume_declara').value = ''
 
+
         
 
         document.getElementById('documentos_inseridos').innerHTML += "<th scope='row'>#</th><td>"+dados_doc.chave_nf+"</td><td>"+dados_doc.num_nf+"</td><td>"+dados_doc.vol_nf+"</td>"
@@ -322,9 +323,14 @@ function insere_doc() {
 
 
 function cadastrar_dados_com_chave() {
+
+    var volumes_totais = lista_vol_doc.reduce((accumulator, value) => {
+        return accumulator + value;
+    },0)
+
     let chave_nf = document.getElementById("chave_nf").value;
     let num_nf = document.getElementById("num_nf").value;
-    let volume_declara = document.getElementById("volume_declara").value;
+    let volume_declara = volumes_totais;
 
     let num_declara = document.getElementById("num_declara").value;
     let rota_entrega = document.getElementById("rota_entrega").value;
@@ -400,6 +406,7 @@ function cadastrar_dados_com_chave() {
         data_entrega: data_entrega,
         volume_declara: volume_declara,
         observacao: observacao,
+        documentos: lista_dados_doc,
 
         nome_log_dest: nome_log_dest,
         num_log_dest: num_log_dest,
@@ -502,8 +509,9 @@ function cadastrar_dados_com_chave() {
                             cadastrar_ciente_cad_declara(cnpj_rem,nome_remetente,nome_log,num_log,bairro,cidade,unidade_federativa,tipo_pessoa);
                             localStorage.setItem(ch_nf,JSON.stringify(dados));
                             localStorage.setItem(nf,JSON.stringify(dados));
+                            localStorage.setItem(num_declara,JSON.stringify(dados));
                             gerar_pdf();
-                            console.log(JSON.parse(localStorage.getItem(chave_nf)));
+                            console.log(JSON.parse(localStorage.getItem(ch_nf)));
                             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-success p-3 mt-3 rounded-3'>Cadastro realizado com sucesso.</p>";
                         }
                     } else {
@@ -516,8 +524,9 @@ function cadastrar_dados_com_chave() {
                             cadastrar_ciente_cad_declara(cnpj_rem,nome_remetente,nome_log,num_log,bairro,cidade,unidade_federativa,tipo_pessoa);
                             localStorage.setItem(ch_nf,JSON.stringify(dados));
                             localStorage.setItem(nf,JSON.stringify(dados));
+                            localStorage.setItem(num_declara,JSON.stringify(dados));
                             gerar_pdf();
-                            console.log(JSON.parse(localStorage.getItem(chave_nf)));
+                            console.log(JSON.parse(localStorage.getItem(ch_nf)));
                             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-success p-3 mt-3 rounded-3'>Cadastro realizado com sucesso.</p>";
                         }
                     }
@@ -533,8 +542,9 @@ function cadastrar_dados_com_chave() {
                             cadastrar_ciente_cad_declara(cnpj_dest,nome_destinatario,nome_log_dest,num_log_dest,bairro_dest,cidade_dest,unidade_federativa_dest,tipo_pessoa);
                             localStorage.setItem(ch_nf,JSON.stringify(dados));
                             localStorage.setItem(nf,JSON.stringify(dados));
+                            localStorage.setItem(num_declara,JSON.stringify(dados));
                             gerar_pdf();
-                            console.log(JSON.parse(localStorage.getItem(chave_nf)));
+                            console.log(JSON.parse(localStorage.getItem(ch_nf)));
                             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-success p-3 mt-3 rounded-3'>Cadastro realizado com sucesso.</p>";
                         }
                     } else {
@@ -547,8 +557,9 @@ function cadastrar_dados_com_chave() {
                             cadastrar_ciente_cad_declara(cnpj_dest,nome_destinatario,nome_log_dest,num_log_dest,bairro_dest,cidade_dest,unidade_federativa_dest,tipo_pessoa);
                             localStorage.setItem(ch_nf,JSON.stringify(dados));
                             localStorage.setItem(nf,JSON.stringify(dados));
+                            localStorage.setItem(num_declara,JSON.stringify(dados));
                             gerar_pdf();
-                            console.log(JSON.parse(localStorage.getItem(chave_nf)));
+                            console.log(JSON.parse(localStorage.getItem(ch_nf)));
                             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-success p-3 mt-3 rounded-3'>Cadastro realizado com sucesso.</p>";
                         }
                     }
@@ -558,7 +569,8 @@ function cadastrar_dados_com_chave() {
                     var nf = lista_dados_doc[0].num_nf[0]
                     localStorage.setItem(ch_nf,JSON.stringify(dados));
                     localStorage.setItem(nf,JSON.stringify(dados));
-                    console.log(JSON.parse(localStorage.getItem(chave_nf)));
+                    localStorage.setItem(num_declara,JSON.stringify(dados));
+                    console.log(JSON.parse(localStorage.getItem(ch_nf)));
                     gerar_pdf();
                     document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-success p-3 mt-3 rounded-3'>Cadastro realizado com sucesso.</p>";
                 }
@@ -596,8 +608,8 @@ function consultar_dados(){
     document.getElementById("ocorrencia_cad").value = "";
     document.getElementById("data_hora_cad_baixa").value = "";
     document.getElementById("data_hora_entrega_cad").value = "";
-    document.getElementById("num_declara_cad").value = "";
-    document.getElementById("volume_declara_cad").value = "";
+    document.getElementById("num_declara_cad_declara").value = "";
+    document.getElementById("documentos_inseridos_cad_declara").innerHTML = "";
     document.getElementById("observacao_cad").value = "";
     document.getElementById("motivo_devolucao_cad").value = "";
 
@@ -620,15 +632,15 @@ function consultar_dados(){
     if (localStorage.getItem(num_declara) !== null) {
         console.log(JSON.parse(localStorage.getItem(num_declara)));
                 if (dados_salvos.e_devolucao == true) {
-                    if (typeof dados_salvos.chave_nf !== "undefined")document.getElementById("chave_nf_cad").value = dados_salvos.chave_nf
                     document.getElementById("e_devolucao_cad").checked = true;
+                    if(typeof dados_salvos.documentos !== 'undefined') document.getElementById('chave_nf_cad').value = dados_salvos.documentos[0].chave_nf;
                     if(typeof dados_salvos.status_entrega !== "undefined") document.getElementById("ocorrencia_cad").value = dados_salvos.status_entrega;
                     if(typeof dados_salvos.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos.data_cadastro_baixa;
                     if(typeof dados_salvos.data_entrega !== "undefined") document.getElementById("data_hora_entrega_cad").value = dados_salvos.data_entrega;
-                    if(typeof dados_salvos.num_declara !== "undefined") document.getElementById("num_declara_cad").value = dados_salvos.num_declara;
-                    if(typeof dados_salvos.num_nf !== "undefined") document.getElementById("num_nf_cad").value = dados_salvos.num_nf;
+                    if(typeof dados_salvos.num_declara !== "undefined") document.getElementById("num_declara_cad_declara").value = dados_salvos.num_declara;
+                    //if(typeof dados_salvos.num_nf !== "undefined") document.getElementById("num_nf_cad").value = dados_salvos.num_nf;
                     if(typeof dados_salvos.rota_entrega !== "undefined") document.getElementById("rota_entrega_cad").value = dados_salvos.rota_entrega;
-                    if(typeof dados_salvos.volume_declara !== "undefined") document.getElementById("volume_declara_cad").value = dados_salvos.volume_declara;
+                    //if(typeof dados_salvos.volume_declara !== "undefined") document.getElementById("volume_declara_cad").value = dados_salvos.volume_declara;
                     if(typeof dados_salvos.observacao !== "undefined") document.getElementById("observacao_cad").value = dados_salvos.observacao;
                     if(typeof dados_salvos.motivo_devolucao !== "undefined") document.getElementById("motivo_devolucao_cad").value = dados_salvos.motivo_devolucao;
                     if(typeof dados_salvos.digitador !== "undefined") document.getElementById("nome_digitador_cad").value = dados_salvos.digitador;
@@ -647,16 +659,26 @@ function consultar_dados(){
                     if(typeof dados_salvos.bairro_dest !== "undefined") document.getElementById("bairro_dest_cad").value = dados_salvos.bairro_dest;
                     if(typeof dados_salvos.cidade_dest !== "undefined") document.getElementById("cidade_dest_cad").value = dados_salvos.cidade_dest;
                     if(typeof dados_salvos.unidade_federativa_dest !== "undefined") document.getElementById("uf_dest_cad").value = dados_salvos.unidade_federativa_dest;
+
+                    if (typeof dados_salvos.documentos !== 'undefined') {
+                        for (const i in dados_salvos.documentos) {
+                            if (Object.hasOwnProperty.call(dados_salvos.documentos, i)) {
+                                const emelento = dados_salvos.documentos[i];
+                                document.getElementById('documentos_inseridos_cad_declara').innerHTML += "<th scope='row'>#</th><td>"+emelento.chave_nf+"</td><td>"+emelento.num_nf+"</td><td>"+emelento.vol_nf+"</td>";
+                            }
+                        }
+                    }
                 }else{
-                    if (typeof dados_salvos.chave_nf !== "undefined")document.getElementById("chave_nf_cad").value = dados_salvos.chave_nf
+                    
                     document.getElementById("e_devolucao_cad").checked = false;
                     if(typeof dados_salvos.status_entrega !== "undefined") document.getElementById("ocorrencia_cad").value = dados_salvos.status_entrega;
+                    if(typeof dados_salvos.documentos !== 'undefined') document.getElementById('chave_nf_cad').value = dados_salvos.documentos[0].chave_nf;
                     if(typeof dados_salvos.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos.data_cadastro_baixa;
                     if(typeof dados_salvos.digitador !== "undefined") document.getElementById("nome_digitador_cad").value = dados_salvos.digitador;
                     if(typeof dados_salvos.rota_entrega !== "undefined") document.getElementById("rota_entrega_cad").value = dados_salvos.rota_entrega;
                     if(typeof dados_salvos.data_entrega !== "undefined") document.getElementById("data_hora_entrega_cad").value = dados_salvos.data_entrega;
-                    if(typeof dados_salvos.num_declara !== "undefined") document.getElementById("num_declara_cad").value = dados_salvos.num_declara;
-                    if(typeof dados_salvos.volume_declara !== "undefined") document.getElementById("volume_declara_cad").value = dados_salvos.volume_declara;
+                    if(typeof dados_salvos.num_declara !== "undefined") document.getElementById("num_declara_cad_declara").value = dados_salvos.num_declara;
+                    //if(typeof dados_salvos.volume_declara !== "undefined") document.getElementById("volume_declara_cad").value = dados_salvos.volume_declara;
                     if(typeof dados_salvos.observacao !== "undefined") document.getElementById("observacao_cad").value = dados_salvos.observacao;
                     if(typeof dados_salvos.motivo_devolucao !== "undefined") document.getElementById("motivo_devolucao_cad").value = dados_salvos.motivo_devolucao;
 
@@ -675,17 +697,26 @@ function consultar_dados(){
                     if(typeof dados_salvos.bairro_dest !== "undefined") document.getElementById("bairro_dest_cad").value = dados_salvos.bairro_dest;
                     if(typeof dados_salvos.cidade_dest !== "undefined") document.getElementById("cidade_dest_cad").value = dados_salvos.cidade_dest;
                     if(typeof dados_salvos.unidade_federativa_dest !== "undefined") document.getElementById("uf_dest_cad").value = dados_salvos.unidade_federativa_dest;
+
+                    if (typeof dados_salvos.documentos !== 'undefined') {
+                        
+                        for (let i = 0; i < dados_salvos.documentos.length; i++) {
+                            const element = dados_salvos.documentos[i];
+                            
+                            document.getElementById('documentos_inseridos_cad_declara').innerHTML += "<th scope='row'>#</th><td>"+element.chave_nf+"</td><td>"+element.num_nf+"</td><td>"+element.vol_nf+"</td>";
+                        }
+                    }
                 }
             }else{
                 if(dados_salvos.e_devolucao == true){
-                    if (typeof dados_salvos.chave_nf !== "undefined")document.getElementById("chave_nf_cad").value = dados_salvos.chave_nf
+                    if(typeof dados_salvos.documentos !== 'undefined') document.getElementById('chave_nf_cad').value = dados_salvos.documentos[0].chave_nf;
                     document.getElementById("e_devolucao_cad").checked = true;
                     if(typeof dados_salvos.status_entrega !== "undefined") document.getElementById("ocorrencia_cad").value = dados_salvos.status_entrega;
                     if(typeof dados_salvos.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos.data_cadastro_baixa;
                     if(typeof dados_salvos.data_entrega !== "undefined") document.getElementById("data_hora_entrega_cad").value = dados_salvos.data_entrega;
                     if(typeof dados_salvos.rota_entrega !== "undefined") document.getElementById("rota_entrega_cad").value = dados_salvos.rota_entrega;
                     if(typeof dados_salvos.digitador !== "undefined") document.getElementById("nome_digitador_cad").value = dados_salvos.digitador;
-                    if(typeof dados_salvos.num_declara !== "undefined") document.getElementById("num_declara_cad").value = dados_salvos.num_declara;
+                    if(typeof dados_salvos.num_declara !== "undefined") document.getElementById("num_declara_cad_declara").value = dados_salvos.num_declara;
                     if(typeof dados_salvos.volume_declara !== "undefined") document.getElementById("volume_declara_cad").value = dados_salvos.volume_declara;
                     if(typeof dados_salvos.observacao !== "undefined") document.getElementById("observacao_cad").value = dados_salvos.observacao;
                     if(typeof dados_salvos.motivo_devolucao !== "undefined") document.getElementById("motivo_devolucao_cad").value = dados_salvos.motivo_devolucao;
@@ -706,14 +737,14 @@ function consultar_dados(){
                     if(typeof dados_salvos.cidade_dest !== "undefined") document.getElementById("cidade_dest_cad").value = dados_salvos.cidade_dest;
                     if(typeof dados_salvos.unidade_federativa_dest !== "undefined") document.getElementById("uf_dest_cad").value = dados_salvos.unidade_federativa_dest;
                 }else{
-                    if (typeof dados_salvos.chave_nf !== "undefined")document.getElementById("chave_nf_cad").value = dados_salvos.chave_nf
+                    if(typeof dados_salvos.documentos !== 'undefined') document.getElementById('chave_nf_cad').value = dados_salvos.documentos[0].chave_nf;
                     document.getElementById("e_devolucao_cad").checked = false;
                     if(typeof dados_salvos.status_entrega !== "undefined") document.getElementById("ocorrencia_cad").value = dados_salvos.status_entrega;
                     if(typeof dados_salvos.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos.data_cadastro_baixa;
                     if(typeof dados_salvos.data_entrega !== "undefined") document.getElementById("data_hora_entrega_cad").value = dados_salvos.data_entrega;
                     if(typeof dados_salvos.digitador !== "undefined") document.getElementById("nome_digitador_cad").value = dados_salvos.digitador;
                     if(typeof dados_salvos.rota_entrega !== "undefined") document.getElementById("rota_entrega_cad").value = dados_salvos.rota_entrega;
-                    if(typeof dados_salvos.num_declara !== "undefined") document.getElementById("num_declara_cad").value = dados_salvos.num_declara;
+                    if(typeof dados_salvos.num_declara !== "undefined") document.getElementById("num_declara_cad_declara").value = dados_salvos.num_declara;
                     if(typeof dados_salvos.volume_declara !== "undefined") document.getElementById("volume_declara_cad").value = dados_salvos.volume_declara;
                     if(typeof dados_salvos.observacao !== "undefined") document.getElementById("observacao_cad").value = dados_salvos.observacao;
                     if(typeof dados_salvos.motivo_devolucao !== "undefined") document.getElementById("motivo_devolucao_cad").value = dados_salvos.motivo_devolucao;
@@ -1266,7 +1297,12 @@ function gerar_pdf() {
     pdf.save(nome_remetente+" para "+nome_destinatario+" ref NF "+num_nf+" - Declaracao Num "+num_declara+".pdf");
 }
 
+
+
 function reimprmir_pdf() {
+    let ch_ac = document.getElementById("busca_declara").value;
+    let dados_salvos = JSON.parse(localStorage.getItem(ch_ac));
+
     let cnpj_rem = document.getElementById("cnpj_rem_cad").value;
     let nome_remetente = document.getElementById("nome_remetente_cad").value;
     let nome_log = document.getElementById("nome_log_rem_cad").value;
@@ -1289,9 +1325,12 @@ function reimprmir_pdf() {
     //dados basicos da nf
 
     let chave_nf = document.getElementById("chave_nf_cad").value;
-    let num_declara = document.getElementById("num_declara_cad").value;
-    let num_nf = document.getElementById("num_nf_cad").value
-    let volume_declara = document.getElementById("volume_declara_cad").value;
+    let num_declara = document.getElementById("num_declara_cad_declara").value;
+
+    let num_nf = dados_salvos.documentos[0].num_nf;
+    let volume_declara = dados_salvos.volume_declara;
+    //let num_nf = document.getElementById("num_nf_cad").value
+    //let volume_declara = document.getElementById("volume_declara_cad").value;
     let pegar_hora = document.getElementById("data_hora_cad_baixa").value;
     let hora_cadastro_baixa = pegar_hora.slice(11,16);
     let dia_cadastro_baixa = pegar_hora.slice(8,10);
@@ -1445,14 +1484,43 @@ function reimprmir_pdf() {
     pdf.setFontSize(8);
     pdf.text("Endereço: "+nome_log_dest +", "+ num_log_dest +", "+ bairro_dest +", "+cidade_dest, 10, 70);
 
+    pdf.setFontSize(10)
+    pdf.setFont('Times New Roman','normal')
+    pdf.text('Chave', 5, 135)
+    pdf.text('Nota Fiscal', 100, 135)
+
+    
+
+    var x_chave_cad = 5
+    var y_chave_cad = 140
+
+    var x_num_nf_cad = 100
+    var y_num_nf_cad = 140
+
+    for (const i in dados_salvos.documentos) {
+        if (Object.hasOwnProperty.call(dados_salvos.documentos, i)) {
+            const element = dados_salvos.documentos[i];
+            pdf.setFontSize(10)
+            pdf.setFont('Times New Roman','normal')
+            pdf.text(element.chave_nf,x_chave_cad,y_chave_cad)
+            pdf.text(element.num_nf,x_num_nf_cad,y_num_nf_cad)
+
+            
+
+        }
+        y_chave_cad += 6
+        y_num_nf_cad += 6
+    }
+
+    pdf.line(1,230,209,230)
 
     pdf.setFontSize(13);
-    pdf.text("____/____/_______",17, 150);
-    pdf.text("______:______", 60, 150);
-    pdf.text("_________________________________________", 148, 150, "center")
+    pdf.text("____/____/_______",17, 250);
+    pdf.text("______:______", 60, 250);
+    pdf.text("_________________________________________", 148, 250, "center")
     pdf.setFont("arial","bold");
-    pdf.text("DATA E HORA DO RECEBIMENTO",13, 156);
-    pdf.text("ASSINATURA E CARIMBO DO RECEBEDOR", 100, 156);
+    pdf.text("DATA E HORA DO RECEBIMENTO",13, 256);
+    pdf.text("ASSINATURA E CARIMBO DO RECEBEDOR", 100, 256);
 
 
     pdf.save(nome_remetente+" para "+nome_destinatario+" ref NF "+num_nf+" - Declaracao Num "+num_declara+".pdf");
