@@ -22,9 +22,11 @@
                 <li class="nav-item">
                     <a href="cad_cliente.html" class="nav-link" target="_blank">Cadastro de Cliente</a>
                 </li>
-                <li class="nav-item">
-                    <a href="consultar_declaracoes.html" class="nav-link" target="_blank">Consulta de Declarações Emitidas</a>
-                </li>
+                <!--
+                    <li class="nav-item">
+                        <a href="consultar_declaracoes.html" class="nav-link" target="_blank">Consulta de Declarações Emitidas</a>
+                    </li>
+                -->
                 <li class="nav-item">
                     <a href="cancelar_declaracoes.html" class="nav-link" target="_blank">Cancelamento de Declarações</a>
                 </li>
@@ -39,34 +41,56 @@
                     <div class="col"><h5 class="bg-primary m-3 p-2 rounded-3">Dados da Declaração</h5></div>
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <div class="form-floating">
-                            <input type="number" name="chave_nf" id="chave_nf" class="form-control" required>
-                            <label for="chave_nf">Chave de Acesso</label>
+                    <button class="btn btn-info mt-3" data-bs-toggle="collapse" data-bs-target="#documentos">Documentos</button>
+                    <div class="collapse row m-3" id="documentos">
+                        <div class="collapse mt-2 row bg-primary-subtle p-3" id="documentos">
+                            <div class="col-5">
+                                <div class="form-floating">
+                                    <input type="number" name="chave_nf" id="chave_nf" class="form-control">
+                                    <label for="chave_nf">Chave</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="text" name="num_nf" id="num_nf" class="form-control">
+                                    <label for="num_nf">Número NF</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="text" name="volume_declara" id="volume_declara" class="form-control">
+                                    <label for="volume_declara">Volumes</label>
+                                </div>
+                            </div>
+                            <table class="table mt-3">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Chave</th>
+                                        <th scope="col">Nota Fiscal</th>
+                                        <th scope="col">Volumes</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="documentos_inseridos">
+                                    
+                                </tbody>
+                            </table>
+                            <div class="col-1">
+                                <button class="btn btn-success" role="button" onclick="insere_doc()">Adicionar</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col mt-3">
                         <div class="form-floating">
                             <input type="text" name="num_declara" id="num_declara" class="form-control" required>
                             <label for="num_declara">N° Declaração</label>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col mt-3">
                         <div class="form-floating">
-                            <input type="text" name="num_nf" id="num_nf" class="form-control" required>
-                            <label for="num_nf" class="form-label">N° Nota Fiscal</label>
+                            <input type="number" name="rota_entrega" id="rota_entrega" class="form-control" required>
+                            <label for="rota_entrega">Rota Entrega</label>
                         </div>
-                    </div>
-                <div class="col-2">
-                    <div class="form-floating">
-                        <input type="number" name="volume_declara" id="volume_declara" class="form-control" required>
-                        <label for="volume_declara">Volume</label>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="form-floating">
-                        <input type="number" name="rota_entrega" id="rota_entrega" class="form-control" required>
-                        <label for="rota_entrega">Rota Entrega</label>
                     </div>
                 </div>
             </div>
@@ -273,5 +297,6 @@
         
     </main>
     <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
