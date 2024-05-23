@@ -322,7 +322,12 @@ function insere_doc() {
 }
 
 
+
+
 function cadastrar_dados_com_chave() {
+
+    var ch_nf = lista_dados_doc[0].chave_nf
+    var nf = lista_dados_doc[0].num_nf
 
     var volumes_totais = lista_vol_doc.reduce((accumulator, value) => {
         return accumulator + value;
@@ -400,10 +405,8 @@ function cadastrar_dados_com_chave() {
         digitador: digitador,
         num_declara: num_declara,
         e_devolucao: e_devolucao,
-        status_entrega: status_entrega,
         data_cadastro_baixa: data_cadastro_baixa,
         motivo_devolucao: motivo_devolucao,
-        data_entrega: data_entrega,
         volume_declara: volume_declara,
         observacao: observacao,
         documentos: lista_dados_doc,
@@ -503,8 +506,7 @@ function cadastrar_dados_com_chave() {
                         if(!validarCNPJ(cnpj_rem)){
                             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>CNPJ Remetente Inválido.</p>";
                         } else {
-                            var ch_nf = lista_dados_doc[0].chave_nf[0]
-                            var nf = lista_dados_doc[0].num_nf[0]
+
                             tipo_pessoa = "Jurídica";
                             cadastrar_ciente_cad_declara(cnpj_rem,nome_remetente,nome_log,num_log,bairro,cidade,unidade_federativa,tipo_pessoa);
                             localStorage.setItem(ch_nf,JSON.stringify(dados));
@@ -518,8 +520,6 @@ function cadastrar_dados_com_chave() {
                         if(!TestaCPF(cnpj_rem)){
                             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>CPF Remetente Inválido.</p>";
                         } else {
-                            var ch_nf = lista_dados_doc[0].chave_nf[0]
-                            var nf = lista_dados_doc[0].num_nf[0]
                             tipo_pessoa = "Física";
                             cadastrar_ciente_cad_declara(cnpj_rem,nome_remetente,nome_log,num_log,bairro,cidade,unidade_federativa,tipo_pessoa);
                             localStorage.setItem(ch_nf,JSON.stringify(dados));
@@ -536,8 +536,6 @@ function cadastrar_dados_com_chave() {
                         if(!validarCNPJ(cnpj_dest)){
                             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>CNPJ Remetente Inválido.</p>";
                         } else {
-                            var ch_nf = lista_dados_doc[0].chave_nf[0]
-                            var nf = lista_dados_doc[0].num_nf[0]
                             tipo_pessoa = "Jurídica";
                             cadastrar_ciente_cad_declara(cnpj_dest,nome_destinatario,nome_log_dest,num_log_dest,bairro_dest,cidade_dest,unidade_federativa_dest,tipo_pessoa);
                             localStorage.setItem(ch_nf,JSON.stringify(dados));
@@ -551,8 +549,6 @@ function cadastrar_dados_com_chave() {
                         if(!TestaCPF(cnpj_dest)){
                             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>CPF Remetente Inválido.</p>";
                         } else {
-                            var ch_nf = lista_dados_doc[0].chave_nf[0]
-                            var nf = lista_dados_doc[0].num_nf[0]
                             tipo_pessoa = "Física";
                             cadastrar_ciente_cad_declara(cnpj_dest,nome_destinatario,nome_log_dest,num_log_dest,bairro_dest,cidade_dest,unidade_federativa_dest,tipo_pessoa);
                             localStorage.setItem(ch_nf,JSON.stringify(dados));
@@ -565,8 +561,6 @@ function cadastrar_dados_com_chave() {
                     }
                 }
                 else if(cnpj_rem == "" || cnpj_dest == "") {
-                    var ch_nf = lista_dados_doc[0].chave_nf[0]
-                    var nf = lista_dados_doc[0].num_nf[0]
                     localStorage.setItem(ch_nf,JSON.stringify(dados));
                     localStorage.setItem(nf,JSON.stringify(dados));
                     localStorage.setItem(num_declara,JSON.stringify(dados));
@@ -600,11 +594,13 @@ function copia_dados_dest() {
     document.getElementById("uf_dest").value = unidade_federativa;
 }
 
+
+
 function consultar_dados(){
     let num_declara = document.getElementById("busca_declara").value;
-    let dados_salvos = JSON.parse(localStorage.getItem(num_declara));
+    var dados_salvos_cons_declara = JSON.parse(localStorage.getItem(num_declara));
 
-    document.getElementById("e_devolucao_cad").checked = false;
+    document.getElementById('e_devolucao_cad').checked = false
     document.getElementById("ocorrencia_cad").value = "";
     document.getElementById("data_hora_cad_baixa").value = "";
     document.getElementById("data_hora_entrega_cad").value = "";
@@ -631,141 +627,162 @@ function consultar_dados(){
     
     if (localStorage.getItem(num_declara) !== null) {
         console.log(JSON.parse(localStorage.getItem(num_declara)));
-                if (dados_salvos.e_devolucao == true) {
+                if (dados_salvos_cons_declara.e_devolucao == true) {
                     document.getElementById("e_devolucao_cad").checked = true;
-                    if(typeof dados_salvos.documentos !== 'undefined') document.getElementById('chave_nf_cad').value = dados_salvos.documentos[0].chave_nf;
-                    if(typeof dados_salvos.status_entrega !== "undefined") document.getElementById("ocorrencia_cad").value = dados_salvos.status_entrega;
-                    if(typeof dados_salvos.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos.data_cadastro_baixa;
-                    if(typeof dados_salvos.data_entrega !== "undefined") document.getElementById("data_hora_entrega_cad").value = dados_salvos.data_entrega;
-                    if(typeof dados_salvos.num_declara !== "undefined") document.getElementById("num_declara_cad_declara").value = dados_salvos.num_declara;
-                    //if(typeof dados_salvos.num_nf !== "undefined") document.getElementById("num_nf_cad").value = dados_salvos.num_nf;
-                    if(typeof dados_salvos.rota_entrega !== "undefined") document.getElementById("rota_entrega_cad").value = dados_salvos.rota_entrega;
-                    //if(typeof dados_salvos.volume_declara !== "undefined") document.getElementById("volume_declara_cad").value = dados_salvos.volume_declara;
-                    if(typeof dados_salvos.observacao !== "undefined") document.getElementById("observacao_cad").value = dados_salvos.observacao;
-                    if(typeof dados_salvos.motivo_devolucao !== "undefined") document.getElementById("motivo_devolucao_cad").value = dados_salvos.motivo_devolucao;
-                    if(typeof dados_salvos.digitador !== "undefined") document.getElementById("nome_digitador_cad").value = dados_salvos.digitador;
-                    if(typeof dados_salvos.cnpj_rem !== "undefined") document.getElementById("cnpj_rem_cad").value = dados_salvos.cnpj_rem;
-                    if(typeof dados_salvos.nome_remetente !== "undefined") document.getElementById("nome_remetente_cad").value = dados_salvos.nome_remetente;
-                    if(typeof dados_salvos.nome_log !== "undefined") document.getElementById("nome_log_rem_cad").value = dados_salvos.nome_log;
-                    if(typeof dados_salvos.num_log !== "undefined") document.getElementById("num_log_rem_cad").value = dados_salvos.num_log;
-                    if(typeof dados_salvos.bairro !== "undefined") document.getElementById("bairro_rem_cad").value = dados_salvos.bairro;
-                    if(typeof dados_salvos.cidade !== "undefined") document.getElementById("cidade_rem_cad").value = dados_salvos.cidade;
-                    if(typeof dados_salvos.unidade_federativa !== "undefined") document.getElementById("uf_rem_cad").value = dados_salvos.unidade_federativa;
+                    if(typeof dados_salvos_cons_declara.documentos !== 'undefined') document.getElementById('chave_nf_cad').value = dados_salvos_cons_declara.documentos[0].chave_nf;
+                    if(typeof dados_salvos_cons_declara.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos_cons_declara.data_cadastro_baixa;
+                    if(typeof dados_salvos_cons_declara.num_declara !== "undefined") document.getElementById("num_declara_cad_declara").value = dados_salvos_cons_declara.num_declara;
+                    //if(typeof dados_salvos_cons_declara.num_nf !== "undefined") document.getElementById("num_nf_cad").value = dados_salvos_cons_declara.num_nf;
+                    if(typeof dados_salvos_cons_declara.rota_entrega !== "undefined") document.getElementById("rota_entrega_cad").value = dados_salvos_cons_declara.rota_entrega;
+                    //if(typeof dados_salvos_cons_declara.volume_declara !== "undefined") document.getElementById("volume_declara_cad").value = dados_salvos_cons_declara.volume_declara;
+                    if(typeof dados_salvos_cons_declara.observacao !== "undefined") document.getElementById("observacao_cad").value = dados_salvos_cons_declara.observacao;
+                    if(typeof dados_salvos_cons_declara.motivo_devolucao !== "undefined") document.getElementById("motivo_devolucao_cad").value = dados_salvos_cons_declara.motivo_devolucao;
+                    if(typeof dados_salvos_cons_declara.digitador !== "undefined") document.getElementById("nome_digitador_cad").value = dados_salvos_cons_declara.digitador;
+                    if(typeof dados_salvos_cons_declara.cnpj_rem !== "undefined") document.getElementById("cnpj_rem_cad").value = dados_salvos_cons_declara.cnpj_rem;
+                    if(typeof dados_salvos_cons_declara.nome_remetente !== "undefined") document.getElementById("nome_remetente_cad").value = dados_salvos_cons_declara.nome_remetente;
+                    if(typeof dados_salvos_cons_declara.nome_log !== "undefined") document.getElementById("nome_log_rem_cad").value = dados_salvos_cons_declara.nome_log;
+                    if(typeof dados_salvos_cons_declara.num_log !== "undefined") document.getElementById("num_log_rem_cad").value = dados_salvos_cons_declara.num_log;
+                    if(typeof dados_salvos_cons_declara.bairro !== "undefined") document.getElementById("bairro_rem_cad").value = dados_salvos_cons_declara.bairro;
+                    if(typeof dados_salvos_cons_declara.cidade !== "undefined") document.getElementById("cidade_rem_cad").value = dados_salvos_cons_declara.cidade;
+                    if(typeof dados_salvos_cons_declara.unidade_federativa !== "undefined") document.getElementById("uf_rem_cad").value = dados_salvos_cons_declara.unidade_federativa;
 
-                    if(typeof dados_salvos.cnpj_dest !== "undefined") document.getElementById("cnpj_dest_cad").value = dados_salvos.cnpj_dest;
-                    if(typeof dados_salvos.nome_destinatario !== "undefined") document.getElementById("nome_destinatario_cad").value = dados_salvos.nome_destinatario;
-                    if(typeof dados_salvos.nome_log_dest !== "undefined") document.getElementById("nome_log_dest_cad").value = dados_salvos.nome_log_dest;
-                    if(typeof dados_salvos.num_log !== "undefined") document.getElementById("num_log_dest_cad").value = dados_salvos.num_log_dest;
-                    if(typeof dados_salvos.bairro_dest !== "undefined") document.getElementById("bairro_dest_cad").value = dados_salvos.bairro_dest;
-                    if(typeof dados_salvos.cidade_dest !== "undefined") document.getElementById("cidade_dest_cad").value = dados_salvos.cidade_dest;
-                    if(typeof dados_salvos.unidade_federativa_dest !== "undefined") document.getElementById("uf_dest_cad").value = dados_salvos.unidade_federativa_dest;
+                    if(typeof dados_salvos_cons_declara.cnpj_dest !== "undefined") document.getElementById("cnpj_dest_cad").value = dados_salvos_cons_declara.cnpj_dest;
+                    if(typeof dados_salvos_cons_declara.nome_destinatario !== "undefined") document.getElementById("nome_destinatario_cad").value = dados_salvos_cons_declara.nome_destinatario;
+                    if(typeof dados_salvos_cons_declara.nome_log_dest !== "undefined") document.getElementById("nome_log_dest_cad").value = dados_salvos_cons_declara.nome_log_dest;
+                    if(typeof dados_salvos_cons_declara.num_log !== "undefined") document.getElementById("num_log_dest_cad").value = dados_salvos_cons_declara.num_log_dest;
+                    if(typeof dados_salvos_cons_declara.bairro_dest !== "undefined") document.getElementById("bairro_dest_cad").value = dados_salvos_cons_declara.bairro_dest;
+                    if(typeof dados_salvos_cons_declara.cidade_dest !== "undefined") document.getElementById("cidade_dest_cad").value = dados_salvos_cons_declara.cidade_dest;
+                    if(typeof dados_salvos_cons_declara.unidade_federativa_dest !== "undefined") document.getElementById("uf_dest_cad").value = dados_salvos_cons_declara.unidade_federativa_dest;
 
-                    if (typeof dados_salvos.documentos !== 'undefined') {
-                        for (const i in dados_salvos.documentos) {
-                            if (Object.hasOwnProperty.call(dados_salvos.documentos, i)) {
-                                const emelento = dados_salvos.documentos[i];
+                    if (typeof dados_salvos_cons_declara.documentos !== 'undefined') {
+                        for (const i in dados_salvos_cons_declara.documentos) {
+                            if (Object.hasOwnProperty.call(dados_salvos_cons_declara.documentos, i)) {
+                                const emelento = dados_salvos_cons_declara.documentos[i];
                                 document.getElementById('documentos_inseridos_cad_declara').innerHTML += "<th scope='row'>#</th><td>"+emelento.chave_nf+"</td><td>"+emelento.num_nf+"</td><td>"+emelento.vol_nf+"</td>";
                             }
                         }
                     }
                 }else{
-                    
                     document.getElementById("e_devolucao_cad").checked = false;
-                    if(typeof dados_salvos.status_entrega !== "undefined") document.getElementById("ocorrencia_cad").value = dados_salvos.status_entrega;
-                    if(typeof dados_salvos.documentos !== 'undefined') document.getElementById('chave_nf_cad').value = dados_salvos.documentos[0].chave_nf;
-                    if(typeof dados_salvos.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos.data_cadastro_baixa;
-                    if(typeof dados_salvos.digitador !== "undefined") document.getElementById("nome_digitador_cad").value = dados_salvos.digitador;
-                    if(typeof dados_salvos.rota_entrega !== "undefined") document.getElementById("rota_entrega_cad").value = dados_salvos.rota_entrega;
-                    if(typeof dados_salvos.data_entrega !== "undefined") document.getElementById("data_hora_entrega_cad").value = dados_salvos.data_entrega;
-                    if(typeof dados_salvos.num_declara !== "undefined") document.getElementById("num_declara_cad_declara").value = dados_salvos.num_declara;
-                    //if(typeof dados_salvos.volume_declara !== "undefined") document.getElementById("volume_declara_cad").value = dados_salvos.volume_declara;
-                    if(typeof dados_salvos.observacao !== "undefined") document.getElementById("observacao_cad").value = dados_salvos.observacao;
-                    if(typeof dados_salvos.motivo_devolucao !== "undefined") document.getElementById("motivo_devolucao_cad").value = dados_salvos.motivo_devolucao;
+                    if(typeof dados_salvos_cons_declara.status_entrega !== "undefined") document.getElementById("ocorrencia_cad").value = dados_salvos_cons_declara.status_entrega;
+                    if(typeof dados_salvos_cons_declara.documentos !== 'undefined') document.getElementById('chave_nf_cad').value = dados_salvos_cons_declara.documentos[0].chave_nf;
+                    if(typeof dados_salvos_cons_declara.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos_cons_declara.data_cadastro_baixa;
+                    if(typeof dados_salvos_cons_declara.digitador !== "undefined") document.getElementById("nome_digitador_cad").value = dados_salvos_cons_declara.digitador;
+                    if(typeof dados_salvos_cons_declara.rota_entrega !== "undefined") document.getElementById("rota_entrega_cad").value = dados_salvos_cons_declara.rota_entrega;
+                    if(typeof dados_salvos_cons_declara.num_declara !== "undefined") document.getElementById("num_declara_cad_declara").value = dados_salvos_cons_declara.num_declara;
+                    //if(typeof dados_salvos_cons_declara.volume_declara !== "undefined") document.getElementById("volume_declara_cad").value = dados_salvos_cons_declara.volume_declara;
+                    if(typeof dados_salvos_cons_declara.observacao !== "undefined") document.getElementById("observacao_cad").value = dados_salvos_cons_declara.observacao;
+                    if(typeof dados_salvos_cons_declara.motivo_devolucao !== "undefined") document.getElementById("motivo_devolucao_cad").value = dados_salvos_cons_declara.motivo_devolucao;
 
-                    if(typeof dados_salvos.cnpj_rem !== "undefined") document.getElementById("cnpj_rem_cad").value = dados_salvos.cnpj_rem;
-                    if(typeof dados_salvos.nome_remetente !== "undefined") document.getElementById("nome_remetente_cad").value = dados_salvos.nome_remetente;
-                    if(typeof dados_salvos.nome_log !== "undefined") document.getElementById("nome_log_rem_cad").value = dados_salvos.nome_log;
-                    if(typeof dados_salvos.num_log !== "undefined") document.getElementById("num_log_rem_cad").value = dados_salvos.num_log;
-                    if(typeof dados_salvos.bairro !== "undefined") document.getElementById("bairro_rem_cad").value = dados_salvos.bairro;
-                    if(typeof dados_salvos.cidade !== "undefined") document.getElementById("cidade_rem_cad").value = dados_salvos.cidade;
-                    if(typeof dados_salvos.unidade_federativa !== "undefined") document.getElementById("uf_rem_cad").value = dados_salvos.unidade_federativa;
+                    if(typeof dados_salvos_cons_declara.cnpj_rem !== "undefined") document.getElementById("cnpj_rem_cad").value = dados_salvos_cons_declara.cnpj_rem;
+                    if(typeof dados_salvos_cons_declara.nome_remetente !== "undefined") document.getElementById("nome_remetente_cad").value = dados_salvos_cons_declara.nome_remetente;
+                    if(typeof dados_salvos_cons_declara.nome_log !== "undefined") document.getElementById("nome_log_rem_cad").value = dados_salvos_cons_declara.nome_log;
+                    if(typeof dados_salvos_cons_declara.num_log !== "undefined") document.getElementById("num_log_rem_cad").value = dados_salvos_cons_declara.num_log;
+                    if(typeof dados_salvos_cons_declara.bairro !== "undefined") document.getElementById("bairro_rem_cad").value = dados_salvos_cons_declara.bairro;
+                    if(typeof dados_salvos_cons_declara.cidade !== "undefined") document.getElementById("cidade_rem_cad").value = dados_salvos_cons_declara.cidade;
+                    if(typeof dados_salvos_cons_declara.unidade_federativa !== "undefined") document.getElementById("uf_rem_cad").value = dados_salvos_cons_declara.unidade_federativa;
 
-                    if(typeof dados_salvos.cnpj_dest !== "undefined") document.getElementById("cnpj_dest_cad").value = dados_salvos.cnpj_dest;
-                    if(typeof dados_salvos.nome_destinatario !== "undefined") document.getElementById("nome_destinatario_cad").value = dados_salvos.nome_destinatario;
-                    if(typeof dados_salvos.nome_log_dest !== "undefined") document.getElementById("nome_log_dest_cad").value = dados_salvos.nome_log_dest;
-                    if(typeof dados_salvos.num_log !== "undefined") document.getElementById("num_log_dest_cad").value = dados_salvos.num_log_dest;
-                    if(typeof dados_salvos.bairro_dest !== "undefined") document.getElementById("bairro_dest_cad").value = dados_salvos.bairro_dest;
-                    if(typeof dados_salvos.cidade_dest !== "undefined") document.getElementById("cidade_dest_cad").value = dados_salvos.cidade_dest;
-                    if(typeof dados_salvos.unidade_federativa_dest !== "undefined") document.getElementById("uf_dest_cad").value = dados_salvos.unidade_federativa_dest;
+                    if(typeof dados_salvos_cons_declara.cnpj_dest !== "undefined") document.getElementById("cnpj_dest_cad").value = dados_salvos_cons_declara.cnpj_dest;
+                    if(typeof dados_salvos_cons_declara.nome_destinatario !== "undefined") document.getElementById("nome_destinatario_cad").value = dados_salvos_cons_declara.nome_destinatario;
+                    if(typeof dados_salvos_cons_declara.nome_log_dest !== "undefined") document.getElementById("nome_log_dest_cad").value = dados_salvos_cons_declara.nome_log_dest;
+                    if(typeof dados_salvos_cons_declara.num_log !== "undefined") document.getElementById("num_log_dest_cad").value = dados_salvos_cons_declara.num_log_dest;
+                    if(typeof dados_salvos_cons_declara.bairro_dest !== "undefined") document.getElementById("bairro_dest_cad").value = dados_salvos_cons_declara.bairro_dest;
+                    if(typeof dados_salvos_cons_declara.cidade_dest !== "undefined") document.getElementById("cidade_dest_cad").value = dados_salvos_cons_declara.cidade_dest;
+                    if(typeof dados_salvos_cons_declara.unidade_federativa_dest !== "undefined") document.getElementById("uf_dest_cad").value = dados_salvos_cons_declara.unidade_federativa_dest;
 
-                    if (typeof dados_salvos.documentos !== 'undefined') {
+                    if (typeof dados_salvos_cons_declara.documentos !== 'undefined') {
                         
-                        for (let i = 0; i < dados_salvos.documentos.length; i++) {
-                            const element = dados_salvos.documentos[i];
+                        for (let i = 0; i < dados_salvos_cons_declara.documentos.length; i++) {
+                            const element = dados_salvos_cons_declara.documentos[i];
                             
                             document.getElementById('documentos_inseridos_cad_declara').innerHTML += "<th scope='row'>#</th><td>"+element.chave_nf+"</td><td>"+element.num_nf+"</td><td>"+element.vol_nf+"</td>";
                         }
                     }
                 }
-            }else{
-                if(dados_salvos.e_devolucao == true){
-                    if(typeof dados_salvos.documentos !== 'undefined') document.getElementById('chave_nf_cad').value = dados_salvos.documentos[0].chave_nf;
+            }
+            
+            
+            else{
+                console.log(JSON.parse(localStorage.getItem(num_declara)));
+                console.log('chapuleuski')
+                if(dados_salvos_cons_declara.e_devolucao == true){
+                    if(typeof dados_salvos_cons_declara.documentos !== 'undefined') document.getElementById('chave_nf_cad').value = dados_salvos_cons_declara.documentos[0].chave_nf;
                     document.getElementById("e_devolucao_cad").checked = true;
-                    if(typeof dados_salvos.status_entrega !== "undefined") document.getElementById("ocorrencia_cad").value = dados_salvos.status_entrega;
-                    if(typeof dados_salvos.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos.data_cadastro_baixa;
-                    if(typeof dados_salvos.data_entrega !== "undefined") document.getElementById("data_hora_entrega_cad").value = dados_salvos.data_entrega;
-                    if(typeof dados_salvos.rota_entrega !== "undefined") document.getElementById("rota_entrega_cad").value = dados_salvos.rota_entrega;
-                    if(typeof dados_salvos.digitador !== "undefined") document.getElementById("nome_digitador_cad").value = dados_salvos.digitador;
-                    if(typeof dados_salvos.num_declara !== "undefined") document.getElementById("num_declara_cad_declara").value = dados_salvos.num_declara;
-                    if(typeof dados_salvos.volume_declara !== "undefined") document.getElementById("volume_declara_cad").value = dados_salvos.volume_declara;
-                    if(typeof dados_salvos.observacao !== "undefined") document.getElementById("observacao_cad").value = dados_salvos.observacao;
-                    if(typeof dados_salvos.motivo_devolucao !== "undefined") document.getElementById("motivo_devolucao_cad").value = dados_salvos.motivo_devolucao;
-
-                    if(typeof dados_salvos.cnpj_rem !== "undefined") document.getElementById("cnpj_rem_cad").value = dados_salvos.cnpj_rem;
-                    if(typeof dados_salvos.nome_remetente !== "undefined") document.getElementById("nome_remetente_cad").value = dados_salvos.nome_remetente;
-                    if(typeof dados_salvos.nome_log !== "undefined") document.getElementById("nome_log_rem_cad").value = dados_salvos.nome_log;
-                    if(typeof dados_salvos.num_log !== "undefined") document.getElementById("num_log_rem_cad").value = dados_salvos.num_log;
-                    if(typeof dados_salvos.bairro !== "undefined") document.getElementById("bairro_rem_cad").value = dados_salvos.bairro;
-                    if(typeof dados_salvos.cidade !== "undefined") document.getElementById("cidade_rem_cad").value = dados_salvos.cidade;
-                    if(typeof dados_salvos.unidade_federativa !== "undefined") document.getElementById("uf_rem_cad").value = dados_salvos.unidade_federativa;
-
-                    if(typeof dados_salvos.cnpj_dest !== "undefined") document.getElementById("cnpj_dest_cad").value = dados_salvos.cnpj_dest;
-                    if(typeof dados_salvos.nome_destinatario !== "undefined") document.getElementById("nome_destinatario_cad").value = dados_salvos.nome_destinatario;
-                    if(typeof dados_salvos.nome_log_dest !== "undefined") document.getElementById("nome_log_dest_cad").value = dados_salvos.nome_log_dest;
-                    if(typeof dados_salvos.num_log !== "undefined") document.getElementById("num_log_dest_cad").value = dados_salvos.num_log_dest;
-                    if(typeof dados_salvos.bairro_dest !== "undefined") document.getElementById("bairro_dest_cad").value = dados_salvos.bairro_dest;
-                    if(typeof dados_salvos.cidade_dest !== "undefined") document.getElementById("cidade_dest_cad").value = dados_salvos.cidade_dest;
-                    if(typeof dados_salvos.unidade_federativa_dest !== "undefined") document.getElementById("uf_dest_cad").value = dados_salvos.unidade_federativa_dest;
+                    if(typeof dados_salvos_cons_declara.status_entrega !== "undefined") document.getElementById("ocorrencia_cad").value = dados_salvos_cons_declara.status_entrega;
+                    if(typeof dados_salvos_cons_declara.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos_cons_declara.data_cadastro_baixa;
+                    if(typeof dados_salvos_cons_declara.data_entrega !== "undefined") document.getElementById("data_hora_entrega_cad").value = dados_salvos_cons_declara.data_entrega;
+                    if(typeof dados_salvos_cons_declara.rota_entrega !== "undefined") document.getElementById("rota_entrega_cad").value = dados_salvos_cons_declara.rota_entrega;
+                    if(typeof dados_salvos_cons_declara.digitador !== "undefined") document.getElementById("nome_digitador_cad").value = dados_salvos_cons_declara.digitador;
+                    if(typeof dados_salvos_cons_declara.num_declara !== "undefined") document.getElementById("num_declara_cad_declara").value = dados_salvos_cons_declara.num_declara;
+                    if(typeof dados_salvos_cons_declara.volume_declara !== "undefined") document.getElementById("volume_declara_cad").value = dados_salvos_cons_declara.volume_declara;
+                    if(typeof dados_salvos_cons_declara.observacao !== "undefined") document.getElementById("observacao_cad").value = dados_salvos_cons_declara.observacao;
+                    if(typeof dados_salvos_cons_declara.motivo_devolucao !== "undefined") document.getElementById("motivo_devolucao_cad").value = dados_salvos_cons_declara.motivo_devolucao;
+                    
+                    if(typeof dados_salvos_cons_declara.cnpj_rem !== "undefined") document.getElementById("cnpj_rem_cad").value = dados_salvos_cons_declara.cnpj_rem;
+                    if(typeof dados_salvos_cons_declara.nome_remetente !== "undefined") document.getElementById("nome_remetente_cad").value = dados_salvos_cons_declara.nome_remetente;
+                    if(typeof dados_salvos_cons_declara.nome_log !== "undefined") document.getElementById("nome_log_rem_cad").value = dados_salvos_cons_declara.nome_log;
+                    if(typeof dados_salvos_cons_declara.num_log !== "undefined") document.getElementById("num_log_rem_cad").value = dados_salvos_cons_declara.num_log;
+                    if(typeof dados_salvos_cons_declara.bairro !== "undefined") document.getElementById("bairro_rem_cad").value = dados_salvos_cons_declara.bairro;
+                    if(typeof dados_salvos_cons_declara.cidade !== "undefined") document.getElementById("cidade_rem_cad").value = dados_salvos_cons_declara.cidade;
+                    if(typeof dados_salvos_cons_declara.unidade_federativa !== "undefined") document.getElementById("uf_rem_cad").value = dados_salvos_cons_declara.unidade_federativa;
+                    
+                    if(typeof dados_salvos_cons_declara.cnpj_dest !== "undefined") document.getElementById("cnpj_dest_cad").value = dados_salvos_cons_declara.cnpj_dest;
+                    if(typeof dados_salvos_cons_declara.nome_destinatario !== "undefined") document.getElementById("nome_destinatario_cad").value = dados_salvos_cons_declara.nome_destinatario;
+                    if(typeof dados_salvos_cons_declara.nome_log_dest !== "undefined") document.getElementById("nome_log_dest_cad").value = dados_salvos_cons_declara.nome_log_dest;
+                    if(typeof dados_salvos_cons_declara.num_log !== "undefined") document.getElementById("num_log_dest_cad").value = dados_salvos_cons_declara.num_log_dest;
+                    if(typeof dados_salvos_cons_declara.bairro_dest !== "undefined") document.getElementById("bairro_dest_cad").value = dados_salvos_cons_declara.bairro_dest;
+                    if(typeof dados_salvos_cons_declara.cidade_dest !== "undefined") document.getElementById("cidade_dest_cad").value = dados_salvos_cons_declara.cidade_dest;
+                    if(typeof dados_salvos_cons_declara.unidade_federativa_dest !== "undefined") document.getElementById("uf_dest_cad").value = dados_salvos_cons_declara.unidade_federativa_dest;
+                    
+                    if (typeof dados_salvos_cons_declara.documentos !== 'undefined') {
+                        
+                        for (let i = 0; i < dados_salvos_cons_declara.documentos.length; i++) {
+                            const element = dados_salvos_cons_declara.documentos[i];
+                            
+                            document.getElementById('documentos_inseridos_cad_declara').innerHTML += "<th scope='row'>#</th><td>"+element.chave_nf+"</td><td>"+element.num_nf+"</td><td>"+element.vol_nf+"</td>";
+                        }
+                    }
+                    
                 }else{
-                    if(typeof dados_salvos.documentos !== 'undefined') document.getElementById('chave_nf_cad').value = dados_salvos.documentos[0].chave_nf;
+                    if(typeof dados_salvos_cons_declara.documentos !== 'undefined') document.getElementById('chave_nf_cad').value = dados_salvos_cons_declara.documentos[0].chave_nf;
                     document.getElementById("e_devolucao_cad").checked = false;
-                    if(typeof dados_salvos.status_entrega !== "undefined") document.getElementById("ocorrencia_cad").value = dados_salvos.status_entrega;
-                    if(typeof dados_salvos.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos.data_cadastro_baixa;
-                    if(typeof dados_salvos.data_entrega !== "undefined") document.getElementById("data_hora_entrega_cad").value = dados_salvos.data_entrega;
-                    if(typeof dados_salvos.digitador !== "undefined") document.getElementById("nome_digitador_cad").value = dados_salvos.digitador;
-                    if(typeof dados_salvos.rota_entrega !== "undefined") document.getElementById("rota_entrega_cad").value = dados_salvos.rota_entrega;
-                    if(typeof dados_salvos.num_declara !== "undefined") document.getElementById("num_declara_cad_declara").value = dados_salvos.num_declara;
-                    if(typeof dados_salvos.volume_declara !== "undefined") document.getElementById("volume_declara_cad").value = dados_salvos.volume_declara;
-                    if(typeof dados_salvos.observacao !== "undefined") document.getElementById("observacao_cad").value = dados_salvos.observacao;
-                    if(typeof dados_salvos.motivo_devolucao !== "undefined") document.getElementById("motivo_devolucao_cad").value = dados_salvos.motivo_devolucao;
-
-                    if(typeof dados_salvos.cnpj_rem !== "undefined") document.getElementById("cnpj_rem_cad").value = dados_salvos.cnpj_rem;
-                    if(typeof dados_salvos.nome_remetente !== "undefined") document.getElementById("nome_remetente_cad").value = dados_salvos.nome_remetente;
-                    if(typeof dados_salvos.nome_log !== "undefined") document.getElementById("nome_log_rem_cad").value = dados_salvos.nome_log;
-                    if(typeof dados_salvos.num_log !== "undefined") document.getElementById("num_log_rem_cad").value = dados_salvos.num_log;
-                    if(typeof dados_salvos.bairro !== "undefined") document.getElementById("bairro_rem_cad").value = dados_salvos.bairro;
-                    if(typeof dados_salvos.cidade !== "undefined") document.getElementById("cidade_rem_cad").value = dados_salvos.cidade;
-                    if(typeof dados_salvos.unidade_federativa !== "undefined") document.getElementById("uf_rem_cad").value = dados_salvos.unidade_federativa;
-
-                    if(typeof dados_salvos.cnpj_dest !== "undefined") document.getElementById("cnpj_dest_cad").value = dados_salvos.cnpj_dest;
-                    if(typeof dados_salvos.nome_destinatario !== "undefined") document.getElementById("nome_destinatario_cad").value = dados_salvos.nome_destinatario;
-                    if(typeof dados_salvos.nome_log_dest !== "undefined") document.getElementById("nome_log_dest_cad").value = dados_salvos.nome_log_dest;
-                    if(typeof dados_salvos.num_log !== "undefined") document.getElementById("num_log_dest_cad").value = dados_salvos.num_log_dest;
-                    if(typeof dados_salvos.bairro_dest !== "undefined") document.getElementById("bairro_dest_cad").value = dados_salvos.bairro_dest;
-                    if(typeof dados_salvos.cidade_dest !== "undefined") document.getElementById("cidade_dest_cad").value = dados_salvos.cidade_dest;
-                    if(typeof dados_salvos.unidade_federativa_dest !== "undefined") document.getElementById("uf_dest_cad").value = dados_salvos.unidade_federativa_dest;
+                    if(typeof dados_salvos_cons_declara.status_entrega !== "undefined") document.getElementById("ocorrencia_cad").value = dados_salvos_cons_declara.status_entrega;
+                    if(typeof dados_salvos_cons_declara.data_cadastro_baixa !== "undefined") document.getElementById("data_hora_cad_baixa").value = dados_salvos_cons_declara.data_cadastro_baixa;
+                    if(typeof dados_salvos_cons_declara.data_entrega !== "undefined") document.getElementById("data_hora_entrega_cad").value = dados_salvos_cons_declara.data_entrega;
+                    if(typeof dados_salvos_cons_declara.digitador !== "undefined") document.getElementById("nome_digitador_cad").value = dados_salvos_cons_declara.digitador;
+                    if(typeof dados_salvos_cons_declara.rota_entrega !== "undefined") document.getElementById("rota_entrega_cad").value = dados_salvos_cons_declara.rota_entrega;
+                    if(typeof dados_salvos_cons_declara.num_declara !== "undefined") document.getElementById("num_declara_cad_declara").value = dados_salvos_cons_declara.num_declara;
+                    if(typeof dados_salvos_cons_declara.volume_declara !== "undefined") document.getElementById("volume_declara_cad").value = dados_salvos_cons_declara.volume_declara;
+                    if(typeof dados_salvos_cons_declara.observacao !== "undefined") document.getElementById("observacao_cad").value = dados_salvos_cons_declara.observacao;
+                    if(typeof dados_salvos_cons_declara.motivo_devolucao !== "undefined") document.getElementById("motivo_devolucao_cad").value = dados_salvos_cons_declara.motivo_devolucao;
+                    
+                    if(typeof dados_salvos_cons_declara.cnpj_rem !== "undefined") document.getElementById("cnpj_rem_cad").value = dados_salvos_cons_declara.cnpj_rem;
+                    if(typeof dados_salvos_cons_declara.nome_remetente !== "undefined") document.getElementById("nome_remetente_cad").value = dados_salvos_cons_declara.nome_remetente;
+                    if(typeof dados_salvos_cons_declara.nome_log !== "undefined") document.getElementById("nome_log_rem_cad").value = dados_salvos_cons_declara.nome_log;
+                    if(typeof dados_salvos_cons_declara.num_log !== "undefined") document.getElementById("num_log_rem_cad").value = dados_salvos_cons_declara.num_log;
+                    if(typeof dados_salvos_cons_declara.bairro !== "undefined") document.getElementById("bairro_rem_cad").value = dados_salvos_cons_declara.bairro;
+                    if(typeof dados_salvos_cons_declara.cidade !== "undefined") document.getElementById("cidade_rem_cad").value = dados_salvos_cons_declara.cidade;
+                    if(typeof dados_salvos_cons_declara.unidade_federativa !== "undefined") document.getElementById("uf_rem_cad").value = dados_salvos_cons_declara.unidade_federativa;
+                    
+                    if(typeof dados_salvos_cons_declara.cnpj_dest !== "undefined") document.getElementById("cnpj_dest_cad").value = dados_salvos_cons_declara.cnpj_dest;
+                    if(typeof dados_salvos_cons_declara.nome_destinatario !== "undefined") document.getElementById("nome_destinatario_cad").value = dados_salvos_cons_declara.nome_destinatario;
+                    if(typeof dados_salvos_cons_declara.nome_log_dest !== "undefined") document.getElementById("nome_log_dest_cad").value = dados_salvos_cons_declara.nome_log_dest;
+                    if(typeof dados_salvos_cons_declara.num_log !== "undefined") document.getElementById("num_log_dest_cad").value = dados_salvos_cons_declara.num_log_dest;
+                    if(typeof dados_salvos_cons_declara.bairro_dest !== "undefined") document.getElementById("bairro_dest_cad").value = dados_salvos_cons_declara.bairro_dest;
+                    if(typeof dados_salvos_cons_declara.cidade_dest !== "undefined") document.getElementById("cidade_dest_cad").value = dados_salvos_cons_declara.cidade_dest;
+                    if(typeof dados_salvos_cons_declara.unidade_federativa_dest !== "undefined") document.getElementById("uf_dest_cad").value = dados_salvos_cons_declara.unidade_federativa_dest;
+                    
+                    if (typeof dados_salvos_cons_declara.documentos !== 'undefined') {
+                        
+                        for (let i = 0; i < dados_salvos_cons_declara.documentos.length; i++) {
+                            const element = dados_salvos_cons_declara.documentos[i];
+                            
+                            document.getElementById('documentos_inseridos_cad_declara').innerHTML += "<th scope='row'>#</th><td>"+element.chave_nf+"</td><td>"+element.num_nf+"</td><td>"+element.vol_nf+"</td>";
+                        }
+                    }
                 }
             }
+            
 }
 
 /**
@@ -1384,7 +1401,7 @@ function gerar_pdf() {
     pdf.setFont('arial','normal')
     pdf.text("Remetente: "+nome_remetente,5, 212)
     pdf.text("Endereço: "+nome_log,5,216)
-    pdf.text(num_log, 60, 216)
+    pdf.text(num_log, 65, 216)
     pdf.text("Bairro: "+bairro,5,220)
     pdf.text("Cidade: "+cidade,5,224)
 
@@ -1395,7 +1412,7 @@ function gerar_pdf() {
     pdf.setFont('arial','normal')
     pdf.text("Destinatário: "+nome_destinatario,105, 212)
     pdf.text("Endereço: "+nome_log_dest,105,216)
-    pdf.text(num_log,160,216)
+    pdf.text(num_log_dest,165,216)
     pdf.text("Bairro: "+bairro_dest,105,220)
     pdf.text("Cidade: "+cidade_dest,105,224)
 
