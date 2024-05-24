@@ -1516,10 +1516,6 @@ function gerar_pdf() {
             pdf.text(element.chave_nf,x_chave_comp,y_chave_comp)
             pdf.text(element.num_nf,x_num_nf_comp,y_num_nf_comp)
 
-
-
-            
-
         }
         y_chave_comp += 4
         y_num_nf_comp += 4
@@ -1570,10 +1566,15 @@ function reimprmir_pdf() {
 
     //dados basicos da nf
 
+    let num_nf = ''
+
     let chave_nf = document.getElementById("chave_nf_cad").value;
     let num_declara = document.getElementById("num_declara_cad_declara").value;
-
-    let num_nf = dados_salvos.documentos[0].num_nf;
+    if (typeof dados_salvos.documentos[0].num_nf !== 'undefined') {        
+        let num_nf = dados_salvos.documentos[0].num_nf;
+    } else {
+        let num_nf = dados_salvos.num_nf;
+    }
     let volume_declara = dados_salvos.volume_declara;
     //let num_nf = document.getElementById("num_nf_cad").value
     //let volume_declara = document.getElementById("volume_declara_cad").value;
