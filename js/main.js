@@ -283,6 +283,7 @@ function cadastrar_ciente_cad_declara(cnpj,nome_c,nome_log,num_log,bairro_c,cida
 
 lista_dados_doc = []
 lista_vol_doc = []
+lista_peso_doc = []
 
 
 
@@ -290,6 +291,7 @@ function insere_doc() {
     var chave_nf = document.getElementById('chave_nf').value
     var num_nf = document.getElementById('num_nf').value
     var vol_nf = parseInt(document.getElementById('volume_declara').value)
+    var peso_nf = parseFloat(document.getElementById('peso_declara').value)
     
     if(chave_nf == ''){
         alert('Chave de Acesso não informada')
@@ -297,27 +299,29 @@ function insere_doc() {
         alert('Número de Nota Fiscal não encontrado')
     } else if (vol_nf == '') {
         alert('Volumes não informados')
+    } else if (peso_nf == ''){
+        alert('Peso nao informado')
     } else {
-
-        
         dados_doc = {
             chave_nf: chave_nf,
             num_nf: num_nf,
             vol_nf: vol_nf,
+            peso_nf: peso_nf
         }
-        
         
         lista_dados_doc.push(dados_doc)
         lista_vol_doc.push(dados_doc.vol_nf)
+        lista_peso_doc.push(dados_doc.peso_nf)
         
         document.getElementById('chave_nf').value = ''
         document.getElementById('num_nf').value = ''
         document.getElementById('volume_declara').value = ''
+        document.getElementById('peso_declara').value = ''
 
 
         
 
-        document.getElementById('documentos_inseridos').innerHTML += "<th scope='row'>#</th><td>"+dados_doc.chave_nf+"</td><td>"+dados_doc.num_nf+"</td><td>"+dados_doc.vol_nf+"</td>"
+        document.getElementById('documentos_inseridos').innerHTML += "<th scope='row'>#</th><td>"+dados_doc.chave_nf+"</td><td>"+dados_doc.num_nf+"</td><td>"+dados_doc.vol_nf+"</td><td>"+dados_doc.peso_nf.toString()+"</td>";
     }
 }
 
@@ -331,6 +335,10 @@ function cadastrar_dados_com_chave() {
 
     var volumes_totais = lista_vol_doc.reduce((accumulator, value) => {
         return accumulator + value;
+    },0)
+
+    var peso_total = lista_peso_doc.reduce((accumulator, value) => {
+        return accumulator + value
     },0)
 
     let chave_nf = document.getElementById("chave_nf").value;
@@ -658,7 +666,7 @@ function consultar_dados(){
                         for (const i in dados_salvos_cons_declara.documentos) {
                             if (Object.hasOwnProperty.call(dados_salvos_cons_declara.documentos, i)) {
                                 const emelento = dados_salvos_cons_declara.documentos[i];
-                                document.getElementById('documentos_inseridos_cad_declara').innerHTML += "<th scope='row'>#</th><td>"+emelento.chave_nf+"</td><td>"+emelento.num_nf+"</td><td>"+emelento.vol_nf+"</td>";
+                                document.getElementById('documentos_inseridos_cad_declara').innerHTML += "<th scope='row'>#</th><td>"+emelento.chave_nf+"</td><td>"+emelento.num_nf+"</td><td>"+emelento.vol_nf+"</td><td>"+emelento.peso_nf+"</td>";
                             }
                         }
                     }
@@ -695,7 +703,7 @@ function consultar_dados(){
                         for (let i = 0; i < dados_salvos_cons_declara.documentos.length; i++) {
                             const element = dados_salvos_cons_declara.documentos[i];
                             
-                            document.getElementById('documentos_inseridos_cad_declara').innerHTML += "<th scope='row'>#</th><td>"+element.chave_nf+"</td><td>"+element.num_nf+"</td><td>"+element.vol_nf+"</td>";
+                            document.getElementById('documentos_inseridos_cad_declara').innerHTML += "<th scope='row'>#</th><td>"+element.chave_nf+"</td><td>"+element.num_nf+"</td><td>"+element.vol_nf+"</td><td>"+element.peso_nf+"</td>";
                         }
                     }
                 }
@@ -739,7 +747,7 @@ function consultar_dados(){
                         for (let i = 0; i < dados_salvos_cons_declara.documentos.length; i++) {
                             const element = dados_salvos_cons_declara.documentos[i];
                             
-                            document.getElementById('documentos_inseridos_cad_declara').innerHTML += "<th scope='row'>#</th><td>"+element.chave_nf+"</td><td>"+element.num_nf+"</td><td>"+element.vol_nf+"</td>";
+                            document.getElementById('documentos_inseridos_cad_declara').innerHTML += "<th scope='row'>#</th><td>"+element.chave_nf+"</td><td>"+element.num_nf+"</td><td>"+element.vol_nf+"</td><td>"+element.peso_nf+"</td>";
                         }
                     }
                     
@@ -777,7 +785,7 @@ function consultar_dados(){
                         for (let i = 0; i < dados_salvos_cons_declara.documentos.length; i++) {
                             const element = dados_salvos_cons_declara.documentos[i];
                             
-                            document.getElementById('documentos_inseridos_cad_declara').innerHTML += "<th scope='row'>#</th><td>"+element.chave_nf+"</td><td>"+element.num_nf+"</td><td>"+element.vol_nf+"</td>";
+                            document.getElementById('documentos_inseridos_cad_declara').innerHTML += "<th scope='row'>#</th><td>"+element.chave_nf+"</td><td>"+element.num_nf+"</td><td>"+element.vol_nf+"</td><td>"+element.peso_nf+"</td>";
                         }
                     }
                 }
@@ -1335,9 +1343,15 @@ function gerar_pdf() {
         return accumulator + value;
     },0)
 
+    var peso_total = lista_peso_doc.reduce((accumulator, value) => {
+        return accumulator + value;
+    },0)
+
     pdf.line(105,102,105,93);
+    pdf.line(50, 93, 50, 102)
     pdf.setFontSize(11);
-    pdf.text("Volumes: "+ volumes_totais, 52.5, 99, "center");
+    pdf.text("Volumes: "+ volumes_totais, 25.5, 99, "center");
+    pdf.text('Peso: '+ peso_total+'Kg', 76, 99, 'center')
 
     //borda campo nota fiscal
     pdf.line(105,102,209,102);
@@ -1355,8 +1369,8 @@ function gerar_pdf() {
     //linha de baixo do aviso de conformidade
     pdf.line(1,130,209,130)
     pdf.setFontSize(11)
-    pdf.setFont("arial","italic");
-    pdf.text("Decalro para os fins devidos, que recebi em perfeito estado as mercadorias pela empresa Expresso São Miguel S/A.",104,126,"center");
+    pdf.setFont("arial","bold");
+    pdf.text("Documentos Anexados",104,126,"center");
 
     //borda em volta da folha
     pdf.line(1, 1, 209, 1);
@@ -1400,21 +1414,19 @@ function gerar_pdf() {
     pdf.setFontSize(7)
     pdf.setFont('arial','normal')
     pdf.text("Remetente: "+nome_remetente,5, 212)
-    pdf.text("Endereço: "+nome_log,5,216)
-    pdf.text(num_log, 65, 216)
+    pdf.text("Endereço: "+nome_log+ " "+num_log,5,216)
     pdf.text("Bairro: "+bairro,5,220)
     pdf.text("Cidade: "+cidade,5,224)
 
     //divisória horizontal dos dados do remetente/destinatário
-    pdf.line(100,208,100,230)
+    pdf.line(105,208,105,230)
 
     pdf.setFontSize(7)
     pdf.setFont('arial','normal')
-    pdf.text("Destinatário: "+nome_destinatario,105, 212)
-    pdf.text("Endereço: "+nome_log_dest,105,216)
-    pdf.text(num_log_dest,165,216)
-    pdf.text("Bairro: "+bairro_dest,105,220)
-    pdf.text("Cidade: "+cidade_dest,105,224)
+    pdf.text("Destinatário: "+nome_destinatario,107, 212)
+    pdf.text("Endereço: "+nome_log_dest+" "+num_log_dest,107,216)
+    pdf.text("Bairro: "+bairro_dest,107,220)
+    pdf.text("Cidade: "+cidade_dest,107,224)
 
     pdf.setLineDash([1,1])
     pdf.line(1,199,209,199)
@@ -1526,6 +1538,30 @@ function gerar_pdf() {
 
     x_num_nf_comp = 100
     y_num_nf_comp = 245
+
+    //linha divisória notas comprovante/declaracao de recebimento
+    pdf.setFontSize(8)
+
+    pdf.line(132,238,132,260)
+    pdf.text("Declaro para os devidos fins, que recebi em perfeito estado as\nmercadorias descritas ao lado transportadas\n pela Empresa Expresso São Miguel S/A.",170,241,'center')
+    pdf.line(132,249,209,249)
+
+    //divisoria volume/peso
+    pdf.line(170,249,170,260)
+    pdf.setFontSize(7)
+    pdf.setFont('arial','normal')
+    
+    pdf.text('Volume', 133, 252)
+    pdf.setFontSize(16)
+    pdf.setFont('arial','bold')
+    pdf.text(volumes_totais.toString(), 133, 258)
+    pdf.setFontSize(7)
+    pdf.setFont('arial','normal')
+    pdf.text('Peso',171,252)
+    pdf.setFontSize(16)
+    pdf.setFont('arial','bold')
+    pdf.text(peso_total.toString()+'Kg', 171, 258)
+    
 
     pdf.setFontSize(13);
     pdf.text("____/____/_______",17, 275);
@@ -1776,11 +1812,6 @@ function reimprmir_pdf() {
             pdf.setFont('Times New Roman','normal')
             pdf.text(element.chave_nf,x_chave_comp,y_chave_comp)
             pdf.text(element.num_nf,x_num_nf_comp,y_num_nf_comp)
-
-
-
-            
-
         }
         y_chave_comp += 4
         y_num_nf_comp += 4
@@ -1792,6 +1823,28 @@ function reimprmir_pdf() {
     x_num_nf_comp = 100
     y_num_nf_comp = 241
 
+    pdf.setFontSize(8)
+
+    pdf.line(132,238,132,260)
+    pdf.text("Declaro para os devidos fins, que recebi em perfeito estado as\nmercadorias descritas ao lado transportadas\n pela Empresa Expresso São Miguel S/A.",170,241,'center')
+    pdf.line(132,249,209,249)
+
+    //divisoria volume/peso
+    pdf.line(170,249,170,260)
+    pdf.setFontSize(7)
+    pdf.setFont('arial','normal')
+    
+    pdf.text('Volume', 133, 252)
+    pdf.setFontSize(16)
+    pdf.setFont('arial','bold')
+    pdf.text(volumes_totais.toString(), 133, 258)
+    pdf.setFontSize(7)
+    pdf.setFont('arial','normal')
+    pdf.text('Peso',171,252)
+    pdf.setFontSize(16)
+    pdf.setFont('arial','bold')
+    pdf.text(peso_total.toString()+'Kg', 171, 258)
+    
 
     pdf.setFontSize(13);
     pdf.text("____/____/_______",17, 275);
