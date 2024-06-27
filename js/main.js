@@ -2041,7 +2041,7 @@ function reimprmir_pdf() {
     pdf.text('Peso',171,252)
     pdf.setFontSize(16)
     pdf.setFont('arial','bold')
-    pdf.text(peso_declara +'Kg', 171, 258)
+    pdf.text(peso_declara.toString() +'Kg', 171, 258)
     
 
     pdf.setFontSize(13);
