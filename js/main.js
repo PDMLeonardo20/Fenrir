@@ -86,6 +86,7 @@ let nome_digitadores = [
     "VINICIUS BERTELLI MELGAREJO",
     "LUCAS ALVES CASTILHOS",
     "ANDRESSA GRAZIELE CORREA RODRIGUES",
+    "EDUARDO DIAS MACIEL",
     //BASE DE OPERACOES
     "JOSE AUGUSTO SAID BALTAR",
     "FABIANO FAGUNDES COELHO",
@@ -113,7 +114,7 @@ let digitadores = [
     {nome: "VINICIUS BERTELLI MELGAREJO", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "LUCAS ALVES CASTILHOS", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "ANDRESSA GRAZIELE CORREA RODRIGUES", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
-
+    {nome: "EDUARDO DIAS MACIEL", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     // Base de operacoes
     {nome: "JOSE AUGUSTO SAID BALTAR", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
     {nome: "FABIANO FAGUNDES COELHO", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
@@ -418,6 +419,7 @@ function cadastrar_dados_com_chave() {
         volume_declara: volume_declara,
         observacao: observacao,
         documentos: lista_dados_doc,
+        peso_total: peso_total,
 
         nome_log_dest: nome_log_dest,
         num_log_dest: num_log_dest,
@@ -1612,6 +1614,8 @@ function reimprmir_pdf() {
         let num_nf = dados_salvos.num_nf;
     }
     let volume_declara = dados_salvos.volume_declara;
+    let peso_declara = dados_salvos.peso_total;
+
     //let num_nf = document.getElementById("num_nf_cad").value
     //let volume_declara = document.getElementById("volume_declara_cad").value;
     let pegar_hora = document.getElementById("data_hora_cad_baixa").value;
@@ -1662,27 +1666,55 @@ function reimprmir_pdf() {
         
         pdf.setFont("arial","bold");
         pdf.setFontSize(13);
+         if (digitadores[i].setor == "BASE DE OPERACOES" && digitador == digitadores[i].nome && e_devolucao){
+            pdf.text("Declaração da Base de Operações", 105, 35, "center");
+            pdf.setFontSize(12);
+            pdf.text("Local de Entrega:", 10, 81);
+            pdf.setFontSize(11);
+            pdf.text(endereco_entrega, 10, 87);
+            pdf.text("Motivo Devolução: "+motivo_devolucao, 10, 108);
 
-        if(digitadores[i].setor == "BASE DE OPERACOES" && digitador == digitadores[i].nome && e_devolucao && digitadores[i].nome == "KLAUS BRAUN HELMICH"){
-            pdf.text("Declaração da Base de Operações", 105, 35, "center");
-            pdf.setFontSize(12);
-            pdf.text("Local de Entrega:", 10, 81);
-            pdf.setFontSize(11);
-            pdf.text(endereco_entrega, 10, 87);
-            pdf.text("Motivo Devolução: "+motivo_devolucao, 10, 108);
-        }else if (digitadores[i].setor == "BASE DE OPERACOES" && digitador == digitadores[i].nome){
-            pdf.text("Declaração da Base de Operações", 105, 35, "center");
-            pdf.setFontSize(12);
-            pdf.text("Local de Entrega:", 10, 81);
-            pdf.setFontSize(11);
-            pdf.text(endereco_entrega, 10, 87);
-            pdf.text("Motivo Devolução: "+motivo_devolucao, 10, 108);
+            pdf.setFont("arial","normal");
+            pdf.setFontSize(5)
+            pdf.text("Endereço Entrega",17,202)
+            pdf.setFont("arial","bold");
+            pdf.setFontSize(6)
+            pdf.text(endereco_entrega,17,206)
+
+            pdf.setFont("arial","normal");
+            pdf.setFontSize(5)
+            pdf.text("Motivo Devolução", 122, 202)
+            pdf.setFont("arial","bold");
+            pdf.setFontSize(11)
+            pdf.text(motivo_devolucao,122,206)
+
+            pdf.setFont("arial","normal");
+            pdf.setFontSize(5)
+            pdf.text("Devolução", 192,202)
+            pdf.setFont("arial","bold");
+            pdf.setFontSize(11)
+            pdf.text("Sim",192,206)
         } else if (digitadores[i].setor == "SOLUCOES" && digitador == digitadores[i].nome) {
             pdf.text("Declaração do Setor de Soluções", 105, 35, "center");
             pdf.setFontSize(12);
             pdf.text("Local de Entrega:", 10, 81);
             pdf.setFontSize(11);
             pdf.text(endereco_entrega_dest, 10, 87);
+
+            pdf.setFont("arial","normal");
+            pdf.setFontSize(5)
+            pdf.text("Endereço Entrega",17,202)
+            pdf.setFont("arial","bold");
+            pdf.setFontSize(6)
+            pdf.text(endereco_entrega_dest,17,206)
+
+
+            pdf.setFont("arial","normal");
+            pdf.setFontSize(5)
+            pdf.text("Devolução", 192,202)
+            pdf.setFont("arial","bold");
+            pdf.setFontSize(11)
+            pdf.text("Não",192,206)
         }else if ( digitadores[i].setor == "ATENDIMENTO" && digitador == digitadores[i].nome && e_devolucao) {
             pdf.text("Declaração de Devolução", 105, 35, "center");
             pdf.setFontSize(12);
@@ -1691,12 +1723,96 @@ function reimprmir_pdf() {
             pdf.text(endereco_entrega, 10, 87);
             pdf.text("Motivo Devolução: "+motivo_devolucao, 10, 108);
             
+            pdf.setFont("arial","normal");
+            pdf.setFontSize(5)
+            pdf.text("Endereço Entrega",17,202)
+            pdf.setFont("arial","bold");
+            pdf.setFontSize(6)
+            pdf.text(endereco_entrega,17,206)
+
+            pdf.setFont("arial","normal");
+            pdf.setFontSize(5)
+            pdf.text("Motivo Devolução", 122, 202)
+            pdf.setFont("arial","bold");
+            pdf.setFontSize(11)
+            pdf.text(motivo_devolucao,122,206)
+
+            pdf.setFont("arial","normal");
+            pdf.setFontSize(5)
+            pdf.text("Devolução", 192,202)
+            pdf.setFont("arial","bold");
+            pdf.setFontSize(11)
+            pdf.text("Sim",192,206)
+            
         }else if(digitadores[i].setor == "ATENDIMENTO" && digitador == digitadores[i].nome){
             pdf.text("Declaração de Entrega", 105, 35, "center");
             pdf.setFontSize(12);
             pdf.text("Local de Entrega:", 10, 81);
             pdf.setFontSize(11);
             pdf.text(endereco_entrega_dest, 10, 87);
+
+            pdf.setFont("arial","normal");
+            pdf.setFontSize(5)
+            pdf.text("Endereço Entrega",17,202)
+            pdf.setFont("arial","bold");
+            pdf.setFontSize(6)
+            pdf.text(endereco_entrega_dest,17,206)
+
+            pdf.setFont("arial","normal");
+            pdf.setFontSize(5)
+            pdf.text("Devolução", 192,202)
+            pdf.setFont("arial","bold");
+            pdf.setFontSize(11)
+            pdf.text("Não",192,206)
+        }else if ( digitadores[i].setor == "ATENDIMENTO" && digitador == digitadores[i].nome && e_devolucao && digitadores[i].nome == "MARCELO HUBER SILVA") {
+            pdf.text("Declaração de Devolução", 105, 35, "center");
+            pdf.setFontSize(12);
+            pdf.text("Local de Entrega:", 10, 81);
+            pdf.setFontSize(11);
+            pdf.text(endereco_entrega, 10, 87);
+            pdf.text("Motivo Devolução: "+motivo_devolucao, 10, 108);
+
+            pdf.setFont("arial","normal");
+            pdf.setFontSize(5)
+            pdf.text("Endereço Entrega",17,202)
+            pdf.setFont("arial","bold");
+            pdf.setFontSize(6)
+            pdf.text(endereco_entrega,17,206)
+
+            pdf.setFont("arial","normal");
+            pdf.setFontSize(5)
+            pdf.text("Motivo Devolução", 122, 202)
+            pdf.setFont("arial","bold");
+            pdf.setFontSize(11)
+            pdf.text(motivo_devolucao,122,206)
+
+            pdf.setFont("arial","normal");
+            pdf.setFontSize(5)
+            pdf.text("Devolução", 192,202)
+            pdf.setFont("arial","bold");
+            pdf.setFontSize(11)
+            pdf.text("Sim",192,206)
+            
+        }else if(digitadores[i].setor == "ATENDIMENTO" && digitador == digitadores[i].nome && digitadores[i].nome == "MARCELO HUBER SILVA"){
+            pdf.text("Declaração de Entrega", 105, 35, "center");
+            pdf.setFontSize(12);
+            pdf.text("Local de Entrega:", 10, 81);
+            pdf.setFontSize(11);
+            pdf.text(endereco_entrega_dest, 10, 87);
+
+            pdf.setFont("arial","normal");
+            pdf.setFontSize(5)
+            pdf.text("Endereço Entrega",17,202)
+            pdf.setFont("arial","bold");
+            pdf.setFontSize(6)
+            pdf.text(endereco_entrega_dest,17,206)
+
+            pdf.setFont("arial","normal");
+            pdf.setFontSize(5)
+            pdf.text("Devolução", 192,202)
+            pdf.setFont("arial","bold");
+            pdf.setFontSize(11)
+            pdf.text("Não",192,206)
         }
         
     }
@@ -1747,8 +1863,48 @@ function reimprmir_pdf() {
     //linha de baixo do aviso de conformidade
     pdf.line(1,130,209,130)
     pdf.setFontSize(11)
-    pdf.setFont("arial","italic");
-    pdf.text("Decalro para os fins devidos, que recebi em perfeito estado as mercadorias pela empresa Expresso São Miguel S/A.",104,126,"center");
+    pdf.setFont("arial","bold");
+    pdf.text("Documentos Anexados",104,126,"center",);
+
+    pdf.line(1,208,209,208)
+
+    pdf.setFontSize(7)
+    pdf.setFont('arial','normal')
+    pdf.text("Remetente: "+nome_remetente,5, 212)
+    pdf.text("Endereço: "+nome_log+ " "+num_log,5,216)
+    pdf.text("Bairro: "+bairro,5,220)
+    pdf.text("Cidade: "+cidade,5,224)
+
+    //divisória horizontal dos dados do remetente/destinatário
+    pdf.line(105,208,105,230)
+
+    pdf.setFontSize(7)
+    pdf.setFont('arial','normal')
+    pdf.text("Destinatário: "+nome_destinatario,107, 212)
+    pdf.text("Endereço: "+nome_log_dest+" "+num_log_dest,107,216)
+    pdf.text("Bairro: "+bairro_dest,107,220)
+    pdf.text("Cidade: "+cidade_dest,107,224)
+
+    pdf.setLineDash([1,1])
+    pdf.line(1,199,209,199)
+    //linha acima da assinatura do recebedor
+    pdf.setLineDash([0,0])
+    pdf.line(1,200,209,200)
+
+
+    //celula numero declara
+    pdf.line(15,208,15,200)
+    pdf.setFontSize(5)
+    pdf.text("Declaração",2,202)
+    pdf.setFontSize(9)
+    pdf.setFont('arial','bold')
+    pdf.text(num_declara,5,206)
+
+    //linha celula endereço entrega
+    pdf.line(120,208,120,200)
+
+    // linha celula é devolucao
+    pdf.line(190, 208, 190, 200)
 
     //borda em volta da folha
     pdf.line(1, 1, 209, 1);
@@ -1805,29 +1961,71 @@ function reimprmir_pdf() {
 
     pdf.text('Nota Fiscal', 100, 241)
 
+    var x_chave_comp_r = 2
+    var y_chave_comp_r = 245
+
+    var x_num_nf_comp_r = 100
+    var y_num_nf_comp_r = 245
+
     for (const i in dados_salvos.documentos) {
         if (Object.hasOwnProperty.call(dados_salvos.documentos, i)) {
             const element = dados_salvos.documentos[i];
             pdf.setFontSize(10)
             pdf.setFont('Times New Roman','normal')
-            pdf.text(element.chave_nf,x_chave_comp,y_chave_comp)
-            pdf.text(element.num_nf,x_num_nf_comp,y_num_nf_comp)
+            pdf.text(element.chave_nf,x_chave_comp_r,y_chave_comp_r)
+            pdf.text(element.num_nf,x_num_nf_comp_r,y_num_nf_comp_r)
         }
-        y_chave_comp += 4
-        y_num_nf_comp += 4
+        y_chave_comp_r += 4
+        y_num_nf_comp_r += 4
     }
 
-    x_chave_comp = 2
-    y_chave_comp = 241
+    x_chave_comp_r = 2
+    y_chave_comp_r = 241
 
-    x_num_nf_comp = 100
-    y_num_nf_comp = 241
+    x_num_nf_comp_r = 100
+    y_num_nf_comp_r = 241
 
     pdf.setFontSize(8)
+
+    pdf.setFontSize(5)
+    pdf.setFont('arial','normal')
+    pdf.text("Observação",2,232)
+    pdf.setFontSize(7)
+    pdf.setFont('arial','bold')
+    pdf.text(observacao,2,236)
+
+    //linha divisao obs/rota entrega
+    pdf.line(120,238,120,230)
+    pdf.setFontSize(5)
+    pdf.setFont('arial','normal')
+    pdf.text('Rota Entrega', 121, 232)
+    pdf.setFontSize(7)
+    pdf.setFont('arial','bold')
+    pdf.text(rota_entrega, 121, 236)
+
+    pdf.line(132,238,132,230)
+
+    pdf.setFontSize(5)
+    pdf.setFont('arial','normal')
+    pdf.text('Chave', 133, 232)
+    pdf.setFontSize(7)
+    pdf.setFont('arial','bold')
+    pdf.text(dados_salvos.documentos[0].chave_nf, 133, 236)
+
+    pdf.line(190,238,190,230)
+
+    pdf.setFontSize(5)
+    pdf.setFont('arial','normal')
+    pdf.text('NF', 191, 232)
+    pdf.setFontSize(7)
+    pdf.setFont('arial','bold')
+    pdf.text(dados_salvos.documentos[0].num_nf, 191, 236)
 
     pdf.line(132,238,132,260)
     pdf.text("Declaro para os devidos fins, que recebi em perfeito estado as\nmercadorias descritas ao lado transportadas\n pela Empresa Expresso São Miguel S/A.",170,241,'center')
     pdf.line(132,249,209,249)
+
+    
 
     //divisoria volume/peso
     pdf.line(170,249,170,260)
@@ -1837,13 +2035,13 @@ function reimprmir_pdf() {
     pdf.text('Volume', 133, 252)
     pdf.setFontSize(16)
     pdf.setFont('arial','bold')
-    pdf.text(volumes_totais.toString(), 133, 258)
+    pdf.text(volume_declara.toString(), 133, 258)
     pdf.setFontSize(7)
     pdf.setFont('arial','normal')
     pdf.text('Peso',171,252)
     pdf.setFontSize(16)
     pdf.setFont('arial','bold')
-    pdf.text(peso_total.toString()+'Kg', 171, 258)
+    pdf.text(peso_declara +'Kg', 171, 258)
     
 
     pdf.setFontSize(13);
@@ -1855,5 +2053,5 @@ function reimprmir_pdf() {
     pdf.text("ASSINATURA E CARIMBO DO RECEBEDOR", 100, 281);
 
 
-    pdf.save(nome_remetente+" para "+nome_destinatario+" ref NF "+lista_dados_doc[0].num_nf+" - Declaracao Num "+num_declara+".pdf");
+    pdf.save(nome_remetente+" para "+nome_destinatario+" ref NF "+dados_salvos.documentos[0].num_nf+" - Declaracao Num "+num_declara+".pdf");
 }
