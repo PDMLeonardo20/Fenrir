@@ -8,6 +8,7 @@
     <link rel="icon" href="img/nycrux.jfif">
     <title>Consulta de Localidades para Redespacho</title>
     <script src="js/main.js"></script>
+    <script src="js/teste.js"></script>
 </head>
 <body data-bs-theme="dark">
     <main>
@@ -40,7 +41,7 @@
             <div class="row mt-2">
                 <div class="col">
                     <div class="form-floating">
-                        <input list="cliente_redesp" name="cliente_redespachante" id="cliente_redespachante" class="form-control" onkeyup="consulta_loc_redespacho(); this.value = this.value.  toUpperCase();">
+                        <input list="cliente_redesp" name="cliente_redespachante" id="cliente_redespachante" class="form-control" onkeyup="consulta_loc_redespacho(); this.value = this.value.toUpperCase();">
                         <label for="cliente_redespachante" class="form-label">Cliente Redespachante</label>
                         <datalist id="cliente_redesp">
                             <option value="Termolar"></option>
@@ -56,7 +57,7 @@
             <div class="row mt-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input list="cidade_redesp" name="nome_cidade_redesp" id="nome_cidade_redesp" class="form-control" onkeyup="consulta_loc_redespacho(); this.value = this.value.toUpperCase();">
+                        <input list="cidade_redesp" name="nome_cidade_redesp" id="nome_cidade_redesp" class="form-control" onkeyup="this.value = this.value.toUpperCase(); busca_cidade_ate_redesp(); ">
                         <label for="nome_cidade_redesp">Nome Cidade</label>
                         <datalist id="cidade_redesp">
                         </datalist>

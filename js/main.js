@@ -1,6 +1,9 @@
+
 /**
  * CADASTRO DE DECLARACOES DE ENTREGA
  */
+
+
 function preenchimento_automatico_rem() {
     let numero_cnpj_rem = document.getElementById("cnpj_rem").value;
     let cadastros_salvos = JSON.parse(localStorage.getItem(numero_cnpj_rem));
@@ -83,7 +86,7 @@ let nome_digitadores = [
     "LEONARDO VARGAS COELHO",
     "WELERSON RIBEIRO VARGAS",
     "JERUSA AGUIRRE CARVALHO",
-    "VINICIUS BERTELLI MELGAREJO",
+    "MARCOS ",
     "LUCAS ALVES CASTILHOS",
     "ANDRESSA GRAZIELE CORREA RODRIGUES",
     "EDUARDO DIAS MACIEL",
@@ -91,6 +94,7 @@ let nome_digitadores = [
     "JOSE AUGUSTO SAID BALTAR",
     "FABIANO FAGUNDES COELHO",
     "PATRICIA BECKER DOS SANTOS NORA",
+    "VINICIUS BERTELLI MELGAREJO",
     "GELSON BRIZOLLA DE BRIZOLA",
     "GISELE FERRIRA DORNELES",
     "JOSE AUGUSTO SAID BALTAR",
@@ -111,7 +115,7 @@ let digitadores = [
     {nome: "LEONARDO VARGAS COELHO", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "WELERSON RIBEIRO VARGAS", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "JERUSA AGUIRRE CARVALHO", setor: "ATENDIMENTO", cargo: "ATENDENTE II"},
-    {nome: "VINICIUS BERTELLI MELGAREJO", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
+    {nome: "MARCOS ", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "LUCAS ALVES CASTILHOS", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "ANDRESSA GRAZIELE CORREA RODRIGUES", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "EDUARDO DIAS MACIEL", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
@@ -122,6 +126,7 @@ let digitadores = [
     {nome: "GELSON BRIZOLLA DE BRIZOLA", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
     {nome: "GISELE FERRIRA DORNELES", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
     {nome: "JOSE AUGUSTO SAID BALTAR", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
+    {nome: "VINICIUS BERTELLI MELGAREJO", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
     // Solucoes
     {nome: "PABLO CANABARRO DA SILVA", setor: "SOLUCOES", cargo: "ANALISTA SOLUCOES JR"},
     {nome: "CLODOALDO LACERDA DO COUTO", setor: "SOLUCOES", cargo: "ANALISTA SOLUCOES JR"},
@@ -2005,6 +2010,7 @@ function reimprmir_pdf() {
 
     pdf.line(132,238,132,230)
 
+    pdf.line(1,238,209,238)
     pdf.setFontSize(5)
     pdf.setFont('arial','normal')
     pdf.text('Chave', 133, 232)
