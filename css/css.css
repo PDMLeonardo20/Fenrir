@@ -18,3 +18,9 @@ unselectable {
     -ms-user-select: none;
     user-select: none;
 }
+
+#mapa{
+    height: 400px;
+    width: 700px;
+    margin: auto;
+}

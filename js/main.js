@@ -129,7 +129,7 @@ let digitadores = [
     {nome: "VINICIUS BERTELLI MELGAREJO", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
     // Solucoes
     {nome: "PABLO CANABARRO DA SILVA", setor: "SOLUCOES", cargo: "ANALISTA SOLUCOES JR"},
-    {nome: "CLODOALDO LACERDA DO COUTO", setor: "SOLUCOES", cargo: "ANALISTA SOLUCOES JR"},
+    {nome: "THIAGO MENEZES", setor: "SOLUCOES", cargo: "ANALISTA SOLUCOES JR"},
     {nome: "JESSIKA BARBOSA BORGES", setor: "SOLUCOES", cargo: "ANALISTA SOLUCOES PL"},
     {nome: "LUCIANO CHAVES JOAQUIM", setor: "SOLUCOES", cargo: "AUXILIAR ADMINISTRATIVO"},
     {nome: "MATHEUS OLIVEIRA DA ROSA", setor: "SOLUCOES", cargo: "ANALISTA SOLUCOES JR"},
@@ -1577,6 +1577,15 @@ function gerar_pdf() {
     pdf.setFont("arial","bold");
     pdf.text("DATA E HORA DO RECEBIMENTO",13, 281);
     pdf.text("ASSINATURA E CARIMBO DO RECEBEDOR", 100, 281);
+
+    pdf.line(1,286,209,286)
+
+    pdf.line(105,294,105,286)
+
+    pdf.setFont("arial","normal")
+    pdf.setFontSize(10)
+    pdf.text('Data Emissão: '+data_cadastro_baixa, 2, 291)
+    pdf.text('Emissor: '+digitador, 106,291)
 
 
     pdf.save(nome_remetente+" para "+nome_destinatario+" ref NF "+lista_dados_doc[0].num_nf+" - Declaracao Num "+num_declara+".pdf");
