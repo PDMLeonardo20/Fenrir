@@ -1177,6 +1177,9 @@ function gerar_pdf() {
             pdf.text(endereco_entrega, 10, 87);
             pdf.text("Motivo Devolução: "+motivo_devolucao, 10, 108);
 
+            pdf.setFontSize(12)
+            pdf.text("Problemas na entrega, favor ligar e falar com o setor de Base de Operações",105,196,'center')
+
             pdf.setFont("arial","normal");
             pdf.setFontSize(5)
             pdf.text("Endereço Entrega",17,202)
@@ -1204,6 +1207,8 @@ function gerar_pdf() {
             pdf.setFontSize(11);
             pdf.text(endereco_entrega_dest, 10, 87);
 
+            pdf.text("Problemas na entrega, favor ligar e falar com o setor de Soluções",105,196,'center')
+
             pdf.setFont("arial","normal");
             pdf.setFontSize(5)
             pdf.text("Endereço Entrega",17,202)
@@ -1225,6 +1230,8 @@ function gerar_pdf() {
             pdf.setFontSize(11);
             pdf.text(endereco_entrega, 10, 87);
             pdf.text("Motivo Devolução: "+motivo_devolucao, 10, 108);
+
+            pdf.text("Problemas na entrega, favor ligar e falar com o setor de Atendimento",105,196,'center')
             
             pdf.setFont("arial","normal");
             pdf.setFontSize(5)
@@ -1254,6 +1261,8 @@ function gerar_pdf() {
             pdf.setFontSize(11);
             pdf.text(endereco_entrega_dest, 10, 87);
 
+            pdf.text("Problemas na entrega, favor ligar e falar com o setor de Atendimento",105,196,'center')
+
             pdf.setFont("arial","normal");
             pdf.setFontSize(5)
             pdf.text("Endereço Entrega",17,202)
@@ -1274,6 +1283,8 @@ function gerar_pdf() {
             pdf.setFontSize(11);
             pdf.text(endereco_entrega, 10, 87);
             pdf.text("Motivo Devolução: "+motivo_devolucao, 10, 108);
+
+            pdf.text("Problemas na entrega, favor ligar e falar com o setor de Atendimento",105,196,'center')
 
             pdf.setFont("arial","normal");
             pdf.setFontSize(5)
@@ -1436,9 +1447,16 @@ function gerar_pdf() {
     pdf.text("Cidade: "+cidade_dest,107,224)
 
     pdf.setLineDash([1,1])
-    pdf.line(1,199,209,199)
+    pdf.line(1,179,209,179)
     //linha acima da assinatura do recebedor
     pdf.setLineDash([0,0])
+    pdf.line(1,180,209,180)
+    pdf.setFontSize(9)
+    pdf.text("Ressalva", 2, 184)
+
+
+    pdf.line(1,190,209,190) // linha do campo "problemas na entrega"(localizado na verificação de setores)
+
     pdf.line(1,200,209,200)
 
 
@@ -1688,6 +1706,8 @@ function reimprmir_pdf() {
             pdf.text(endereco_entrega, 10, 87);
             pdf.text("Motivo Devolução: "+motivo_devolucao, 10, 108);
 
+            pdf.text("Problemas na entrega, favor ligar e falar com o setor de Base de Operações",105,196,'center')
+
             pdf.setFont("arial","normal");
             pdf.setFontSize(5)
             pdf.text("Endereço Entrega",17,202)
@@ -1715,6 +1735,8 @@ function reimprmir_pdf() {
             pdf.setFontSize(11);
             pdf.text(endereco_entrega_dest, 10, 87);
 
+            pdf.text("Problemas na entrega, favor ligar e falar com o setor de Soluções",105,196,'center')
+
             pdf.setFont("arial","normal");
             pdf.setFontSize(5)
             pdf.text("Endereço Entrega",17,202)
@@ -1736,6 +1758,8 @@ function reimprmir_pdf() {
             pdf.setFontSize(11);
             pdf.text(endereco_entrega, 10, 87);
             pdf.text("Motivo Devolução: "+motivo_devolucao, 10, 108);
+
+            pdf.text("Problemas na entrega, favor ligar e falar com o setor de Atendimento",105,196,'center')
             
             pdf.setFont("arial","normal");
             pdf.setFontSize(5)
@@ -1764,6 +1788,8 @@ function reimprmir_pdf() {
             pdf.text("Local de Entrega:", 10, 81);
             pdf.setFontSize(11);
             pdf.text(endereco_entrega_dest, 10, 87);
+
+            pdf.text("Problemas na entrega, favor ligar e falar com o setor de Atendimento",105,196,'center')
 
             pdf.setFont("arial","normal");
             pdf.setFontSize(5)
@@ -1900,11 +1926,17 @@ function reimprmir_pdf() {
     pdf.text("Cidade: "+cidade_dest,107,224)
 
     pdf.setLineDash([1,1])
-    pdf.line(1,199,209,199)
+    pdf.line(1,179,209,179)
     //linha acima da assinatura do recebedor
     pdf.setLineDash([0,0])
-    pdf.line(1,200,209,200)
+    pdf.line(1,180,209,180)
+    pdf.setFontSize(9)
+    pdf.text("Ressalva", 2, 184)
 
+
+    pdf.line(1,190,209,190) // linha do campo "problemas na entrega"(localizado na verificação de setores)
+
+    pdf.line(1,200,209,200)
 
     //celula numero declara
     pdf.line(15,208,15,200)
@@ -2066,6 +2098,15 @@ function reimprmir_pdf() {
     pdf.setFont("arial","bold");
     pdf.text("DATA E HORA DO RECEBIMENTO",13, 281);
     pdf.text("ASSINATURA E CARIMBO DO RECEBEDOR", 100, 281);
+
+    pdf.line(1,286,209,286)
+
+    pdf.line(105,294,105,286)
+
+    pdf.setFont("arial","normal")
+    pdf.setFontSize(10)
+    pdf.text('Data Emissão: '+data_cadastro_baixa, 2, 291)
+    pdf.text('Emissor: '+digitador, 106,291)
 
 
     pdf.save(nome_remetente+" para "+nome_destinatario+" ref NF "+dados_salvos.documentos[0].num_nf+" - Declaracao Num "+num_declara+".pdf");
