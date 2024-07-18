@@ -24,6 +24,7 @@ function preenchimento_automatico_rem() {
         
     }
 }
+
 function preenchimento_automatico_dest() {
     let numero_cnpj_dest = document.getElementById("cnpj_dest").value;
     let cadastros_salvos = JSON.parse(localStorage.getItem(numero_cnpj_dest));
@@ -45,62 +46,28 @@ function preenchimento_automatico_dest() {
         
     }
 }
-/**
-
-function limpa_campos(){
-    if (confirm("Deseja limpar todos os campos?")) {
-        document.getElementById("num_declara").value = "";
-        document.getElementById("cnpj_rem").value = "";
-        document.getElementById("nome_remetente").value = "";
-        document.getElementById("nome_log").value = "";
-        document.getElementById("num_log").value = "";
-        document.getElementById("bairro").value = "";
-        document.getElementById("cidade").value = "";
-        document.getElementById("unidade_federativa").value = "";
-        
-        document.getElementById("cnpj_dest").value = "";
-        document.getElementById("nome_destinatario").value = "";
-        document.getElementById("nome_log_dest").value = "";
-        document.getElementById("num_log_dest").value = "";
-        document.getElementById("bairro_dest").value = "";
-        document.getElementById("cidade_dest").value = "";
-        document.getElementById("unidade_federativa_dest").value = "";
-        document.getElementById("e_devolucao").checked = false;
-    }
-}
-
-function calc_iss() {
-    let valor_servico = document.getElementById("valor_srv_declara").value;
-    let porcentagem_iss_poa = 0.05;
-    
-    let iss_declara = valor_servico * porcentagem_iss_poa;
-    
-    
-    document.getElementById("valor_iss_declara").value = iss_declara.toFixed(2);
-    console.log(iss_declara);
-}
-*/
 
 let nome_digitadores = [
     //ATENDIMENTO
     "LEONARDO VARGAS COELHO",
     "WELERSON RIBEIRO VARGAS",
     "JERUSA AGUIRRE CARVALHO",
-    "MARCOS ",
+    "MARCOS VINICIUS PEDRO HALL",
     "LUCAS ALVES CASTILHOS",
     "ANDRESSA GRAZIELE CORREA RODRIGUES",
     "EDUARDO DIAS MACIEL",
+    "LUCIANE MACHADO DE SOUZA",
+    "JEFERSON PADILHA",
     //BASE DE OPERACOES
-    "JOSE AUGUSTO SAID BALTAR",
+    "LARISSA DO ROUSARIO MOREIRA",
     "FABIANO FAGUNDES COELHO",
     "PATRICIA BECKER DOS SANTOS NORA",
     "VINICIUS BERTELLI MELGAREJO",
     "GELSON BRIZOLLA DE BRIZOLA",
     "GISELE FERRIRA DORNELES",
-    "JOSE AUGUSTO SAID BALTAR",
     // SOLUCOES
     "PABLO CANABARRO DA SILVA",
-    "CLODOALDO LACERDA DO COUTO",
+    "THIAGO MENEZES",
     "JESSIKA BARBOSA BORGES",
     "LUCIANO CHAVES JOAQUIM",
     "MATHEUS OLIVEIRA DA ROSA",
@@ -115,17 +82,18 @@ let digitadores = [
     {nome: "LEONARDO VARGAS COELHO", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "WELERSON RIBEIRO VARGAS", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "JERUSA AGUIRRE CARVALHO", setor: "ATENDIMENTO", cargo: "ATENDENTE II"},
-    {nome: "MARCOS ", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
+    {nome: "MARCOS VINICIUS PEDRO HALL", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "LUCAS ALVES CASTILHOS", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "ANDRESSA GRAZIELE CORREA RODRIGUES", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "EDUARDO DIAS MACIEL", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
+    {nome: "LUCIANE MACHADO DE SOUZA", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
+    {nome: "JEFERSON PADILHA", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     // Base de operacoes
-    {nome: "JOSE AUGUSTO SAID BALTAR", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
     {nome: "FABIANO FAGUNDES COELHO", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
     {nome: "PATRICIA BECKER DOS SANTOS NORA", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
     {nome: "GELSON BRIZOLLA DE BRIZOLA", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
     {nome: "GISELE FERRIRA DORNELES", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
-    {nome: "JOSE AUGUSTO SAID BALTAR", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
+    {nome: "LARISSA DO ROUSARIO MOREIRA", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
     {nome: "VINICIUS BERTELLI MELGAREJO", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
     // Solucoes
     {nome: "PABLO CANABARRO DA SILVA", setor: "SOLUCOES", cargo: "ANALISTA SOLUCOES JR"},
@@ -287,11 +255,11 @@ function cadastrar_ciente_cad_declara(cnpj,nome_c,nome_log,num_log,bairro_c,cida
     }
 }
 
+// paranaue pra adicionar vários documentos em uma declaracao
+
 lista_dados_doc = []
 lista_vol_doc = []
 lista_peso_doc = []
-
-
 
 function insere_doc() {
     var chave_nf = document.getElementById('chave_nf').value
