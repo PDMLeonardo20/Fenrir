@@ -7,13 +7,12 @@
     <link rel="stylesheet" href="css/css.css">
     <link rel="icon" href="img/nycrux.jfif">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="js/cadastro_comprovante_entrega.js"></script>
-    <title>Cadastro Comprovante Entrega</title>
+    <title>Consultar Comprovante</title>
 </head>
 <body data-bs-theme="dark">
     <main>
         <section class=" m-2 bg-primary-subtle border border-primary rounded-3 p-3" >
-            <h1 class="display-4 text-center">Cadastro de Comprovantes de Entrega</h1>
+            <h1 class="display-4 text-center">Consulta Comprovantes de Entrega</h1>
         </section>
         <section class="text-center">
             <ul class="nav nav-tabs bg-body-tertiary">
@@ -33,68 +32,73 @@
                     <a href="consulta_loc_ate_redesp.html" class="nav-link">Consulta Loc. Ate. p/ Redespacho</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link active">Cadastro de Comprovante de Entrega</a>
+                    <a href="cad_comprovante_entrega.html" class="nav-link">Cadastro de Comprovante de Entrega</a>
                 </li>
                 <li class="nav-item">
-                    <a href="cons_comprovante.html" class="nav-link">Consulta de Comprovante de Entrega</a>
+                    <a href="#" class="nav-link active">Consulta de Comprovante de Entrega</a>
                 </li>
             </ul>
         </section>
-        <section class="container">
-            <div class="row">
-                <div class="col"><h5 class="bg-primary m-3 p-2 rounded-3 text-center">Dados do Comprovante</h5></div>
+        <section class="container m-2">
+            <div class="row mt-2">
+                <div class="col bg-primary rounded-3 p-3">
+                    <label for="busca_comprovante" class="form-label">Buscar Comprovante (Insira o número da Declaração)</label>
+                    <input type="search" name="busca_comprovante" id="busca_comprovante" class="form-control" onkeyup="consultar_comprovantes()">
+                </div>
+            </div>
+        </section>
+        <section class="container mt-3">
+            <div class="row mt-3">
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="number" name="cnpj_rem_cons_comp" id="cnpj_rem_cons_comp" class="form-control">
+                        <label for="cnpj_rem_cons_comp">CNPJ Remetente</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="nome_rem_cons_comp" id="nome_rem_cons_comp" class="form-control" readonly>
+                        <label for="nome_rem_cons_comp">Nome Remetente</label>
+                    </div>
+                </div>
             </div>
             <div class="row mt-3">
                 <div class="col-2">
                     <div class="form-floating">
-                        <input type="number" name="cnpj_rem_cad_comp" id="cnpj_rem_cad_comp" class="form-control" onkeyup="preenchimento_automatico_rem_cad_comp()">
-                        <label for="cnpj_rem_cad_comp">CNPJ Remetente</label>
+                        <input type="number" name="cnpj_dest_cons_comp" id="cnpj_dest_cons_comp" class="form-control">
+                        <label for="cnpj_dest_cons_comp">CNPJ Destinatário</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input type="text" name="nome_rem_cad_comp" id="nome_rem_cad_comp" class="form-control" readonly>
-                        <label for="nome_rem_cad_comp">Nome Remetente</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-2">
-                    <div class="form-floating">
-                        <input type="number" name="cnpj_dest_cad_comp" id="cnpj_dest_cad_comp" class="form-control" onkeyup="preenchimento_automatico_dest_cad_comp()">
-                        <label for="cnpj_dest_cad_comp">CNPJ Destinatário</label>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating">
-                        <input type="text" name="nome_dest_cad_comp" id="nome_dest_cad_comp" class="form-control" readonly>
-                        <label for="nome_dest_cad_comp">Nome Destinatário</label>
+                        <input type="text" name="nome_dest_cons_comp" id="nome_dest_cons_comp" class="form-control" readonly>
+                        <label for="nome_dest_cons_comp">Nome Destinatário</label>
                     </div>
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input type="text" name="num_dec_cad_comp" id="num_dec_cad_comp" class="form-control">
-                        <label for="num_dec_cad_comp">N° Declaração</label>
+                        <input type="text" name="num_dec_cons_comp" id="num_dec_cons_comp" class="form-control">
+                        <label for="num_dec_cons_comp">N° Declaração</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input type="text" name="num_nf_cad_comp" id="num_nf_cad_comp" class="form-control">
-                        <label for="num_nf_cad_comp">N° Nota Fiscal</label>
+                        <input type="text" name="num_nf_cons_comp" id="num_nf_cons_comp" class="form-control">
+                        <label for="num_nf_cons_comp">N° Nota Fiscal</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input type="text" name="num_vol_cad_comp" id="num_vol_cad_comp" class="form-control">
-                        <label for="num_vol_cad_comp">Volume</label>
+                        <input type="text" name="num_vol_cons_comp" id="num_vol_cons_comp" class="form-control">
+                        <label for="num_vol_cons_comp">Volume</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input type="text" name="num_peso_cad_comp" id="num_peso_cad_comp" class="form-control">
-                        <label for="num_peso_cad_comp">Peso</label>
+                        <input type="text" name="num_peso_cons_comp" id="num_peso_cons_comp" class="form-control">
+                        <label for="num_peso_cons_comp">Peso</label>
                     </div>
                 </div>
             </div>
@@ -102,14 +106,10 @@
                 <div class="col"><h5 class="bg-primary m-3 p-2 rounded-3 text-center">Foto do Comprovante</h5></div>
             </div>
             <div class="row mt-3">
-                <div class="col">
-                    <label for="foto_comprovante">Selecione uma foto de comprovante</label>
-                    <input type="file" name="foto_comprovante" id="foto_comprovante" class="form-control">
-                </div>
-                <button class="btn btn-success mt-3" onclick="cadastrar_comprovante()">Cadastrar Comprovante</button>
+                <img src="" alt="" id="foto_comp_cons">
             </div>
         </section>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="js/cadastro_comprovante_entrega.js"></script>
 </body>
 </html>
