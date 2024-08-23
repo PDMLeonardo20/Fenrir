@@ -1,7 +1,5 @@
 let db_comprovantes = new Localbase('db_comprovantes')
 
-
-
 function cad_comp() {
     let numero_declaracao = document.getElementById('numero_declaracao').value;
     let numero_nota_fiscal = document.getElementById('numero_nota_fiscal').value;
@@ -9,19 +7,17 @@ function cad_comp() {
     let peso_declaracao = document.getElementById('peso_declaracao').value;
     let foto_comprovante = document.getElementById('foto_comprovante');
     if (numero_declaracao == "") {
-        alert('Necessário informar um número de declaração')
+        document.getElementById('resultado_cad_comp').innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>Necessário informar um número de declaração.</p>"
     } else if(numero_nota_fiscal == ""){
-        alert('Necessário informar um número de nota fiscal')
+        document.getElementById('resultado_cad_comp').innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>Necessário informar um numero de nota fiscal.</p>"
     }else if (foto_comprovante.files.length == 0){
-        alert('Necessário anexar uma foto de um comprovante')
+        document.getElementById('resultado_cad_comp').innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>Necessário anexar uma foto de um comprovante.</p>"
     } else if (foto_comprovante.files && foto_comprovante.files[0]){
         const reader = new FileReader();
 
         reader.readAsDataURL(foto_comprovante.files[0])
         reader.onload = function (e) {
             const foto_comp_b64 = e.target.result;
-            
-            
             db_comprovantes.collection('comprovantes').add({
                 id: numero_nota_fiscal,
                 numero_declaracao: numero_declaracao,
@@ -33,8 +29,7 @@ function cad_comp() {
                 console.log(comps)
             })
         }
-        alert('foi')
-        
+        document.getElementById('resultado_cad_comp').innerHTML = "<p class='text-bg-success p-3 mt-3 rounded-3'>Cadastro realizado com sucesso.</p>"
     }
 }
 

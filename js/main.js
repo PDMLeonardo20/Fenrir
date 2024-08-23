@@ -559,7 +559,7 @@ function cadastrar_dados_com_chave() {
 
 function copia_dados_dest() {
     let cnpj_rem = document.getElementById("cnpj_rem").value;
-    let nome_remetente = document.getElementById("nome_remetente").value
+    let nome_remetente = document.getElementById("nome_remetente").value;
     let nome_log = document.getElementById("nome_log_rem").value;
     let num_log = document.getElementById("num_log_rem").value;
     let bairro = document.getElementById("bairro_rem").value;
@@ -1047,16 +1047,16 @@ function alterar_declaracao() {
 }
 
 var x_chave = 5
-var y_chave = 140
+var y_chave = 135.5
 
 var x_num_nf = 100
-var y_num_nf = 140
+var y_num_nf = 135.5
 
 var x_chave_comp = 2
-var y_chave_comp = 245
+var y_chave_comp = 244
 
 var x_num_nf_comp = 100
-var y_num_nf_comp = 245
+var y_num_nf_comp = 244
 
 
 
@@ -1378,10 +1378,10 @@ function gerar_pdf() {
     //divisória dos documentos pertencentes a declaração
     //pdf.line(105,130,105,230)
 
-    pdf.setFontSize(10)
-    pdf.setFont('Times New Roman','normal')
-    pdf.text('Chave', 5, 135)
-    pdf.text('Nota Fiscal', 100, 135)
+    pdf.setFontSize(8)
+    pdf.setFont('Times New Roman','bold')
+    pdf.text('Chave', 5, 133)
+    pdf.text('Nota Fiscal', 100, 133)
 
     /*
     for (const i in lista_vol_doc) {
@@ -1447,7 +1447,7 @@ function gerar_pdf() {
     for (const i in lista_dados_doc) {
         if (Object.hasOwnProperty.call(lista_dados_doc, i)) {
             const element = lista_dados_doc[i];
-            pdf.setFontSize(10)
+            pdf.setFontSize(7)
             pdf.setFont('Times New Roman','normal')
             pdf.text(element.chave_nf,x_chave,y_chave)
             pdf.text(element.num_nf,x_num_nf,y_num_nf)
@@ -1457,15 +1457,15 @@ function gerar_pdf() {
             
 
         }
-        y_chave += 6
-        y_num_nf += 6
+        y_chave += 3
+        y_num_nf += 3
     }
 
     x_chave = 5
-    y_chave = 140
+    y_chave = 135.5
 
     x_num_nf = 100
-    y_num_nf = 140
+    y_num_nf = 135.5
 
     //linha acima dos dados do recebedor
     pdf.line(1,230,209,230)
@@ -1516,21 +1516,21 @@ function gerar_pdf() {
     for (const i in lista_dados_doc) {
         if (Object.hasOwnProperty.call(lista_dados_doc, i)) {
             const element = lista_dados_doc[i];
-            pdf.setFontSize(8)
+            pdf.setFontSize(7)
             pdf.setFont('Times New Roman','normal')
             pdf.text(element.chave_nf,x_chave_comp,y_chave_comp)
             pdf.text(element.num_nf,x_num_nf_comp,y_num_nf_comp)
 
         }
-        y_chave_comp += 4
-        y_num_nf_comp += 4
+        y_chave_comp += 3
+        y_num_nf_comp += 3
     }
 
     x_chave_comp = 2
-    y_chave_comp = 245
+    y_chave_comp = 244
 
     x_num_nf_comp = 100
-    y_num_nf_comp = 245
+    y_num_nf_comp = 244
 
     //linha divisória notas comprovante/declaracao de recebimento
     pdf.setFontSize(8)
@@ -1938,24 +1938,24 @@ function reimprmir_pdf() {
     pdf.text("Endereço: "+nome_log_dest +", "+ num_log_dest +", "+ bairro_dest +", "+cidade_dest, 10, 70);
 
     pdf.setFontSize(10)
-    pdf.setFont('Times New Roman','normal')
+    pdf.setFont('Times New Roman','bold')
     pdf.text('Chave', 5, 135)
     pdf.text('Nota Fiscal', 100, 135)
 
     
 
     var x_chave_cad = 5
-    var y_chave_cad = 140
+    var y_chave_cad = 138
 
     var x_num_nf_cad = 100
-    var y_num_nf_cad = 140
+    var y_num_nf_cad = 138
 
     
 
     for (const i in dados_salvos.documentos) {
         if (Object.hasOwnProperty.call(dados_salvos.documentos, i)) {
             const element = dados_salvos.documentos[i];
-            pdf.setFontSize(10)
+            pdf.setFontSize(7)
             pdf.setFont('Times New Roman','normal')
             pdf.text(element.chave_nf,x_chave_cad,y_chave_cad)
             pdf.text(element.num_nf,x_num_nf_cad,y_num_nf_cad)
@@ -1963,9 +1963,15 @@ function reimprmir_pdf() {
             
 
         }
-        y_chave_cad += 6
-        y_num_nf_cad += 6
+        y_chave_cad += 3
+        y_num_nf_cad += 3
     }
+
+    x_chave_cad = 5
+    y_chave_cad = 138
+
+    x_num_nf_cad = 100
+    y_num_nf_cad = 138
 
     pdf.line(1,230,209,230)
     pdf.line(1,260,209,260)
@@ -1976,28 +1982,28 @@ function reimprmir_pdf() {
     pdf.text('Nota Fiscal', 100, 241)
 
     var x_chave_comp_r = 2
-    var y_chave_comp_r = 245
+    var y_chave_comp_r = 244
 
     var x_num_nf_comp_r = 100
-    var y_num_nf_comp_r = 245
+    var y_num_nf_comp_r = 244
 
     for (const i in dados_salvos.documentos) {
         if (Object.hasOwnProperty.call(dados_salvos.documentos, i)) {
             const element = dados_salvos.documentos[i];
-            pdf.setFontSize(10)
+            pdf.setFontSize(7)
             pdf.setFont('Times New Roman','normal')
             pdf.text(element.chave_nf,x_chave_comp_r,y_chave_comp_r)
             pdf.text(element.num_nf,x_num_nf_comp_r,y_num_nf_comp_r)
         }
-        y_chave_comp_r += 4
-        y_num_nf_comp_r += 4
+        y_chave_comp_r += 3
+        y_num_nf_comp_r += 3
     }
 
     x_chave_comp_r = 2
-    y_chave_comp_r = 241
+    y_chave_comp_r = 244
 
     x_num_nf_comp_r = 100
-    y_num_nf_comp_r = 241
+    y_num_nf_comp_r = 244
 
     pdf.setFontSize(8)
 
