@@ -4,6 +4,8 @@
  */
 
 
+
+
 function preenchimento_automatico_rem() {
     let numero_cnpj_rem = document.getElementById("cnpj_rem").value;
     let cadastros_salvos = JSON.parse(localStorage.getItem(numero_cnpj_rem));
@@ -265,7 +267,7 @@ function insere_doc() {
     var chave_nf = document.getElementById('chave_nf').value
     var num_nf = document.getElementById('num_nf').value
     var vol_nf = parseInt(document.getElementById('volume_declara').value)
-    var peso_nf = parseFloat(document.getElementById('peso_declara').value)
+    var peso_nf = document.getElementById('peso_declara').value
     
     if(chave_nf == ''){
         alert('Chave de Acesso não informada')
@@ -276,6 +278,8 @@ function insere_doc() {
     } else if (peso_nf == ''){
         alert('Peso nao informado')
     } else {
+        peso_nf = peso_nf.replace(",",".");
+        peso_nf = parseFloat(peso_nf);
         dados_doc = {
             chave_nf: chave_nf,
             num_nf: num_nf,
@@ -301,6 +305,11 @@ function insere_doc() {
 
 
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
+var num_declara = getRandomInt(99999999);
+document.getElementById('num_declara').value = num_declara
 
 function cadastrar_dados_com_chave() {
 
@@ -319,7 +328,7 @@ function cadastrar_dados_com_chave() {
     let num_nf = document.getElementById("num_nf").value;
     let volume_declara = volumes_totais;
 
-    let num_declara = document.getElementById("num_declara").value;
+    //let num_declara = document.getElementById("num_declara").value;
     let rota_entrega = document.getElementById("rota_entrega").value;
     let pegar_hora = document.getElementById("hora_cadastro_baixa").value;
     let hora_cadastro_baixa = pegar_hora.slice(11,16);
@@ -1083,8 +1092,9 @@ function gerar_pdf() {
     //dados basicos da nf
 
     let chave_nf = document.getElementById("chave_nf").value;
-    let num_declara = document.getElementById("num_declara").value;
-    let num_nf = document.getElementById("num_nf").value
+    
+    let num_nf = document.getElementById("num_nf").value;
+    document.getElementById('num_declara').value = num_declara;
 
 
 
@@ -1197,7 +1207,12 @@ function gerar_pdf() {
             pdf.text("Local de Entrega:", 10, 81);
             pdf.setFontSize(11);
             pdf.text(endereco_entrega, 10, 87);
-            pdf.text("Motivo Devolução: "+motivo_devolucao, 10, 108);
+            pdf.setFontSize(5);
+            pdf.setFont('arial','normal')
+            pdf.text("Motivo Devolução", 2, 104);
+            pdf.setFontSize(11);
+            pdf.setFont('arial','bold')
+            pdf.text(motivo_devolucao,2,109)
 
             pdf.text("Problemas na entrega, favor ligar e falar com o setor de Atendimento",105,196,'center')
             
@@ -1303,10 +1318,10 @@ function gerar_pdf() {
     pdf.setFont("arial", "normal");
     pdf.setFontSize(10);
 
-    pdf.text(data_cadastro_baixa, 160, 12);
-    pdf.text("N° Declaração: "+num_declara, 160, 16);
-    pdf.text("Rota de Entrega: "+rota_entrega,160,20);
-    pdf.text("Emissor: "+ digitador + ".", 110, 108);
+    //pdf.text(data_cadastro_baixa, 160, 12);
+    //pdf.text("N° Declaração: "+num_declara.toString(), 160, 16);
+    //pdf.text("Rota de Entrega: "+rota_entrega,160,20);
+    //pdf.text("Emissor: "+ digitador + ".", 110, 108);
 
     pdf.line(1, 30, 209, 30); // borda acima do código de barras
 
@@ -1334,23 +1349,64 @@ function gerar_pdf() {
     },0)
 
     pdf.line(105,102,105,93);
-    pdf.line(50, 93, 50, 102)
+    pdf.line(25, 93, 25, 102);
+    pdf.setFontSize(6);
+    pdf.text('Volumes',2,95.5);
     pdf.setFontSize(11);
-    pdf.text("Volumes: "+ volumes_totais, 25.5, 99, "center");
-    pdf.text('Peso: '+ peso_total+'Kg', 76, 99, 'center')
+    pdf.setFont('arial','bold')
+    pdf.text(volumes_totais.toString(),2,100);
+    pdf.setFontSize(6);
+    pdf.setFont('arial','normal');
+    pdf.text("Peso",27,95.5);
+    pdf.setFontSize(11);
+    pdf.setFont('arial','bold');
+    pdf.text(peso_total.toFixed(3)+'Kg',27,100);
+    pdf.line(70,93,70,102);
+    pdf.setFontSize(6);
+    pdf.setFont('arial','normal');
+    pdf.text('Data/Hora de Emissão',72,95.5);
+    pdf.setFontSize(11);
+    pdf.setFont('arial','bold');
+    pdf.text(data_cadastro_baixa,72,100);
+
+
+
 
     //borda campo nota fiscal
+    pdf.setFont('arial','normal');
     pdf.line(105,102,209,102);
-    pdf.text("Nota fiscal: "+lista_dados_doc[0].num_nf, 156.5, 99, "center");
+    pdf.setFontSize(6)
+    pdf.text("N° Declaração",107,95.5);
+    pdf.setFontSize(11)
+    pdf.setFont('arial','bold')
+    pdf.text(num_declara.toString(),107,100)
+    pdf.line(130,93,130,102)
+    pdf.setFontSize(6)
+    pdf.setFont('arial','normal');
+    pdf.text('Rota de Entrega',132,95.5);
+    pdf.setFontSize(11);
+    pdf.setFont('arial','bold')
+    pdf.text(rota_entrega,132,100)
+
+    
+
 
     //borda mot dev e obs
     pdf.line(1,111,209,111);
     pdf.line(1,120,209,120);
+    pdf.setFontSize(6);
+    pdf.setFont('arial','normal')
+    pdf.text('Emissor',107,104)
+    pdf.setFontSize(11);
+    pdf.setFont('arial','bold')
+    pdf.text(digitador,107,109);
 
-    pdf.setFontSize(8)
-    pdf.text("Observação",8, 115);
+
+
+    pdf.setFontSize(5)
+    pdf.text("Observação",2, 113);
     pdf.setFontSize(10);
-    pdf.text(observacao, 25, 117);
+    pdf.text(observacao, 2, 118);
 
     //linha de baixo do aviso de conformidade
     pdf.line(1,130,209,130)
@@ -1368,12 +1424,12 @@ function gerar_pdf() {
     pdf.setFontSize(10);
     pdf.text("Remetente: "+nome_remetente + " - CNPJ/CPF: " + cnpj_rem, 10, 50);
     pdf.setFontSize(8);
-    pdf.text("Endereço: "+nome_log +", "+ num_log +", "+ bairro +", "+cidade, 10, 55);
+    pdf.text("Endereço: "+nome_log +", "+ num_log +", "+ bairro +", "+cidade+", "+unidade_federativa, 10, 55);
     
     pdf.setFontSize(10);
     pdf.text("Destinatário: "+nome_destinatario + " - CNPJ/CPF: " + cnpj_dest, 10, 65);
     pdf.setFontSize(8);
-    pdf.text("Endereço: "+nome_log_dest +", "+ num_log_dest +", "+ bairro_dest +", "+cidade_dest, 10, 70);
+    pdf.text("Endereço: "+nome_log_dest +", "+ num_log_dest +", "+ bairro_dest +", "+cidade_dest+", "+unidade_federativa_dest, 10, 70);
 
     //divisória dos documentos pertencentes a declaração
     //pdf.line(105,130,105,230)
@@ -1403,6 +1459,7 @@ function gerar_pdf() {
     pdf.text("Endereço: "+nome_log+ " "+num_log,5,216)
     pdf.text("Bairro: "+bairro,5,220)
     pdf.text("Cidade: "+cidade,5,224)
+    pdf.text("UF: "+unidade_federativa,5,228)
 
     //divisória horizontal dos dados do remetente/destinatário
     pdf.line(105,208,105,230)
@@ -1413,6 +1470,7 @@ function gerar_pdf() {
     pdf.text("Endereço: "+nome_log_dest+" "+num_log_dest,107,216)
     pdf.text("Bairro: "+bairro_dest,107,220)
     pdf.text("Cidade: "+cidade_dest,107,224)
+    pdf.text("UF: "+unidade_federativa_dest,107,228)
 
     pdf.setLineDash([1,1])
     pdf.line(1,179,209,179)
@@ -1432,9 +1490,9 @@ function gerar_pdf() {
     pdf.line(15,208,15,200)
     pdf.setFontSize(5)
     pdf.text("Declaração",2,202)
-    pdf.setFontSize(9)
+    pdf.setFontSize(8)
     pdf.setFont('arial','bold')
-    pdf.text(num_declara,5,206)
+    pdf.text(num_declara.toString(),2,206)
 
     //linha celula endereço entrega
     pdf.line(120,208,120,200)
@@ -1451,16 +1509,10 @@ function gerar_pdf() {
             pdf.setFont('Times New Roman','normal')
             pdf.text(element.chave_nf,x_chave,y_chave)
             pdf.text(element.num_nf,x_num_nf,y_num_nf)
-
-
-
-            
-
         }
         y_chave += 3
         y_num_nf += 3
     }
-
     x_chave = 5
     y_chave = 135.5
 
@@ -1573,8 +1625,9 @@ function gerar_pdf() {
     pdf.text('Data Emissão: '+data_cadastro_baixa, 2, 291)
     pdf.text('Emissor: '+digitador, 106,291)
 
+    pdf.autoPrint({variant: 'non-conform'});
+    pdf.save(nome_remetente+" para "+nome_destinatario+" ref NF "+lista_dados_doc[0].num_nf+" - Declaracao Num "+num_declara.toString()+".pdf");
 
-    pdf.save(nome_remetente+" para "+nome_destinatario+" ref NF "+lista_dados_doc[0].num_nf+" - Declaracao Num "+num_declara+".pdf");
 }
 
 
@@ -1829,14 +1882,8 @@ function reimprmir_pdf() {
     pdf.setFont("arial", "normal");
     pdf.setFontSize(10);
 
-    pdf.text(pegar_hora, 160, 12);
-    pdf.text("N° Declaração: "+num_declara, 160, 16);
-    pdf.text("Rota de Entrega: "+rota_entrega,160,20)
-    pdf.text("Emissor: "+ digitador + ".", 110, 108);
-
     pdf.line(1, 30, 209, 30); // borda acima do código de barras
 
-    //borda em volta dos dados do remetente/destino
     pdf.line(1, 44, 209, 44);
     pdf.line(1, 59, 209, 59);
     pdf.line(1, 44, 1, 76);
@@ -1851,22 +1898,66 @@ function reimprmir_pdf() {
     pdf.line(1,102,105,102);
     pdf.line(105,102,105,111)
 
+
     pdf.line(105,102,105,93);
+    pdf.line(25, 93, 25, 102);
+    pdf.setFontSize(6);
+    pdf.text('Volumes',2,95.5);
     pdf.setFontSize(11);
-    pdf.text("Volumes: "+ volume_declara, 52.5, 99, "center");
+    pdf.setFont('arial','bold')
+    pdf.text(volume_declara.toString(),2,100);
+    pdf.setFontSize(6);
+    pdf.setFont('arial','normal');
+    pdf.text("Peso",27,95.5);
+    pdf.setFontSize(11);
+    pdf.setFont('arial','bold');
+    pdf.text(peso_declara.toFixed(3)+'Kg',27,100);
+    pdf.line(70,93,70,102);
+    pdf.setFontSize(6);
+    pdf.setFont('arial','normal');
+    pdf.text('Data/Hora de Emissão',72,95.5);
+    pdf.setFontSize(11);
+    pdf.setFont('arial','bold');
+    pdf.text(pegar_hora,72,100);
+
+
+
 
     //borda campo nota fiscal
+    pdf.setFont('arial','normal');
     pdf.line(105,102,209,102);
-    pdf.text("Nota fiscal: "+num_nf, 156.5, 99, "center");
+    pdf.setFontSize(6)
+    pdf.text("N° Declaração",107,95.5);
+    pdf.setFontSize(11)
+    pdf.setFont('arial','bold')
+    pdf.text(num_declara.toString(),107,100)
+    pdf.line(130,93,130,102)
+    pdf.setFontSize(6)
+    pdf.setFont('arial','normal');
+    pdf.text('Rota de Entrega',132,95.5);
+    pdf.setFontSize(11);
+    pdf.setFont('arial','bold')
+    pdf.text(rota_entrega,132,100)
+
+    
+
 
     //borda mot dev e obs
     pdf.line(1,111,209,111);
     pdf.line(1,120,209,120);
+    pdf.setFontSize(6);
+    pdf.setFont('arial','normal')
+    pdf.text('Emissor',107,104)
+    pdf.setFontSize(11);
+    pdf.setFont('arial','bold')
+    pdf.text(digitador,107,109);
 
-    pdf.setFontSize(8)
-    pdf.text("Observação",8, 115);
+
+
+    pdf.setFontSize(5)
+    pdf.text("Observação",2, 113);
     pdf.setFontSize(10);
-    pdf.text(observacao, 25, 117);
+    pdf.text(observacao, 2, 118);
 
     //linha de baixo do aviso de conformidade
     pdf.line(1,130,209,130)
@@ -1882,6 +1973,7 @@ function reimprmir_pdf() {
     pdf.text("Endereço: "+nome_log+ " "+num_log,5,216)
     pdf.text("Bairro: "+bairro,5,220)
     pdf.text("Cidade: "+cidade,5,224)
+    pdf.text("UF: "+unidade_federativa,5,228)
 
     //divisória horizontal dos dados do remetente/destinatário
     pdf.line(105,208,105,230)
@@ -1892,6 +1984,8 @@ function reimprmir_pdf() {
     pdf.text("Endereço: "+nome_log_dest+" "+num_log_dest,107,216)
     pdf.text("Bairro: "+bairro_dest,107,220)
     pdf.text("Cidade: "+cidade_dest,107,224)
+    pdf.text("UF: "+unidade_federativa_dest,107,228)
+
 
     pdf.setLineDash([1,1])
     pdf.line(1,179,209,179)
@@ -2082,6 +2176,6 @@ function reimprmir_pdf() {
     pdf.text('Data Emissão: '+data_cadastro_baixa, 2, 291)
     pdf.text('Emissor: '+digitador, 106,291)
 
-
+    pdf.autoPrint({variant: 'non-conform'});
     pdf.save(nome_remetente+" para "+nome_destinatario+" ref NF "+dados_salvos.documentos[0].num_nf+" - Declaracao Num "+num_declara+".pdf");
 }

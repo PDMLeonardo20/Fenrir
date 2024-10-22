@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/css.css">
+    <link rel="icon" href="img/nycrux.jfif">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <title>Controle de Materiais do Retira</title>
+</head>
+<body data-bs-theme="dark">
+    <main>
+        <section class="m-2 bg-primary-subtle border border-primary rounded-3 p-3" style="user-select: none;">
+            <h1 class="display-4 text-center">Controle de Materiais do Retira</h1>
+            <p class="text-center">Módulo: <b>Operacional</b></p>
+        </section>
+        <section class="text-center"></section>
+            <ul class="nav nav-tabs bg-body-tertiary">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Página Inicial</a>
+                </li>
+                <li class="nav-item">
+                    <a href="calc_cubagem.html" class="nav-link">Calculadora de Cubagem</a>
+                </li>
+            </ul>
+        </section>
+        <section class="m-3">
+            <div class="row mt-3">
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="number" name="numero_cte" id="numero_cte" class="form-control">
+                        <label for="numero_cte">CT-e</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating">
+                        <select name="tomador_frete" id="tomador_frete" class="form-control">
+                            <option value="Pago" selected>Pago</option>
+                            <option value="A Pagar">A Pagar</option>
+                        </select>
+                        <label for="tomador_frete">Tomador do Frete</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating">
+                        <select name="forma_pagamento" id="forma_pagamento" class="form-control">
+                            <option value="Carteira">Carteira</option>
+                            <option value="Banco">Banco</option>
+                        </select>
+                        <label for="forma_pagamento">Forma de Pagamento</label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-floating">
+                        <input type="text" name="destinatario" id="destinatario" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                        <label for="destinatario">Destinatário</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="conferente" id="conferente" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                        <label for="conferente">Conferente</label>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="form-floating">
+                        <input type="time" name="hora_retira" id="hora_retira" class="form-control">
+                        <label for="hora_retira">Hora da Retirada</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container text-center mb-3">
+            <div class="row">
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="conf_resp" id="conf_resp" class="form-control" required oninput="this.value = this.value.toUpperCase()">
+                        <label for="conf_resp">Conferente Responsável</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container text-center">
+            <button class="btn btn-primary" onclick="insere_registro()">Inserir Registros</button>
+            <button class="btn btn-info" onclick="cria_pedefi()">Gerar PDF</button>
+            <button class="btn btn-success" onclick="salvar_dados()">Salvar Dados</button>
+            <button class="btn btn-warning" onclick="carrega_dados()">Carregar Dados</button>
+        </section>
+        <div class="m-3" style="user-select: none;">
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">CT-e</th>
+                        <th scope="col">Tomador do Frete</th>
+                        <th scope="col">Forma de Pagamento</th>
+                        <th scope="col">Destinatário</th>
+                        <th scope="col">Conferente</th>
+                        <th scope="col">Hora da Retirada</th>
+                    </tr>
+                </thead>
+                <tbody id="registros_inseridos">
+
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script src="js/controle_retira.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
