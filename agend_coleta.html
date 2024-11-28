@@ -54,7 +54,7 @@
                     <a href="#" class="nav-link active">Agendamento de Coleta</a>
                 </li>
                 <li class="nav-item">
-                    <a href="materiais_recebidos.html" class="nav-link">Materiais Recebidos</a>
+                    <a href="materiais_recebidos.html" class="nav-link">Simulação Peso/Cubagem</a>
                 </li>
             </ul>
         </section>
@@ -79,6 +79,7 @@
                         <option value="EDUARDA RODRIGUES CASTRO"></option>
                         <option value="LUCIANE MACHADO DE SOUZA"></option>
                         <option value="JEFERSON PADILHA"></option>
+                        <option value="MATHEUS MINOSSI BORBA CENTENO"></option>
                     </datalist>
                 </div>
                 <div class="col">
@@ -97,7 +98,7 @@
             <div class="row mt-3">
                 <div class="col-2">
                     <div class="form-floating">
-                        <input type="number" name="cnpj_loc_coleta" id="cnpj_loc_coleta" class="form-control" required oninput="this.value = this.value.toUpperCase()">
+                        <input type="number" name="cnpj_loc_coleta" id="cnpj_loc_coleta" class="form-control" required onkeyup="preenchimento_automatico_cliente()">
                         <label for="cnpj_loc_coleta">CNPJ</label>
                     </div>
                 </div>
@@ -129,13 +130,13 @@
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input type="text" name="cidade_loc_coleta" id="cidade_loc_coleta" class="form-control" value="PORTO ALEGRE" required oninput="this.value = this.value.toUpperCase()">
+                        <input type="text" name="cidade_loc_coleta" id="cidade_loc_coleta" class="form-control" required oninput="this.value = this.value.toUpperCase()">
                         <label for="cidade_loc_coleta">Cidade</label>
                     </div>
                 </div>
                 <div class="col-1">
                     <div class="form-floating">
-                        <input type="text" name="uf_loc_coleta" id="uf_loc_coleta" class="form-control" value="RS" required oninput="this.value = this.value.toUpperCase()">
+                        <input type="text" name="uf_loc_coleta" id="uf_loc_coleta" class="form-control" required oninput="this.value = this.value.toUpperCase()">
                         <label for="uf_loc_coleta">UF</label>
                     </div>
                 </div>
@@ -188,6 +189,137 @@
                 <div class="col">
                     <div class="form-floating">
                         <input type="time" name="hora_ate" id="hora_ate" class="form-control">
+                        <label for="hora_ate">Hora Até</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="number" name="numero_coleta" id="numero_coleta" class="form-control" readonly>
+                        <label for="numero_coleta">Protocolo</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- CONSULTA DE COLETA -->
+        <section class="container m-2">
+            <div class="row mt-2">
+                <div class="col bg-primary rounded-3 p-3">
+                    <label for="busca_coleta" class="form-label">Consultar coleta</label>
+                    <input type="search" name="busca_coleta" id="busca_coleta" class="form-control" onkeyup="consultar_coleta()">
+                </div>
+            </div>
+        </section>
+        <section class="container" style="width: 70%; float: left;">
+            <div class="row mt-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="nome_atendente_cons" id="nome_atendente_cons" class="form-control" readonly>
+                        <label for="nome_atendente_cons">Atendente</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="nome_solicitante_cons" id="nome_solicitante_cons" class="form-control" readonly>
+                        <label for="nome_solicitante_cons">Solicitante</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="cidade_destino_cons" id="cidade_destino_cons" class="form-control" readonly>
+                        <label for="cidade_destino_cons">Cidade de Destino</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="number" name="cnpj_loc_coleta_cons" id="cnpj_loc_coleta_cons" class="form-control" readonly>
+                        <label for="cnpj_loc_coleta_cons">CNPJ</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="nome_loc_coleta_cons" id="nome_loc_coleta_cons" class="form-control" readonly>
+                        <label for="nome_loc_coleta_cons">Razão Social/Nome</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-4">
+                    <div class="form-floating">
+                        <input type="text" name="end_loc_coleta_cons" id="end_loc_coleta_cons" class="form-control" readonly>
+                        <label for="end_loc_coleta_cons">Endereço</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="text" name="num_loc_coleta_cons" id="num_loc_coleta_cons" class="form-control" readonly>
+                        <label for="num_loc_coleta_cons">Número</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="text" name="bairro_loc_coleta_cons" id="bairro_loc_coleta_cons" class="form-control" readonly>
+                        <label for="bairro_loc_coleta_cons">Bairro</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="cidade_loc_coleta_cons" id="cidade_loc_coleta_cons" class="form-control" readonly>
+                        <label for="cidade_loc_coleta_cons">Cidade</label>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="form-floating">
+                        <input type="text" name="uf_loc_coleta_cons" id="uf_loc_coleta_cons" class="form-control" readonly>
+                        <label for="uf_loc_coleta_cons">UF</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="observacao_col_cons" id="observacao_col_cons" class="form-control" readonly>
+                        <label for="observacao_col_cons">Observação</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container" style="width: 28%; float: right;">
+            <div class="row mt-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name="mat_pronto" id="mat_pronto" class="form-control" readonly>
+                        <label for="mat_pronto">Material Pronto</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="number" name="volume" id="volume" class="form-control" readonly>
+                        <label for="volume">Volume</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="number" name="peso" id="peso" class="form-control" readonly>
+                        <label for="peso">Peso</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="time" name="hora_de" id="hora_de" class="form-control" readonly>
+                        <label for="hora_de">Hora De</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="time" name="hora_ate" id="hora_ate" class="form-control" readonly>
                         <label for="hora_ate">Hora Até</label>
                     </div>
                 </div>

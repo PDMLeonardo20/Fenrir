@@ -60,6 +60,7 @@ let nome_digitadores = [
     "EDUARDO DIAS MACIEL",
     "LUCIANE MACHADO DE SOUZA",
     "JEFERSON PADILHA",
+    "MATHEUS MINOSSI BORBA CENTENO",
     //BASE DE OPERACOES
     "LARISSA DO ROUSARIO MOREIRA",
     "FABIANO FAGUNDES COELHO",
@@ -90,6 +91,7 @@ let digitadores = [
     {nome: "EDUARDO DIAS MACIEL", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "LUCIANE MACHADO DE SOUZA", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "JEFERSON PADILHA", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
+    {nome: "MATHEUS MINOSSI BORBA CENTENO", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     // Base de operacoes
     {nome: "FABIANO FAGUNDES COELHO", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
     {nome: "PATRICIA BECKER DOS SANTOS NORA", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
@@ -310,6 +312,27 @@ function getRandomInt(max) {
 }
 var num_declara = getRandomInt(99999999);
 document.getElementById('num_declara').value = num_declara
+
+const convertToDateTimeLocalString = (date) => {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
+var data_atual = new Date();
+document.getElementById('hora_cadastro_baixa').value = convertToDateTimeLocalString(data_atual);
+
+function rota_retira() { 
+    if (document.getElementById('e_retira').checked) {
+        document.getElementById('rota_entrega').value = "RETIRA";
+    }else{
+        document.getElementById('rota_entrega').value = "";
+    }
+}
 
 function cadastrar_dados_com_chave() {
 

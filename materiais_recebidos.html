@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="css/css.css">
     <link rel="icon" href="img/nycrux.jfif">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <title>Relatório de Materiais Recebidos</title>
+    <title>Relatório de Simulação Peso/Cubagem</title>
 </head>
 <body data-bs-theme="dark">
     <main>
         <section class=" m-2 bg-primary-subtle border border-primary rounded-3 p-3" >
-            <h1 class="display-4 text-center">Relatório de Materiais Recebidos</h1>
+            <h1 class="display-4 text-center">Relatório de Simulação Peso/Cubagem</h1>
             <p class="text-center">Módulo: <b>Atendimento/Emissão</b></p>
         </section>
         <section class="text-center">
@@ -42,45 +42,97 @@
                     <a href="agend_coleta.html" class="nav-link">Agendamento de Coleta</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link active">Materiais Recebidos</a>
+                    <a href="#" class="nav-link active">Simulação Peso/Cubagem</a>
                 </li>
             </ul>
         </section>
         <section class="m-3">
-            <div class="row">
-                <div class="col">
+            <div class="row mt-3">
+                <div class="col-1">
                     <div class="form-floating">
-                        <input type="number" name="cte_r" id="cte_r" class="form-control" required>
-                        <label for="cte_r">CT-e</label>
+                        <input type="date" name="data_cad_cubagem" id="data_cad_cubagem" class="form-control">
+                        <label for="data_cad_cubagem">Data</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="text" name="conferente" id="conferente" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                        <label for="conferente">Conferente</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="text" name="n_cliente" id="n_cliente" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                        <label for="n_cliente">Cliente</label>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="form-floating">
+                        <input type="number" name="cod_cte" id="cod_cte" class="form-control">
+                        <label for="cod_cte">Código CT-e</label>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="form-floating">
+                        <input type="number" name="volume" id="volume" class="form-control">
+                        <label for="volume">Volume</label>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="form-floating">
+                        <input type="number" name="peso_aferido" id="peso_aferido" class="form-control">
+                        <label for="peso_aferido">Peso</label>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="form-floating">
+                        <input type="number" name="cubagem_aferida" id="cubagem_aferida" class="form-control">
+                        <label for="cubagem_aferida">Cubagem</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input type="text" name="nome_conferente" id="nome_conferente" class="form-control" required>
-                        <label for="cte_r">Conferente</label>
+                        <input type="number" name="sim_valor_peso" id="sim_valor_peso" class="form-control">
+                        <label for="sim_valor_peso">Sim. Valor Peso</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input type="number" name="cubagem_informada" id="cubagem_informada" class="form-control" required>
-                        <label for="cubagem_informada">Cubagem Informada</label>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating">
-                        <input type="number" name="sim_peso" id="sim_peso" class="form-control" required>
-                        <label for="sim_peso">Sim. Peso</label>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating">
-                        <input type="number" name="sim_cubagem" id="sim_cubagem" class="form-control" required>
-                        <label for="sim_cubagem">Sim. Cubagem</label>
+                        <input type="number" name="sim_valor_cubagem" id="sim_valor_cubagem" class="form-control">
+                        <label for="sim_valor_cubagem">Sim. Valor Cubagem</label>
                     </div>
                 </div>
             </div>
         </section>
-        
+        <section class="container text-center">
+            <button class="btn btn-success" onclick="cadastra_dados_cubagem()">Adicionar Dados</button>
+            <button class="btn btn-info" onclick="gerar_pdf_sim_peso_cubagem()">Gerar PDF</button>
+        </section>
+        <section class="ms-3">
+            <div style="user-select: none;">
+                <table class="table mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Conferente</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Código CT-e</th>
+                            <th scope="col">Volumes</th>
+                            <th scope="col">Peso</th>
+                            <th scope="col">Cubagem</th>
+                            <th scope="col">Sim. Peso</th>
+                            <th scope="col">Sim. Cubagem</th>
+                            <th scope="col">Diferença</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dados_inseridos">
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </main>
+    <script src="js/materiais_recebidos.js"></script>
+    
 </body>
 </html>

@@ -2,6 +2,28 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
+function preenchimento_automatico_cliente() {
+    let numero_cnpj_rem = document.getElementById("cnpj_loc_coleta").value;
+    let cadastros_salvos = JSON.parse(localStorage.getItem(numero_cnpj_rem));
+    document.getElementById("nome_loc_coleta").value = "";
+    document.getElementById("end_loc_coleta").value = "";
+    document.getElementById("num_loc_coleta").value = "";
+    document.getElementById("bairro_loc_coleta").value = "";
+    document.getElementById("cidade_loc_coleta").value = "";
+    document.getElementById("uf_loc_coleta").value = "";
+
+    if (localStorage.getItem(numero_cnpj_rem) !== null) {
+        if(typeof cadastros_salvos.cnpj_cliente !== 'undefined')document.getElementById("nome_loc_coleta").value = cadastros_salvos.nome_cliente;
+        if(typeof cadastros_salvos.nome_logradouro !== 'undefined')document.getElementById("end_loc_coleta").value = cadastros_salvos.nome_logradouro;
+        if(typeof cadastros_salvos.numero_logradouro !== 'undefined')document.getElementById("num_loc_coleta").value = cadastros_salvos.numero_logradouro;
+        if(typeof cadastros_salvos.bairro_cad_cliente !== 'undefined')document.getElementById("bairro_loc_coleta").value = cadastros_salvos.bairro_cad_cliente;
+        if(typeof cadastros_salvos.cidade_cad_cliente !== 'undefined')document.getElementById("cidade_loc_coleta").value = cadastros_salvos.cidade_cad_cliente;
+        if(typeof cadastros_salvos.uf_cad_cliente !== "undefined")document.getElementById("uf_loc_coleta").value = cadastros_salvos.uf_cad_cliente;
+        
+    }
+}
+
+
 function gerar_coleta_manual() {
     var solicitante = document.getElementById('nome_solicitante').value;
     var cidade_destino = document.getElementById('cidade_destino').value;
@@ -64,6 +86,29 @@ function gerar_coleta_manual() {
     } else {
         console.log(numero_coleta);
         document.getElementById('numero_coleta').value = numero_coleta;
+
+        var dados_coleta = {
+            numero_coleta: numero_coleta,
+            solicitante: solicitante,
+            cidade_destino: cidade_destino,
+            cnpj_coleta: cnpj_coleta,
+            nome_coleta: nome_coleta,
+            end_loc_coleta: end_loc_coleta,
+            num_loc_coleta: num_loc_coleta,
+            bairro_loc_coleta: bairro_loc_coleta,
+            cidade_coleta: cidade_coleta,
+            uf_coleta: uf_coleta,
+            observacao_col: observacao_col,
+            material_pronto: material_pronto,
+            volume: volume,
+            peso: peso,
+            hora_de: hora_de,
+            hora_ate: hora_ate,
+            atendente: atendente,
+            data_hoje: data_hoje
+        }
+
+        localStorage.setItem(numero_coleta,JSON.stringify(dados_coleta));
         
         const {jsPDF} = window.jspdf;
         
@@ -159,5 +204,46 @@ function gerar_coleta_manual() {
         pdf.text(atendente, 5, 111);
         
         pdf.save('Coleta '+numero_coleta+' - Atendente '+atendente+'.pdf')
+    }
+}
+
+function consultar_coleta() {
+    var numero_coleta = document.getElementById('busca_coleta').value;
+    var cons_dados_coleta = JSON.parse(localStorage.getItem(numero_coleta));
+
+    document.getElementById('nome_atendente_cons').value = '';
+    document.getElementById('nome_solicitante_cons').value = '';
+    document.getElementById('cidade_destino_cons').value = '';
+    document.getElementById('cnpj_loc_coleta_cons').value = '';
+    document.getElementById('nome_loc_coleta_cons').value = '';
+    document.getElementById('end_loc_coleta_cons').value = '';
+    document.getElementById('num_loc_coleta_cons').value = '';
+    document.getElementById('bairro_loc_coleta_cons').value = '';
+    document.getElementById('cidade_loc_coleta_cons').value = '';
+    document.getElementById('uf_loc_coleta_cons').value = '';
+    document.getElementById('mat_pronto').value = '';
+    document.getElementById('volume').value = '';
+    document.getElementById('peso').value = '';
+    document.getElementById('hora_de').value = '';
+    document.getElementById('hora_ate').value = '';
+    document.getElementById('numero_coleta').value = '';
+
+    if (localStorage.getItem(numero_coleta) !== null) {
+        console.log(cons_dados_coleta)
+        if(typeof cons_dados_coleta.numero_coleta !== 'undefined') document.getElementById('numero_coleta').value = cons_dados_coleta.numero_coleta;
+        if(typeof cons_dados_coleta.solicitante !== 'undefined') document.getElementById('nome_solicitante_cons').value = cons_dados_coleta.solicitante;
+        if(typeof cons_dados_coleta.cidade_destino !== 'undefined') document.getElementById('cidade_destino_cons').value = cons_dados_coleta.cidade_destino;
+        if(typeof cons_dados_coleta.cnpj_coleta !== 'undefined') document.getElementById('cnpj_loc_coleta_cons').value = cons_dados_coleta.cnpj_coleta;
+        if(typeof cons_dados_coleta.nome_coleta !== 'undefined') document.getElementById('nome_loc_coleta_cons').value = cons_dados_coleta.nome_coleta;
+        if(typeof cons_dados_coleta.end_loc_coleta !== 'undefined') document.getElementById('end_loc_coleta_cons').value = cons_dados_coleta.end_loc_coleta;
+        if(typeof cons_dados_coleta.num_loc_coleta !== 'undefined') document.getElementById('num_loc_coleta_cons').value = cons_dados_coleta.num_loc_coleta;
+        if(typeof cons_dados_coleta.cidade_coleta !== 'undefined') document.getElementById('cidade_loc_coleta_cons').value = cons_dados_coleta.cidade_coleta;
+        if(typeof cons_dados_coleta.uf_coleta !== 'undefined') document.getElementById('uf_loc_coleta_cons').value = cons_dados_coleta.uf_coleta;
+        if(typeof cons_dados_coleta.material_pronto !== 'undefined') document.getElementById('mat_pronto').value = cons_dados_coleta.material_pronto;
+        if(typeof cons_dados_coleta.volume !== 'undefined') document.getElementById('volume').value = cons_dados_coleta.volume;
+        if(typeof cons_dados_coleta.peso !== 'undefined') document.getElementById('peso').value = cons_dados_coleta.peso;
+        if(typeof cons_dados_coleta.hora_de !== 'undefined') document.getElementById('hora_de').value = cons_dados_coleta.hora_de;
+        if(typeof cons_dados_coleta.hora_ate !== 'undefined') document.getElementById('hora_ate').value = cons_dados_coleta.hora_ate;
+        if(typeof cons_dados_coleta.atendente !== 'undefined') document.getElementById('nome_atendente_cons').value = cons_dados_coleta.atendente;
     }
 }
