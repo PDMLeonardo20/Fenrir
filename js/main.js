@@ -362,14 +362,6 @@ function cadastrar_dados_com_chave() {
 
     let data_cadastro_baixa = dia_cadastro_baixa + "/" + mes_cadastro_baixa + "/" + ano_cadastro_baixa + " -- " + hora_cadastro_baixa + ".";
 
-    let pegar_hora_entrega = document.getElementById("data_hora_entrega").value;
-    let hora_entrega = pegar_hora_entrega.slice(11,16);
-    let dia_entrega = pegar_hora_entrega.slice(8,10);
-    let mes_entrega = pegar_hora_entrega.slice(5,7);
-    let ano_entrega = pegar_hora_entrega.slice(0,4);
-
-    let data_entrega = dia_entrega + "/" + mes_entrega + "/" + ano_entrega + " -- " + hora_entrega + ".";
-
     //dados do remetente
     let cnpj_rem = document.getElementById("cnpj_rem").value;
     let nome_remetente = document.getElementById("nome_remetente").value
@@ -391,8 +383,7 @@ function cadastrar_dados_com_chave() {
     let unidade_federativa_dest = document.getElementById("uf_dest").value;
     let endereco_entrega_dest = nome_log_dest + " - " + num_log_dest + " - " + bairro_dest + " - " + cidade_dest + " - " + unidade_federativa_dest;
 
-
-    let status_entrega = document.getElementById("status").value;
+    let status_entrega = "Declaração/NFS-e emitida";
     let motivo_devolucao = document.getElementById("motivo_devolucao").value;
     let observacao = document.getElementById("observacao").value;
 
@@ -477,9 +468,6 @@ function cadastrar_dados_com_chave() {
         } else if (unidade_federativa == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Unidade Federativa Remetente'.</p>";
             document.getElementById("uf_rem").focus();
-        } else if (status_entrega == "") {
-            document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Ocorrência'.</p>";
-            document.getElementById("status").focus();
         } else if (data_cadastro_baixa == "") {
             document.getElementById("resultado_cad_declara").innerHTML = "<p class='text-bg-danger p-3 mt-3 rounded-3'>É necessário preencher o campo 'Data Cadastro Baixa'.</p>";
             document.getElementById("data_hora_cad").focus();
