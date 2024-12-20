@@ -83,6 +83,8 @@ function cadastra_dados_cubagem() {
         console.log(val_diferenca);
         l_val_diferenca.push(val_diferenca);
 
+        document.getElementById('num_dados_cub').innerHTML = l_cod_cte.length;
+
         document.getElementById('dados_inseridos').innerHTML += "<th scope='row'><td>"+data_cadastro+"</td><td>"+conferente+"</td><td>"+n_cliente+"</td><td>"+cod_cte+"</td><td>"+volumes+"</td><td>"+peso_aferido.toFixed(2)+"</td><td>"+cubagem_aferida.toFixed(2)+"</td><td>"+real_brasileiro.format(sim_valor_peso)+"</td><td>"+real_brasileiro.format(sim_valor_cubagem)+"</td><td>"+real_brasileiro.format(val_diferenca)+"</td></th>";
     }
 
@@ -196,6 +198,7 @@ function gerar_pdf_sim_peso_cubagem() {
     pdf.setFont('Arial', 'normal')
     var y_dados = 39;
     var y_linha = 40;
+        
     for (const i in l_data_cad) {
         if (Object.prototype.hasOwnProperty.call(l_data_cad, i)) {
             pdf.text(l_data_cad[i],2,y_dados)
@@ -277,6 +280,110 @@ function gerar_pdf_sim_peso_cubagem() {
         }
     }
     y_dados = 39
+        
+    if (l_data_cad.length >=47) {
+        pdf.addPage()
+
+        //borda em volta da folha
+        pdf.line(1, 1, 209, 1);
+        pdf.line(1, 1, 1, 294);
+        pdf.line(1, 294, 209, 294);
+        pdf.line(209,1,209,294);
+
+        pdf.setFontSize(10);
+        pdf.setFont('Arial','bold');
+        pdf.text('Data',2,5);
+        pdf.text("Conferente",25, 5);
+        pdf.text("Cliente",45, 5);
+        pdf.text("Cód. CT-e",75,5);
+        pdf.text("Num. CT-e",95,5)
+        pdf.text('Vol.',120,5)
+        pdf.text('Peso',129,5)
+        pdf.text('M³',144,5)
+        pdf.text("Sim. Peso", 157,5)
+        pdf.text('Sim. Cub.', 173,5)
+        pdf.text('Diferença',190,5)
+
+        //pdf.line(1, 35, 209, 35)
+        pdf.line(24, 2, 24, 294)
+        pdf.line(44, 2, 44, 294)
+        pdf.line(74, 2, 74, 294)
+        pdf.line(94, 2, 94, 294)
+        pdf.line(119, 2, 119, 294)
+        pdf.line(143, 2, 143, 294)
+        pdf.line(128, 2, 128, 294)
+        pdf.line(156, 2, 156, 294)
+        pdf.line(172, 2, 172, 294)
+        pdf.line(189, 2, 189, 294)
+
+        pdf.setFontSize(8)
+        pdf.setFont('Arial', 'normal')
+        var y_dados = 11;
+        var y_linha = 12;
+
+        for (let i = 48; i < l_data_cad.length; i++) {
+            const data = l_data_cad[i];
+            pdf.text(data,2,y_dados)
+            y_dados += 5.5
+        }
+        y_dados = 11;
+        for (let i = 48; i < l_conferentes.length; i++) {
+            const conferentes = l_conferentes[i];
+            pdf.text(conferentes,25,y_dados)
+            y_dados += 5.5
+        }
+        y_dados = 11;
+        for (let i = 48; i < l_n_cliente.length; i++) {
+            const nome_cliente = l_n_cliente[i];
+            pdf.text(nome_cliente,45,y_dados)
+            y_dados += 5.5 
+        }
+        y_dados = 11;
+        for (let i = 48; i < l_cod_cte.length; i++) {
+            const cod_cte = l_cod_cte[i];
+            pdf.text(cod_cte,75,y_dados)
+            y_dados += 5.5
+        }
+        y_dados = 11;
+        for (let i = 48; i < l_volumes.length; i++) {
+            const volumes = l_volumes[i];
+            pdf.text(volumes.toString(),120,y_dados)
+            y_dados += 5.5
+        }
+        y_dados = 11;
+        for (let i = 48; i < l_peso_a.length; i++) {
+            const peso = l_peso_a[i];
+            pdf.text(peso.toString(),129,y_dados)
+            y_dados += 5.5
+        }
+        y_dados = 11;
+        for (let i = 48; i < l_cubagem_a.length; i++) {
+            const cubagem = l_cubagem_a[i];
+            pdf.text(cubagem.toString(),144,y_dados)
+            y_dados += 5.5
+        }
+        y_dados = 11;
+        for (let i = 48; i < l_s_v_peso.length; i++) {
+            const sim_peso = l_s_v_peso[i];
+            pdf.text(real_brasileiro.format(sim_peso),157,y_dados)
+            y_dados += 5.5
+        }
+        y_dados = 11;
+        for (let i = 48; i < l_s_v_cubagem.length; i++) {
+            const sim_cub = l_s_v_cubagem[i];
+            pdf.text(real_brasileiro.format(sim_cub),173,y_dados)
+            y_dados += 5.5
+        }
+        y_dados = 11;
+        for (let i = 48; i < l_val_diferenca.length; i++) {
+            const diferenca = l_val_diferenca[i];
+            pdf.text(real_brasileiro.format(diferenca),190,y_dados)
+            y_dados += 5.5
+            pdf.line(1, y_linha, 209, y_linha)
+            y_linha += 5.5;
+        }
+        y_dados = 11;
+    }
 
 
 
