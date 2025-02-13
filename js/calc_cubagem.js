@@ -82,6 +82,7 @@ function calcular_cubagem() {
         
         document.getElementById('dados_inseridos').innerHTML += "<th scope='row'>#</th><td>"+numreo_nota_fiscal+"</td><td>"+altura+"</td><td>"+largura+"</td><td>"+profundidade+"</td><td>"+volumes+"</td><td>"+peso_nota_fiscal+"</td><td>"+resultado_cubagem.toFixed(2)+"</td><td>"+embarcou+'</td>'
         
+        document.getElementById('dados_adicionados').innerHTML = lista_status.length;
         //limpa os campos e foca no campo 'altura' pra preencher um novo calculo de cubagem
         document.getElementById('altura').value = '';
         document.getElementById('largura').value = '';
@@ -303,79 +304,148 @@ function gerar_pdf_cubagens_embarcadas_dia() {
     
 
 
-    for (const i in lista_cubagens) {
-        if (Object.prototype.hasOwnProperty.call(lista_cubagens, i)) {
+    for (let i = 0; i < 39; i++) {
+        var cubagem = parseFloat(lista_cubagens[i]);
+        cubagem = cubagem.toFixed(2);
+        cubagem = cubagem.toString();
+        pdf.text(cubagem+'m³', 157, y_dados);
+        cubagem = parseFloat(lista_cubagens[i]);
+        y_dados += 5.8;
+    } 
+    y_dados = 42;
+    for (let i = 0; i < 39; i++) {
+        const num_nf = lista_nota_fiscal[i].toString();
+        pdf.text(num_nf, 5, y_dados);
+        y_dados += 5.8;
+    }
+    y_dados = 42;
+    for (let i = 0; i < 39; i++) {  
+        var altura = lista_altura[i].toFixed(2);
+        altura = altura.toString();
+        pdf.text(altura, 28, y_dados);
+        y_dados += 5.8;
+    }
+    y_dados = 42;
+    for (let i = 0; i < 39; i++) {
+        var largura = lista_largura[i].toFixed(2);
+        largura = largura.toString();
+        pdf.text(largura, 48, y_dados);
+        y_dados += 5.8;
+    }
+    y_dados = 42;
+    for (let i = 0; i < 39; i++) {
+        var profundidade = lista_profundidade[i].toFixed(2);
+        profundidade = profundidade.toString();
+        pdf.text(profundidade,70, y_dados);
+        y_dados += 5.8;
+    }
+
+    y_dados = 42;
+
+    for (let i = 0; i < 39; i++) {
+        var vol = lista_volumes[i];
+        vol = vol.toString();
+        pdf.text(vol,97, y_dados);
+        y_dados += 5.8;
+    }
+    y_dados = 42;
+    for (let i = 0; i < 39; i++) {
+        var status = lista_peso_nota_fiscal[i].toFixed(3);
+        status = status.toString();
+        pdf.text(status+'Kg',127, y_dados);
+        pdf.line(1, y_linha_cubagem, 209, y_linha_cubagem)
+        y_dados += 5.8;
+        y_linha_cubagem += 5.8;
+    }
+    y_dados = 42;
+    for (let i = 0; i < 39; i++) {  
+        const status = lista_status[i];
+        pdf.text(status,182,y_dados);
+        y_dados += 5.8;
+    }
+
+    if (lista_peso_nota_fiscal.length >=40) {
+        pdf.addPage()
+
+        //borda em volta da folha
+        pdf.line(1, 1, 209, 1);
+        pdf.line(1, 1, 1, 294);
+        pdf.line(1, 294, 209, 294);
+        pdf.line(209,1,209,294);
+
+        pdf.addImage(img, "PNG", 1,2,40,25)
+
+        pdf.setFontSize(14);
+        pdf.setFont('Arial', 'bold');
+        pdf.text('RELATÓRIO DE CUBAGENS EMBARCADAS NO DIA', 60, 10);
+        pdf.text('Data: '+data_hoje,115,25,'center')
+        pdf.line(1,30,209,30); // borda abaixo da logo
+
+        pdf.setFontSize(10);
+        pdf.setFont('Arial', 'bold');
+        pdf.text('Nota Fiscal', 3, 35);
+        pdf.text('Altura', 28, 35);
+        pdf.text('Largura', 48, 35);
+        pdf.text('Profundidade', 70, 35);
+        pdf.text('Volumes',97,35)
+        pdf.text('Peso', 127, 35);
+        pdf.text('Cubagem', 157, 35);
+        pdf.text('Embarcou', 182, 35)
+        pdf.line(1, 38, 209, 38)
+        pdf.line(26, 30, 26, 260)
+        pdf.line(45, 30, 45, 260)
+        pdf.line(68, 30, 68 , 260)
+        pdf.line(95, 30, 95, 260)
+        pdf.line(125, 30, 125, 260)
+        pdf.line(155, 30, 155, 260)
+        pdf.line(180,30,180,260)
+
+        for (let i = 40; i < lista_cubagens.length; i++) {
             var cubagem = parseFloat(lista_cubagens[i]);
             cubagem = cubagem.toFixed(2);
             cubagem = cubagem.toString();
             pdf.text(cubagem+'m³', 157, y_dados);
             cubagem = parseFloat(lista_cubagens[i]);
-            
             y_dados += 5.8;
-            
-        }
-    }
-
-    y_dados = 42;
-
-    for (const i in lista_nota_fiscal) {
-        if (Object.prototype.hasOwnProperty.call(lista_nota_fiscal, i)) {
+        } 
+        y_dados = 42;
+        for (let i = 40; i < lista_nota_fiscal.length; i++) {
             const num_nf = lista_nota_fiscal[i].toString();
             pdf.text(num_nf, 5, y_dados);
             y_dados += 5.8;
         }
-    }
-
-    y_dados = 42;
-
-    for (const i in lista_altura) {
-        if (Object.prototype.hasOwnProperty.call(lista_altura, i)) {
+        y_dados = 42;
+        for (let i = 40; i < lista_altura.length; i++) {  
             var altura = lista_altura[i].toFixed(2);
             altura = altura.toString();
             pdf.text(altura, 28, y_dados);
             y_dados += 5.8;
-            
         }
-    }
-
-    y_dados = 42;
-
-    for (const i in lista_largura) {
-        if (Object.prototype.hasOwnProperty.call(lista_largura, i)) {
+        y_dados = 42;
+        for (let i = 40; i < lista_largura.length; i++) {
             var largura = lista_largura[i].toFixed(2);
             largura = largura.toString();
             pdf.text(largura, 48, y_dados);
             y_dados += 5.8;
         }
-    }
-
-    y_dados = 42;
-
-    for (const i in lista_profundidade) {
-        if (Object.prototype.hasOwnProperty.call(lista_profundidade, i)) {
+        y_dados = 42;
+        for (let i = 40; i < lista_profundidade.length; i++) {
             var profundidade = lista_profundidade[i].toFixed(2);
             profundidade = profundidade.toString();
             pdf.text(profundidade,70, y_dados);
             y_dados += 5.8;
-            
         }
-    }
-
-    y_dados = 42;
-
-    for (const i in lista_volumes) {
-        if (Object.prototype.hasOwnProperty.call(lista_volumes, i)) {
+    
+        y_dados = 42;
+    
+        for (let i = 40; i < lista_volumes.length; i++) {
             var vol = lista_volumes[i];
             vol = vol.toString();
             pdf.text(vol,97, y_dados);
             y_dados += 5.8;
         }
-    }
-
-    y_dados = 42;
-
-    for (const i in lista_peso_nota_fiscal) {
-        if (Object.prototype.hasOwnProperty.call(lista_peso_nota_fiscal, i)) {
+        y_dados = 42;
+        for (let i = 40; i < lista_peso_nota_fiscal.length; i++) {
             var status = lista_peso_nota_fiscal[i].toFixed(3);
             status = status.toString();
             pdf.text(status+'Kg',127, y_dados);
@@ -383,17 +453,14 @@ function gerar_pdf_cubagens_embarcadas_dia() {
             y_dados += 5.8;
             y_linha_cubagem += 5.8;
         }
-    }
-
-    y_dados = 42;
-
-    for (const i in lista_status) {
-        if (Object.prototype.hasOwnProperty.call(lista_status, i)) {
+        y_dados = 42;
+        for (let i = 40; i < lista_status.length; i++) {  
             const status = lista_status[i];
             pdf.text(status,182,y_dados);
             y_dados += 5.8;
         }
     }
+   
 
     pdf.setFont('Arial', 'normal')
     pdf.setFontSize(10);

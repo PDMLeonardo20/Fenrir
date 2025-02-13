@@ -3,9 +3,6 @@
  * CADASTRO DE DECLARACOES DE ENTREGA
  */
 
-
-
-
 function preenchimento_automatico_rem() {
     let numero_cnpj_rem = document.getElementById("cnpj_rem").value;
     let cadastros_salvos = JSON.parse(localStorage.getItem(numero_cnpj_rem));
