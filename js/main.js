@@ -58,6 +58,7 @@ let nome_digitadores = [
     "LUCIANE MACHADO DE SOUZA",
     "JEFERSON PADILHA",
     "MATHEUS MINOSSI BORBA CENTENO",
+    "RAFAEL PANIS VIDAL",
     //BASE DE OPERACOES
     "LARISSA DO ROUSARIO MOREIRA",
     "FABIANO FAGUNDES COELHO",
@@ -89,6 +90,7 @@ let digitadores = [
     {nome: "LUCIANE MACHADO DE SOUZA", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "JEFERSON PADILHA", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "MATHEUS MINOSSI BORBA CENTENO", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
+    {nome: "RAFAEL PANIS VIDAL", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     // Base de operacoes
     {nome: "FABIANO FAGUNDES COELHO", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
     {nome: "PATRICIA BECKER DOS SANTOS NORA", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
