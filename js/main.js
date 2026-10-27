@@ -49,6 +49,7 @@ function preenchimento_automatico_dest() {
 let nome_digitadores = [
     //ATENDIMENTO
     "LEONARDO VARGAS COELHO",
+    "EDUARDA RODRIGUES CASTRO",
     "WELERSON RIBEIRO VARGAS",
     "JERUSA AGUIRRE CARVALHO",
     "MARCOS VINICIUS PEDRO HALL",
@@ -91,6 +92,7 @@ let digitadores = [
     {nome: "JEFERSON PADILHA", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "MATHEUS MINOSSI BORBA CENTENO", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     {nome: "RAFAEL PANIS VIDAL", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
+    {nome: "EDUARDA RODRIGUES CASTRO", setor: "ATENDIMENTO", cargo: "ATENDENTE I"},
     // Base de operacoes
     {nome: "FABIANO FAGUNDES COELHO", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
     {nome: "PATRICIA BECKER DOS SANTOS NORA", setor: "BASE DE OPERACOES", cargo: "AUXILIAR OPERACIONAL II"},
